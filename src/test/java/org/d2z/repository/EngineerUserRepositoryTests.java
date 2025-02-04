@@ -16,14 +16,12 @@ public class EngineerUserRepositoryTests {
 	@Autowired
 	private EngineerUserRepository eur;
 	
-	private EngineerUser eu = EngineerUser.builder().engineerUserId("aaa").engineerUserPw("bbb")
-										.engineerUserBirth("1975-01-01").engineerUserAdd("강원도 춘천시 춘천로 1234").engineerUserTel("010-1234-5678")
-										.engineerUserCareer(25).engineerUserMajorCompany("강원도팜교육원 풀스택 자바")
-										.engineerUserPosition("주조팀장").engineerUserJob("주조").build();
-	
 //	@Test
 //	public void insertTest() {
-//		eur.save(eu);
+//		eur.save(EngineerUser.builder().engineerUserId("aaa").engineerUserPw("bbb")
+//	.engineerUserBirth("1975-01-01").engineerUserAdd("강원도 춘천시 춘천로 1234").engineerUserTel("010-1234-5678")
+//	.engineerUserCareer(25).engineerUserMajorCompany("강원도팜교육원 풀스택 자바")
+//	.engineerUserPosition("주조팀장").engineerUserJob("주조").build());
 //	}
 //	
 //	@Test

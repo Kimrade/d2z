@@ -35,4 +35,8 @@ public class CompanyUserDTO {
 	
 	private String companyUserTel;
 	
+	private int isDeleted;
+	
+	private int isApproved;
+	
 }

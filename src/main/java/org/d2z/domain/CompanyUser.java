@@ -70,6 +70,11 @@ public class CompanyUser {
 	@Column(nullable = false)
 	private String companyUserTel;
 	
+	// 아이디 삭제 유무
 	@ColumnDefault("0")
 	private int isDeleted;
+	
+	// 아이디 승인 유무
+	@ColumnDefault("0")
+	private int isApproved;
 }

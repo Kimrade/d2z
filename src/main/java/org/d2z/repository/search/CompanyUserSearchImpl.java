@@ -40,6 +40,8 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 		}
 		bb.or(companyUser.isDeleted.eq(0));
 		
+		bb.and(companyUser.isApproved.eq(1));
+		
 		// where 조건 (검색 조건으로 받아온 값을 저장함)
 		query.where(bb);
 		

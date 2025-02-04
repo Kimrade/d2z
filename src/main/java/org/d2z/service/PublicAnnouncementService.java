@@ -20,4 +20,5 @@ public interface PublicAnnouncementService {
 	
 	// 공고 게시글 검색, 조회, 페이지 처리
 	public PageResponseDTO<PublicAnnouncementDTO> publicAnnouncementSearchByKeyword(PageRequestDTO pageRequestDTO);
+
 }

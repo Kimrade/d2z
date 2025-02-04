@@ -28,7 +28,7 @@ public class PageResponseDTO<E> {
 	// 검색 혹은 조회를 할때 list 값으로 리턴이 되는 전체 검색 혹은 조회의 값 이것의 갯수가 total
 	private List<E> dtolist;
 	
-	@Builder(builderMethodName = "")
+	@Builder(builderMethodName = "f1")
 	public PageResponseDTO(PageRequestDTO pageRequestDTO, List<E> dtolist, int total) {
 		this.page = pageRequestDTO.getPage();
 		this.size = pageRequestDTO.getSize();

@@ -1,9 +1,14 @@
 package org.d2z.domain;
 
+import java.time.LocalDateTime;
+
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,6 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Builder
 @Getter
 @ToString
@@ -62,5 +68,11 @@ public class PublicAnnouncement {
 	@ColumnDefault("0")
 	private int ServicePersonnel;
 	
+	@Column(updatable = false)
+	@CreatedDate
+	private LocalDateTime createdDate;
+	
+	@Column(nullable = true)
+	private LocalDateTime deadlineDate;
 	
 }

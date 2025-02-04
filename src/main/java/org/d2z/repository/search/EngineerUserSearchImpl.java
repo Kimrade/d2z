@@ -39,6 +39,8 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		
 		bb.or(engineerUser.isDeleted.eq(0));
 		
+		bb.and(engineerUser.isApproved.eq(1));
+		
 		query.where(bb);
 		
 		this.getQuerydsl().applyPagination(pageable, query);

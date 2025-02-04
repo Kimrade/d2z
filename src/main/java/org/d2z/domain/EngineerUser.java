@@ -48,7 +48,7 @@ public class EngineerUser {
 	
 	// 엔지니어 사용자 경력
 	@Column(nullable = false)
-	private int engineerUserCareer;
+	private double engineerUserCareer;
 	
 	// 엔지니어 사용자 주요 회사
 	@Column(nullable = false)
@@ -62,7 +62,12 @@ public class EngineerUser {
 	@Column(nullable = false)
 	private String engineerUserJob;
 	
+	// 아이디 삭제 유무
 	@ColumnDefault("0")
 	private int isDeleted;
+	
+	// 아이디 승인 유무
+	@ColumnDefault("0")
+	private int isApproved;
 	
 }

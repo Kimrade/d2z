@@ -25,11 +25,15 @@ public class EngineerUserDTO {
 	
 	private String engineerUserTel;
 	
-	private LocalDateTime engineerUserCareer;
+	private double engineerUserCareer;
 	
 	private String engineerUserMajorCompany;
 	
 	private String engineerUserPosition;
 	
 	private String engineerUserJob;
+	
+	private int isDeleted;
+	
+	private int isApproved;
 }
