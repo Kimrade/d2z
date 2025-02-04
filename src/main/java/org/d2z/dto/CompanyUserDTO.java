@@ -27,7 +27,7 @@ public class CompanyUserDTO {
 	
 	private String companyUserFax;
 	
-	private String companyUserEAdd;
+	private String companyUserEmail;
 	
 	private String companyUserSiteAdd;
 	

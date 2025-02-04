@@ -37,9 +37,11 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 					break;
 				}
 			}
-			// where 조건 (검색 조건으로 받아온 값을 저장함)
-			query.where(bb);
 		}
+		bb.or(companyUser.isDeleted.eq(0));
+		
+		// where 조건 (검색 조건으로 받아온 값을 저장함)
+		query.where(bb);
 		
 		this.getQuerydsl().applyPagination(pageable, query);
 		

@@ -1,6 +1,6 @@
 package org.d2z.domain;
 
-import java.time.LocalDateTime;
+import org.hibernate.annotations.ColumnDefault;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,7 +48,7 @@ public class EngineerUser {
 	
 	// 엔지니어 사용자 경력
 	@Column(nullable = false)
-	private LocalDateTime engineerUserCareer;
+	private int engineerUserCareer;
 	
 	// 엔지니어 사용자 주요 회사
 	@Column(nullable = false)
@@ -61,5 +61,8 @@ public class EngineerUser {
 	// 엔지니어 사용자 직업군
 	@Column(nullable = false)
 	private String engineerUserJob;
+	
+	@ColumnDefault("0")
+	private int isDeleted;
 	
 }

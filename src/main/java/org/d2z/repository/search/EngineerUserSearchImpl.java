@@ -35,8 +35,11 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 					break;
 				}
 			}
-			query.where(bb);
 		}
+		
+		bb.or(engineerUser.isDeleted.eq(0));
+		
+		query.where(bb);
 		
 		this.getQuerydsl().applyPagination(pageable, query);
 		

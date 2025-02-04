@@ -1,5 +1,7 @@
 package org.d2z.domain;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -54,7 +56,7 @@ public class CompanyUser {
 	
 	// 사업주 사용자 이메일 주소
 	@Column(nullable = false)
-	private String companyUserEAdd;
+	private String companyUserEmail;
 	
 	// 사업주 업체 웹사이트
 	@Column(nullable = true)
@@ -67,4 +69,7 @@ public class CompanyUser {
 	// 사업주 사용자 연락처(담당자 연락처)
 	@Column(nullable = false)
 	private String companyUserTel;
+	
+	@ColumnDefault("0")
+	private int isDeleted;
 }
