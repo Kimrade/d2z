@@ -31,12 +31,12 @@ public class AdminUserServiceImpl implements AdminUserService{
 	
 	
 	@Override
-	public boolean deleteEngineerUser(EngineerUserDTO engineerUserDTO) {
+	public boolean deleteEngineerUser(int engineerUserNo) {
 		
 		boolean result = false;
 		
-		if(eur.findById(engineerUserDTO.getEngineerUserNo()).isPresent()) {
-			eur.deleteById(engineerUserDTO.getEngineerUserNo());
+		if(eur.findById(engineerUserNo).isPresent()) {
+			eur.deleteById(engineerUserNo);
 			result = true;
 		}
 		
@@ -44,12 +44,12 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 	
 	@Override
-	public boolean deleteCompanyUser(CompanyUserDTO companyUserDTO) {
+	public boolean deleteCompanyUser(int companyUserNo) {
 		
 		boolean result = false;
 		
-		if(cur.findById(companyUserDTO.getCompanyUserNo()).isPresent()) {
-			cur.deleteById(companyUserDTO.getCompanyUserNo());
+		if(cur.findById(companyUserNo).isPresent()) {
+			cur.deleteById(companyUserNo);
 			result = true;
 		}
 		
@@ -57,10 +57,10 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 	
 	@Override
-	public int approveEngineerUser(EngineerUserDTO engineerUserDTO) {
+	public int approveEngineerUser(int engineerUserNo) {
 		
-		if(eur.findById(engineerUserDTO.getEngineerUserNo()).isPresent()){
-			EngineerUser eu = eur.findById(engineerUserDTO.getEngineerUserNo()).orElseThrow();
+		if(eur.findById(engineerUserNo).isPresent()){
+			EngineerUser eu = eur.findById(engineerUserNo).orElseThrow();
 			
 			eur.save(EngineerUser.builder().engineerUserNo(eu.getEngineerUserNo()).engineerUserId(eu.getEngineerUserId())
 					.engineerUserPw(eu.getEngineerUserPw()).engineerUserBirth(eu.getEngineerUserBirth()).engineerUserAdd(eu.getEngineerUserAdd())
@@ -69,15 +69,15 @@ public class AdminUserServiceImpl implements AdminUserService{
 					.isDeleted(eu.getIsDeleted()).build());
 		}
 		
-		return eur.findById(engineerUserDTO.getEngineerUserNo()).orElseThrow().getIsApproved();
+		return eur.findById(engineerUserNo).orElseThrow().getIsApproved();
 	}
 	
 	@Override
-	public int approveCompanyUser(CompanyUserDTO companyUserDTO) {
+	public int approveCompanyUser(int companyUserNo) {
 		
-		if(cur.findById(companyUserDTO.getCompanyUserNo()).isPresent()) {
+		if(cur.findById(companyUserNo).isPresent()) {
 			
-			CompanyUser cu = cur.findById(companyUserDTO.getCompanyUserNo()).orElseThrow();
+			CompanyUser cu = cur.findById(companyUserNo).orElseThrow();
 			
 			cur.save(CompanyUser.builder().companyUserNo(cu.getCompanyUserNo()).companyUserId(cu.getCompanyUserId())
 					.companyUserPw(cu.getCompanyUserPw()).companyNo(cu.getCompanyNo()).companyName(cu.getCompanyName())
@@ -86,14 +86,14 @@ public class AdminUserServiceImpl implements AdminUserService{
 					.companyUserTel(cu.getCompanyUserTel()).isApproved(1).isDeleted(cu.getIsDeleted()).build());
 		}
 		
-		return cur.findById(companyUserDTO.getCompanyUserNo()).orElseThrow().getIsApproved();
+		return cur.findById(companyUserNo).orElseThrow().getIsApproved();
 	}
 	
 	@Override
-	public int pendingEngineerUser(EngineerUserDTO engineerUserDTO) {
+	public int pendingEngineerUser(int engineerUserNo) {
 		
-		if(eur.findById(engineerUserDTO.getEngineerUserNo()).isPresent()){
-			EngineerUser eu = eur.findById(engineerUserDTO.getEngineerUserNo()).orElseThrow();
+		if(eur.findById(engineerUserNo).isPresent()){
+			EngineerUser eu = eur.findById(engineerUserNo).orElseThrow();
 			
 			eur.save(EngineerUser.builder().engineerUserNo(eu.getEngineerUserNo()).engineerUserId(eu.getEngineerUserId())
 					.engineerUserPw(eu.getEngineerUserPw()).engineerUserBirth(eu.getEngineerUserBirth()).engineerUserAdd(eu.getEngineerUserAdd())
@@ -102,15 +102,15 @@ public class AdminUserServiceImpl implements AdminUserService{
 					.isDeleted(eu.getIsDeleted()).build());
 		}
 		
-		return eur.findById(engineerUserDTO.getEngineerUserNo()).orElseThrow().getIsApproved();
+		return eur.findById(engineerUserNo).orElseThrow().getIsApproved();
 	}
 	
 	@Override
-	public int pendingCompanyUser(CompanyUserDTO companyUserDTO) {
+	public int pendingCompanyUser(int companyUserNo) {
 		
-		if(cur.findById(companyUserDTO.getCompanyUserNo()).isPresent()) {
+		if(cur.findById(companyUserNo).isPresent()) {
 			
-			CompanyUser cu = cur.findById(companyUserDTO.getCompanyUserNo()).orElseThrow();
+			CompanyUser cu = cur.findById(companyUserNo).orElseThrow();
 			
 			cur.save(CompanyUser.builder().companyUserNo(cu.getCompanyUserNo()).companyUserId(cu.getCompanyUserId())
 					.companyUserPw(cu.getCompanyUserPw()).companyNo(cu.getCompanyNo()).companyName(cu.getCompanyName())
@@ -119,14 +119,14 @@ public class AdminUserServiceImpl implements AdminUserService{
 					.companyUserTel(cu.getCompanyUserTel()).isApproved(0).isDeleted(cu.getIsDeleted()).build());
 		}
 		
-		return cur.findById(companyUserDTO.getCompanyUserNo()).orElseThrow().getIsApproved();
+		return cur.findById(companyUserNo).orElseThrow().getIsApproved();
 	}
 	
 	@Override
-	public int disApprovedEngineerUser(EngineerUserDTO engineerUserDTO) {
+	public int disApprovedEngineerUser(int engineerUserNo) {
 		
-		if(eur.findById(engineerUserDTO.getEngineerUserNo()).isPresent()){
-			EngineerUser eu = eur.findById(engineerUserDTO.getEngineerUserNo()).orElseThrow();
+		if(eur.findById(engineerUserNo).isPresent()){
+			EngineerUser eu = eur.findById(engineerUserNo).orElseThrow();
 			
 			eur.save(EngineerUser.builder().engineerUserNo(eu.getEngineerUserNo()).engineerUserId(eu.getEngineerUserId())
 					.engineerUserPw(eu.getEngineerUserPw()).engineerUserBirth(eu.getEngineerUserBirth()).engineerUserAdd(eu.getEngineerUserAdd())
@@ -135,15 +135,15 @@ public class AdminUserServiceImpl implements AdminUserService{
 					.isDeleted(eu.getIsDeleted()).build());
 		}
 		
-		return eur.findById(engineerUserDTO.getEngineerUserNo()).orElseThrow().getIsApproved();
+		return eur.findById(engineerUserNo).orElseThrow().getIsApproved();
 	}
 	
 	@Override
-	public int disApprovedCompanyUser(CompanyUserDTO companyUserDTO) {
+	public int disApprovedCompanyUser(int companyUserNo) {
 		
-		if(cur.findById(companyUserDTO.getCompanyUserNo()).isPresent()) {
+		if(cur.findById(companyUserNo).isPresent()) {
 			
-			CompanyUser cu = cur.findById(companyUserDTO.getCompanyUserNo()).orElseThrow();
+			CompanyUser cu = cur.findById(companyUserNo).orElseThrow();
 			
 			cur.save(CompanyUser.builder().companyUserNo(cu.getCompanyUserNo()).companyUserId(cu.getCompanyUserId())
 					.companyUserPw(cu.getCompanyUserPw()).companyNo(cu.getCompanyNo()).companyName(cu.getCompanyName())
@@ -152,16 +152,16 @@ public class AdminUserServiceImpl implements AdminUserService{
 					.companyUserTel(cu.getCompanyUserTel()).isApproved(-1).isDeleted(cu.getIsDeleted()).build());
 		}
 		
-		return cur.findById(companyUserDTO.getCompanyUserNo()).orElseThrow().getIsApproved();
+		return cur.findById(companyUserNo).orElseThrow().getIsApproved();
 	}
 	
 	@Override
-	public boolean deletePublicAnnouncement(PublicAnnouncementDTO publicAnnouncementDTO) {
+	public boolean deletePublicAnnouncement(int announcementNo) {
 		
 		boolean result = false;
 		
-		if(par.findById(publicAnnouncementDTO.getAnnouncementNo()).isPresent()) {
-			par.deleteById(publicAnnouncementDTO.getAnnouncementNo());
+		if(par.findById(announcementNo).isPresent()) {
+			par.deleteById(announcementNo);
 			result = true;
 		}
 		

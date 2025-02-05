@@ -9,9 +9,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -68,11 +70,17 @@ public class PublicAnnouncement {
 	@ColumnDefault("0")
 	private int ServicePersonnel;
 	
+	// 공고 생성 날짜
 	@Column(updatable = false)
 	@CreatedDate
 	private LocalDateTime createdDate;
 	
+	// 공고 마감 날짜
 	@Column(nullable = true)
 	private LocalDateTime deadlineDate;
+	
+	// 조인 - 사업주의 정보를 가져와야하기에
+	@ManyToOne(fetch = FetchType.LAZY)
+	private CompanyUser companyUser;
 	
 }

@@ -43,7 +43,12 @@ public class PublicAnnouncementDTO {
 	// 모집 인원
 	private int ServicePersonnel;
 	
+	// 공고 생성 날짜
 	private LocalDateTime createdDate;
 	
+	// 공고 마감 날짜
 	private LocalDateTime deadlineDate;
+	
+	// 조인 - 사업주의 정보
+	private int companyUserNo;
 }

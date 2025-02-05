@@ -29,7 +29,7 @@ public class CompanyUserDTO {
 	
 	private String companyUserEmail;
 	
-	private String companyUserSiteAdd;
+	private String companySiteAdd;
 	
 	private String companyUserName;
 	
