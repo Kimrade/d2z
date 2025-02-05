@@ -55,6 +55,76 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 		return result;
 	}
 
+	@Override
+	public Page<CompanyUser> companyUserDisapprovecSearchByKeyword(String[] types, String keyword, Pageable pageable) {
+		QCompanyUser companyUser = QCompanyUser.companyUser;
+		
+		// select * from CompanyUser;
+		JPQLQuery<CompanyUser> query = from(companyUser);
+		
+		BooleanBuilder bb = new BooleanBuilder();
+		
+		if((types != null && types.length > 0) && keyword != null) {
+			for(String type : types) {
+				switch(type) {
+					case "":
+						
+					break;
+				}
+			}
+		}
+		bb.or(companyUser.isDeleted.eq(0));
+		
+		bb.and(companyUser.isApproved.eq(-1));
+		
+		// where 조건 (검색 조건으로 받아온 값을 저장함)
+		query.where(bb);
+		
+		this.getQuerydsl().applyPagination(pageable, query);
+		
+		List<CompanyUser> list = query.fetch();
+		Long count = query.fetchCount();
+		
+		Page<CompanyUser> result = new PageImpl<>(list,pageable,count);
+		
+		return result;
+	}
+
+	@Override
+	public Page<CompanyUser> companyUserPendingSearchByKeyword(String[] types, String keyword, Pageable pageable) {
+		QCompanyUser companyUser = QCompanyUser.companyUser;
+		
+		// select * from CompanyUser;
+		JPQLQuery<CompanyUser> query = from(companyUser);
+		
+		BooleanBuilder bb = new BooleanBuilder();
+		
+		if((types != null && types.length > 0) && keyword != null) {
+			for(String type : types) {
+				switch(type) {
+					case "":
+						
+					break;
+				}
+			}
+		}
+		bb.or(companyUser.isDeleted.eq(0));
+		
+		bb.and(companyUser.isApproved.eq(0));
+		
+		// where 조건 (검색 조건으로 받아온 값을 저장함)
+		query.where(bb);
+		
+		this.getQuerydsl().applyPagination(pageable, query);
+		
+		List<CompanyUser> list = query.fetch();
+		Long count = query.fetchCount();
+		
+		Page<CompanyUser> result = new PageImpl<>(list,pageable,count);
+		
+		return result;
+	}
+
 	
 
 }

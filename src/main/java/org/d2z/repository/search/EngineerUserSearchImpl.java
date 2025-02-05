@@ -53,6 +53,74 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		return result;
 	}
 
+	@Override
+	public Page<EngineerUser> EngineerUserDisapprovedSearchByKeyword(String[] types, String keyword, Pageable pageable) {
+		QEngineerUser engineerUser = QEngineerUser.engineerUser;
+		
+		JPQLQuery<EngineerUser> query = from(engineerUser);
+		
+		BooleanBuilder bb = new BooleanBuilder();
+		
+		if((types != null && types.length > 0) && keyword != null) {
+			for(String type : types) {
+				switch(type) {
+					case "":
+						
+					break;
+				}
+			}
+		}
+		
+		bb.or(engineerUser.isDeleted.eq(0));
+		
+		bb.and(engineerUser.isApproved.eq(-1));
+		
+		query.where(bb);
+		
+		this.getQuerydsl().applyPagination(pageable, query);
+		
+		List<EngineerUser> list = query.fetch();
+		Long count = query.fetchCount();
+		
+		Page<EngineerUser> result = new PageImpl<>(list, pageable, count);
+		
+		return result;
+	}
+
+	@Override
+	public Page<EngineerUser> EngineerUserPendingSearchByKeyword(String[] types, String keyword, Pageable pageable) {
+		QEngineerUser engineerUser = QEngineerUser.engineerUser;
+		
+		JPQLQuery<EngineerUser> query = from(engineerUser);
+		
+		BooleanBuilder bb = new BooleanBuilder();
+		
+		if((types != null && types.length > 0) && keyword != null) {
+			for(String type : types) {
+				switch(type) {
+					case "":
+						
+					break;
+				}
+			}
+		}
+		
+		bb.or(engineerUser.isDeleted.eq(0));
+		
+		bb.and(engineerUser.isApproved.eq(0));
+		
+		query.where(bb);
+		
+		this.getQuerydsl().applyPagination(pageable, query);
+		
+		List<EngineerUser> list = query.fetch();
+		Long count = query.fetchCount();
+		
+		Page<EngineerUser> result = new PageImpl<>(list, pageable, count);
+		
+		return result;
+	}
+
 	
 
 }

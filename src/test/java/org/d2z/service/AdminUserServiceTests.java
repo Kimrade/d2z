@@ -1,6 +1,7 @@
 package org.d2z.service;
 
 import org.d2z.dto.AdminUserDTO;
+import org.d2z.dto.PageRequestDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,17 +42,17 @@ public class AdminUserServiceTests {
 	
 	@Test
 	public void pendingCompanyTest() {
-		aus.pendingCompanyUser(2);
+		aus.pendingCompanyUser(5);
 	}
 	
 	@Test
 	public void disapproveEngineerTest() {
-		aus.disApprovedEngineerUser(3);
+		aus.disApprovedEngineerUser(7);
 	}
 	
 	@Test
 	public void disapproveCompanyTest() {
-		aus.disApprovedCompanyUser(2);
+		aus.disApprovedCompanyUser(4);
 	}
 	
 	@Test
@@ -77,4 +78,23 @@ public class AdminUserServiceTests {
 		aus.deleteAdminUser(6);
 	}
 	
+	@Test
+	public void searchCompanyUserDisapprvedTest() {
+		aus.searchDisApprovedCompanyUserByKeyword(PageRequestDTO.builder().keyword("").build()).getDtolist().forEach(x -> log.info("확인용 : "+x));
+	}
+	
+	@Test
+	public void searchCompanyUserPendingTest() {
+		aus.searchPendingCompanyUserByKeyword(PageRequestDTO.builder().build()).getDtolist().forEach(x -> log.info("확인용 : "+x));
+	}
+	
+	@Test
+	public void searchEngineerUserDisapprovedTest() {
+		aus.searchDisApprovedEngineerUserByKeyword(PageRequestDTO.builder().build()).getDtolist().forEach(x -> log.info("확인용 : "+x));
+	}
+	
+	@Test
+	public void searchEngineerUserPendingTest() {
+		aus.searchPendingEngineerUserByKeyword(PageRequestDTO.builder().build()).getDtolist().forEach(x -> log.info("확인용 : "+x));
+	}
 }

@@ -3,7 +3,10 @@ package org.d2z.service;
 import org.d2z.dto.AdminUserDTO;
 import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.EngineerUserDTO;
+import org.d2z.dto.PageRequestDTO;
+import org.d2z.dto.PageResponseDTO;
 import org.d2z.dto.PublicAnnouncementDTO;
+import org.springframework.data.domain.Page;
 
 public interface AdminUserService {
 	
@@ -30,6 +33,18 @@ public interface AdminUserService {
 	
 	// 관리자의 사업주 사용자 id 승인 x
 	public int disApprovedCompanyUser(int companyUserNo);
+	
+	// 관리자의 사업주 미숭인 사용자 조회 (검색 및 페이지 처리)
+	public PageResponseDTO<CompanyUserDTO> searchDisApprovedCompanyUserByKeyword(PageRequestDTO pageRequestDTO);
+	
+	// 관리자의 사업주 보류 사용자 조회 (검색 및 페이지 처리)
+	public PageResponseDTO<CompanyUserDTO> searchPendingCompanyUserByKeyword(PageRequestDTO pageRequestDTO);
+	
+	// 관리자의 엔지니어 미승인 사용자 조회 (검색 및 페이지 처리)
+	public PageResponseDTO<EngineerUserDTO> searchDisApprovedEngineerUserByKeyword(PageRequestDTO pageRequestDTO);
+	
+	// 관리자의 엔지니어 보류 사용자 조회 (검색 및 페이지 처리)
+	public PageResponseDTO<EngineerUserDTO> searchPendingEngineerUserByKeyword(PageRequestDTO pageRequestDTO);
 	
 	// 관리자의 게시글 삭제
 	public boolean deletePublicAnnouncement(int announcementNo);
