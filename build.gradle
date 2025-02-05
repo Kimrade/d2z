@@ -46,6 +46,8 @@ dependencies {
 	
 	implementation group: 'com.google.zxing', name: 'javase', version: '3.5.0'
 	implementation group: 'com.google.zxing', name: 'core', version: '3.5.0'
+	
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
 	annotationProcessor(
             "jakarta.persistence:jakarta.persistence-api",
