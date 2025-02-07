@@ -1,7 +1,5 @@
 package org.d2z.dto;
 
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ChatRoomDTO {
 	
-	private String roomId;
+	private Long roomNo;
 	
-	private LocalDateTime createdDate;
+	private String engineerUserId;
+	
+	private String companyUserId;
+
 	
 }

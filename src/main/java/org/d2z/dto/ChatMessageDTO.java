@@ -9,15 +9,20 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ChatMessageDTO {
 	
-	private Long id;
-	private String sender;
-	private String message;
-	private LocalDateTime createdDate;
+	private Long messageNo;
 	
-	private String roomId;
+	private String sender;
+	
+	private String messageContent;
+	
+	private LocalDateTime createdTime;
+	
+	private Long roomNo;
+	
+	
 	
 }
