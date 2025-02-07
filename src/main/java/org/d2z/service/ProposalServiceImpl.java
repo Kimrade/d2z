@@ -1,5 +1,8 @@
 package org.d2z.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.d2z.domain.Proposal;
 import org.d2z.dto.ProposalDTO;
 import org.d2z.repository.ProposalRepository;
@@ -25,7 +28,7 @@ public class ProposalServiceImpl implements ProposalService {
 
 
 	@Override
-	public boolean sendProposal(int proposalNo) {
+	public boolean deleteProposal(int proposalNo) {
 		
 		boolean result = false;
 		
@@ -35,6 +38,13 @@ public class ProposalServiceImpl implements ProposalService {
 		}
 		
 		return result;
+	}
+
+
+	@Override
+	public List<ProposalDTO> listProposalByAnnouncementNo(int announcementNo) {
+		
+		return pr.findByAnnouncementNo(announcementNo).stream().map(x -> modelMapper.map(x, ProposalDTO.class)).collect(Collectors.toList());
 	}
 
 }

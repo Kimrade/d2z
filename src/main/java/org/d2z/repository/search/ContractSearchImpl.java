@@ -45,4 +45,22 @@ public class ContractSearchImpl extends QuerydslRepositorySupport implements Con
 		return list;
 	}
 
+	@Override
+	public List<Contract> searchByName(String contractName) {
+		
+		QContract contract = QContract.contract;
+		
+		JPQLQuery<Contract> query = from(contract);
+		
+		if(contractName != null && contractName.length() > 0) {
+			query.where(contract.contractName.contains(contractName));
+		}
+		
+		List<Contract> list = query.fetch();
+		
+		return list;
+	}
+	
+	
+
 }

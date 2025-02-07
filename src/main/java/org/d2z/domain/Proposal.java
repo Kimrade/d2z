@@ -46,4 +46,16 @@ public class Proposal {
 	private PublicAnnouncement publicAnnouncement;
 	
 	
+	 public Proposal withProposalEng(EngineerUser engineerUser) {
+        this.engineerUser = engineerUser;
+        return this;
+    }
+	
+	public Proposal withProposalAnn(PublicAnnouncement publicAnnouncement) {
+        this.publicAnnouncement = publicAnnouncement;
+		return this;
+    }
+
+	
+	
 }

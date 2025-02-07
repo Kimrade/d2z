@@ -34,6 +34,9 @@ public class Contract {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int contractNo;
 	
+	// 사업명
+	private String contractName;
+	
 	// 사업 명세 처리 과정 - (5가지 정도로 처리 나눌 예정)
 	@ColumnDefault("0")
 	private int processingTask;
@@ -54,6 +57,16 @@ public class Contract {
 	// 사업주 사용자의 정보 - 조인용
 	@ManyToOne
 	private CompanyUser companyUser;
+	
+	public Contract withContractEng(EngineerUser engineerUser) {
+		this.engineerUser = engineerUser;
+		return this;
+	}
+	
+	public Contract withContractCom(CompanyUser companyUser) {
+		this.companyUser = companyUser;
+		return this;
+	}
 	
 	
 }

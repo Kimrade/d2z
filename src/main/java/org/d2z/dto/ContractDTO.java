@@ -15,6 +15,8 @@ public class ContractDTO {
 	
 	private int contractNo;
 	
+	private String contractName;
+	
 	private int processingTask;
 	
 	private LocalDateTime createdDate;

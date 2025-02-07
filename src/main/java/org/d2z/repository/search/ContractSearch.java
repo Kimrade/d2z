@@ -12,5 +12,6 @@ public interface ContractSearch {
 	// 엔지니어 정보를 통해 조회가 가능
 	public List<Contract> searchByEngineerUserNo(int engineerUserNo);
 	
-	
+	// 사업명으로 사업정보를 조회가 가능
+	public List<Contract> searchByName(String contractName);
 }

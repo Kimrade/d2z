@@ -21,7 +21,7 @@ import lombok.ToString;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Builder(toBuilder = true)
+@Builder
 @ToString
 @Getter
 @NoArgsConstructor
@@ -45,9 +45,8 @@ public class ChatMessage {
 	
 	
 	public ChatMessage withChatRoom(ChatRoom chatRoom) {
-        return this.toBuilder()
-                .chatRoom(chatRoom)
-                .build();
+        this.chatRoom = chatRoom;
+		return this;
     }
 	
 	
