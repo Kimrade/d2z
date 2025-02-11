@@ -1,13 +1,17 @@
 package org.d2z.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.d2z.domain.CompanyUser;
+import org.d2z.domain.Login;
 import org.d2z.dto.CompanyUserDTO;
+import org.d2z.dto.LoginDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PageResponseDTO;
 import org.d2z.repository.CompanyUserRepository;
+import org.d2z.repository.LoginRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -21,62 +25,37 @@ import lombok.extern.log4j.Log4j2;
 public class CompanyUserServiceImpl implements CompanyUserService {
 	
 	private final ModelMapper modelMapper;
+	private final LoginRepository lr;
 	private final CompanyUserRepository cur;
 	
 	
 	@Override
-	public boolean companyUserInfoInsert(CompanyUserDTO companyUserDTO) {
+	public boolean companyUserInfoInsert(LoginDTO loginDTO, CompanyUserDTO companyUserDTO) {
 		
 		boolean result = false;
 		
-		if(cur.findById(companyUserDTO.getCompanyUserNo()).isEmpty()) {
-			cur.save(modelMapper.map(companyUserDTO, CompanyUser.class));
-			result = true;
-		}
-		
-		return result;
-	}
-
-	@Override
-	public boolean companyUserInfoModify(CompanyUserDTO companyUserDTO) {
-		
-		boolean result = false;
-		
-		if(cur.findById(companyUserDTO.getCompanyUserNo()).isPresent()) {
-			cur.save(modelMapper.map(companyUserDTO, CompanyUser.class));
-			result = true;
-		}
-		
-		return result;
-	}
-
-	@Override
-	public boolean companyUserInfoDelete(int companyUserNo) {
-		
-		boolean result = false;
-		
-		if(cur.findById(companyUserNo).isPresent()) {
-			cur.deleteById(companyUserNo);
-			result = true;
-		}
-		
-		return result;
-	}
-
-	@Override
-	public boolean companyUserInfoCheckDeleted(int companyUserNo) {
-		
-		boolean result = false;
-		
-		if(cur.findById(companyUserNo).isPresent()) {
+		if(lr.findById(loginDTO.getId()).isEmpty()) {
 			
-			CompanyUser cu = cur.findById(companyUserNo).orElseThrow();
+			Login login = 
+					Login.builder().userDiv(loginDTO.getUserDiv())
+						.id(loginDTO.getId())
+						.pw(loginDTO.getPw())
+						.build();
 			
-			cur.save(CompanyUser.builder().companyUserNo(cu.getCompanyUserNo()).companyUserId(cu.getCompanyUserId())
-					.companyUserPw(cu.getCompanyUserPw()).companyNo(cu.getCompanyNo()).companyName(cu.getCompanyName())
-					.companyAdd(cu.getCompanyAdd()).companyTel(cu.getCompanyTel()).companyUserFax(cu.getCompanyUserFax())
-					.companyUserEmail(cu.getCompanyUserEmail()).companySiteAdd(cu.getCompanySiteAdd()).companyUserName(cu.getCompanyUserName())
-					.companyUserTel(cu.getCompanyUserTel()).isApproved(cu.getIsApproved()).isDeleted(1).build());
+			lr.save(login);
+			
+			cur.save(CompanyUser.builder()
+						.companyUserEmail(companyUserDTO.getCompanyUserEmail())
+						.companyNo(companyUserDTO.getCompanyNo())
+						.companyName(companyUserDTO.getCompanyName())
+						.companyAdd(companyUserDTO.getCompanyAdd())
+						.companyTel(companyUserDTO.getCompanyTel())
+						.companyUserFax(companyUserDTO.getCompanyUserFax())
+						.companySiteAdd(companyUserDTO.getCompanySiteAdd())
+						.companyUserName(companyUserDTO.getCompanyUserName())
+						.companyUserTel(companyUserDTO.getCompanyUserTel())
+						.login(login)
+						.build());
 			
 			result = true;
 		}
@@ -85,10 +64,104 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 	}
 
 	@Override
-	public CompanyUserDTO companyUserInfo(int companyUserNo) {
+	public boolean companyUserInfoModify(LoginDTO loginDTO, CompanyUserDTO companyUserDTO) {
 		
-		if(cur.findById(companyUserNo).isPresent()) {
-			return modelMapper.map(cur.findById(companyUserNo).orElseThrow(), CompanyUserDTO.class);
+		boolean result = false;
+		
+		if(lr.findById(loginDTO.getId()).isPresent()) {
+			
+			Login login = lr.findById(loginDTO.getId()).orElseThrow();
+			
+			login = login.toBuilder()
+						.pw(loginDTO.getPw())
+						.build();
+			
+			lr.save(login);
+			
+			if(cur.findById(login.getCompanyUser().getCompanyUserNo()).isPresent()) {
+				CompanyUser companyUser = cur.findById(login.getCompanyUser().getCompanyUserNo()).orElseThrow();
+
+				companyUser = companyUser.toBuilder()
+						.companyUserEmail(companyUserDTO.getCompanyUserEmail())
+						.companyNo(companyUserDTO.getCompanyNo())
+						.companyName(companyUserDTO.getCompanyName())
+						.companyAdd(companyUserDTO.getCompanyAdd())
+						.companyTel(companyUserDTO.getCompanyTel())
+						.companyUserFax(companyUserDTO.getCompanyUserFax())
+						.companySiteAdd(companyUserDTO.getCompanySiteAdd())
+						.companyUserName(companyUserDTO.getCompanyUserName())
+						.companyUserTel(companyUserDTO.getCompanyUserTel())
+						.isDeleted(companyUserDTO.getIsDeleted())
+						.isApproved(companyUserDTO.getIsApproved())
+						.login(login)
+						.build();
+				
+				cur.save(companyUser);
+				
+				result = true;
+			}	
+		}
+		
+		return result;
+	}
+
+	@Override
+	public boolean companyUserInfoDelete(String id) {
+		
+		boolean result = false;
+		
+		if(lr.findById(id).isPresent()) {
+			
+			lr.deleteById(lr.findById(id).orElseThrow().getUserNo());
+			
+			result = true;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public boolean companyUserInfoCheckDeleted(String id) {
+		
+		boolean result = false;
+		
+		if(lr.findById(id).isPresent()) {
+			
+			Optional<CompanyUser> companyUser = cur.findByLoginId(id);
+			
+			cur.save(companyUser.map(x -> x.toBuilder().isDeleted(1).build()).orElseThrow());
+			
+			result = true;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public CompanyUserDTO companyUserInfo(String id) {
+		
+		if(cur.findByLoginId(id).isPresent()) {
+			CompanyUser companyUser = cur.findByLoginId(id).orElseThrow();
+			Login login = lr.findById(id).orElseThrow();
+			
+			return CompanyUserDTO.builder()
+					.companyUserNo(companyUser.getCompanyUserNo())
+					.companyUserEmail(companyUser.getCompanyUserEmail())
+					.companyNo(companyUser.getCompanyNo())
+					.companyName(companyUser.getCompanyName())
+					.companyAdd(companyUser.getCompanyAdd())
+					.companyTel(companyUser.getCompanyTel())
+					.companyUserFax(companyUser.getCompanyUserFax())
+					.companySiteAdd(companyUser.getCompanySiteAdd())
+					.companyUserName(companyUser.getCompanyUserName())
+					.companyUserTel(companyUser.getCompanyUserTel())
+					.isDeleted(companyUser.getIsDeleted())
+					.isApproved(companyUser.getIsApproved())
+					.id(id)
+					.pw(login.getPw())
+					.userNo(login.getUserNo())
+					.userDiv(login.getUserDiv())
+					.build();
 		}
 		
 		return null;

@@ -6,16 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompanyUserDTO {
 	
 	private int companyUserNo;
 	
-	private String companyUserId;
-	
-	private String companyUserPw;
+	private String companyUserEmail;
 	
 	private String companyNo;
 	
@@ -27,16 +25,25 @@ public class CompanyUserDTO {
 	
 	private String companyUserFax;
 	
-	private String companyUserEmail;
-	
 	private String companySiteAdd;
 	
 	private String companyUserName;
 	
 	private String companyUserTel;
 	
+	private String companyInfo;
+	
+	private String companyNote;
+	
 	private int isDeleted;
 	
 	private int isApproved;
 	
+	private int userNo;
+	
+	private String id;
+	
+	private int userDiv;
+	
+	private String pw;
 }

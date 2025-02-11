@@ -1,6 +1,7 @@
 package org.d2z.service;
 
 import org.d2z.dto.EngineerUserDTO;
+import org.d2z.dto.LoginDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,28 +18,52 @@ public class EngineerUserServiceTests {
 	
 //	@Test
 //	public void infoInsertTest() {
-//		eus.engineerUserInfoInsert(EngineerUserDTO.builder().engineerUserId("aaa").engineerUserPw("bbb")
-//				.engineerUserBirth("19600903").engineerUserAdd("춘천시 동두천길 앙주시").engineerUserTel("010-1234-4567")
-//				.engineerUserCareer(2.5).engineerUserMajorCompany("1111111산업").engineerUserPosition("xlawkda팀장")
-//				.engineerUserJob("주조").build());
+//		
+//		LoginDTO login = LoginDTO.builder().id("aaa").pw("bbb").userDiv(1).build();
+//		
+//		EngineerUserDTO engineerUser = EngineerUserDTO.builder().engineerUserAdd("춘천시 동두천길 앙주시").engineerUserTel("010-1234-4567")
+//		.engineerUserCareer(2.5).engineerUserMajorCompany("1111111산업").engineerUserPosition("xlawkda팀장")
+//		.engineerUserJob("주조").engineerUserEmail("a@naver.com").build();
+//		
+//		
+//		eus.engineerUserInfoInsert(login, engineerUser);
 //	}
 //	
 //	@Test
 //	public void infoManyInsertTest() {
 //		for(int i=0;i<100;i++) {
-//			eus.engineerUserInfoInsert(EngineerUserDTO.builder().engineerUserId("a"+i).engineerUserPw("b"+i)
-//					.engineerUserBirth("196009"+i).engineerUserAdd("춘천시 동두천길 앙주시 "+i).engineerUserTel("010-1234-45"+i)
-//					.engineerUserCareer(i).engineerUserMajorCompany("132412산업"+i).engineerUserPosition("xlawkda팀장"+i)
-//					.engineerUserJob("주조"+i).build());
+//			
+//			LoginDTO login = LoginDTO.builder().id("a"+i).pw("b"+i).userDiv(1).build();
+//			
+//			EngineerUserDTO engineerUser = EngineerUserDTO.builder().engineerUserAdd("춘천시 동두천길 앙주시"+i).engineerUserTel("010-1234-4567"+i)
+//			.engineerUserCareer(2.5+i).engineerUserMajorCompany("1111111산업"+i).engineerUserPosition("xlawkda팀장"+i)
+//			.engineerUserJob("주조"+i).engineerUserEmail("a"+i+"@naver.com").build();
+//			
+//			
+//			eus.engineerUserInfoInsert(login, engineerUser);
+//			
 //		}
 //	}
 //	
 //	@Test
 //	public void infoModifyTest() {
-//		eus.engineerUserInfoModify(EngineerUserDTO.builder().engineerUserNo(2).engineerUserId("a").engineerUserPw("b")
-//				.engineerUserBirth("196009").engineerUserAdd("춘천시 동두천길 앙주시 ").engineerUserTel("010-1234-45")
-//				.engineerUserCareer(2).engineerUserMajorCompany("132412산업").engineerUserPosition("xlawkda팀장")
-//				.engineerUserJob("주조").build());
+//		LoginDTO login = LoginDTO.builder()
+//				.id("a2")
+//				.pw("bccdef")
+//				.build();
+//		
+//		EngineerUserDTO engineerUser = EngineerUserDTO.builder()
+//				.engineerUserNo(4)
+//				.engineerUserAdd("춘천시 동두천길 앙주시asd123")
+//				.engineerUserTel("010-1234-4567213")
+//				.engineerUserCareer(2.5)
+//				.engineerUserMajorCompany("1111111333산업")
+//				.engineerUserPosition("xlawkdasdaq12a팀장")
+//				.engineerUserJob("주23조")
+//				.engineerUserEmail("a4444@naver.com")
+//				.build();
+//		
+//		eus.engineerUserInfoModify(login, engineerUser);
 //	}
 //	
 //	@Test
@@ -51,17 +76,17 @@ public class EngineerUserServiceTests {
 //	
 //	@Test 
 //	public void infoDeleteTest() {
-//		log.info( "결과 : "+eus.engineerUserInfoDelete(2));
+//		log.info( "결과 : "+eus.engineerUserInfoDelete("a2"));
 //	}
 //	
 //	@Test
 //	public void infoCheckDeletedTest() {
-//		log.info(eus.engineerUserInfoCheckDeleted(3));
+//		log.info(eus.engineerUserInfoCheckDeleted("a3"));
 //	}
 //	
 //	@Test
 //	public void infoReadOne() {
-//		log.info("결과 : "+eus.engineerUserInfo(3));
+//		log.info("결과 : "+eus.engineerUserInfo("a4"));
 //	}
 //	
 //	@Test

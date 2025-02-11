@@ -1,6 +1,7 @@
 package org.d2z.service;
 
 import org.d2z.dto.AdminUserDTO;
+import org.d2z.dto.LoginDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,66 +17,59 @@ public class AdminUserServiceTests {
 	private AdminUserService aus;
 	
 //	@Test
-//	public void deleteEngineerUserTest() {
-//		aus.deleteEngineerUser(2);
+//	public void approveTest() {
+//		aus.approveUser("a0");
+//	}
+//
+//	@Test
+//	public void pendingTest() {
+//		aus.pendingUser("a0");
 //	}
 //	
 //	@Test
-//	public void deleteCompanyUser() {
-//		aus.deleteCompanyUser(3);
+//	public void disapproveTest() {
+//		aus.disApprovedUser("a0");
 //	}
 //	
-//	@Test
-//	public void approveEngineerTest() {
-//		aus.approveEngineerUser(3);
-//	}
-//	
-//	@Test
-//	public void approveCompanyTest() {
-//		aus.approveCompanyUser(2);
-//	}
-//	
-//	@Test
-//	public void pendingEngineerTest() {
-//		aus.pendingEngineerUser(3);
-//	}
-//	
-//	@Test
-//	public void pendingCompanyTest() {
-//		aus.pendingCompanyUser(5);
-//	}
-//	
-//	@Test
-//	public void disapproveEngineerTest() {
-//		aus.disApprovedEngineerUser(7);
-//	}
-//	
-//	@Test
-//	public void disapproveCompanyTest() {
-//		aus.disApprovedCompanyUser(4);
-//	}
 //	
 //	@Test
 //	public void deletePublicTest() {
-//		aus.deletePublicAnnouncement(2);
+//		aus.deletePublicAnnouncement(5);
 //	}
 //	
 //	@Test
 //	public void insertAdminUser() {
-//		aus.insertAdminUser(AdminUserDTO.builder().adminUserId("aaa").adminUserPw("bbb").adminUserName("홍길동")
-//				.adminUserTel("010-1234-5678").build());
+//		
+//		LoginDTO login = LoginDTO.builder().id("admin2123").pw("1234").userDiv(0).build();
+//		
+//		AdminUserDTO admin1 = AdminUserDTO.builder().adminUserName("홍길동ㅁㄴㅇㅁㄴㅇ")
+//							.adminUserTel("010-1234-5678")
+//							.build();
+//		
+//		
+//		aus.insertAdminUser(login,admin1);
 //		
 //	}
 //	
 //	@Test
 //	public void modifyAdminTest() {
-//		aus.modifyAdminUser(AdminUserDTO.builder().adminUserNo(6).adminUserId("aaa").adminUserPw("bbb123").adminUserName("홍길동")
-//				.adminUserTel("010-1234-5678").build());
+//		
+//		LoginDTO login = LoginDTO.builder()
+//							.id("admin1")
+//							.pw("9012")
+//							.build();
+//				
+//		AdminUserDTO admin = AdminUserDTO.builder()
+//							.adminUserName("홍길동23")
+//							.adminUserTel("001011545481241")
+//							.build();
+//		
+//		aus.modifyAdminUser(login,admin);
 //	}
 //	
 //	@Test
 //	public void deleteAdminTest() {
-//		aus.deleteAdminUser(6);
+//		aus.deleteUser("admin2123");
 //	}
 //	
 //	@Test

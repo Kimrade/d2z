@@ -1,20 +1,24 @@
 package org.d2z.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.d2z.domain.AdminUser;
 import org.d2z.domain.CompanyUser;
 import org.d2z.domain.EngineerUser;
+import org.d2z.domain.Login;
 import org.d2z.dto.AdminUserDTO;
 import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.EngineerUserDTO;
+import org.d2z.dto.LoginDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PageResponseDTO;
 import org.d2z.dto.PublicAnnouncementDTO;
 import org.d2z.repository.AdminUserRepository;
 import org.d2z.repository.CompanyUserRepository;
 import org.d2z.repository.EngineerUserRepository;
+import org.d2z.repository.LoginRepository;
 import org.d2z.repository.PublicAnnouncementRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -33,16 +37,17 @@ public class AdminUserServiceImpl implements AdminUserService{
 	private final CompanyUserRepository cur;
 	private final PublicAnnouncementRepository par;
 	private final AdminUserRepository aur;
+	private final LoginRepository lr;
 	
 	
 	
 	@Override
-	public boolean deleteEngineerUser(int engineerUserNo) {
+	public boolean deleteUser(String id) {
 		
 		boolean result = false;
 		
-		if(eur.findById(engineerUserNo).isPresent()) {
-			eur.deleteById(engineerUserNo);
+		if(lr.findById(id).isPresent()) {
+			lr.deleteById(lr.findById(id).orElseThrow().getUserNo());
 			result = true;
 		}
 		
@@ -50,115 +55,84 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 	
 	@Override
-	public boolean deleteCompanyUser(int companyUserNo) {
+	public int approveUser(String id) {
 		
-		boolean result = false;
+		int result = 0;
 		
-		if(cur.findById(companyUserNo).isPresent()) {
-			cur.deleteById(companyUserNo);
-			result = true;
+		if(lr.findById(id).isPresent()){
+			if(lr.findById(id).orElseThrow().getUserDiv() == 1) {
+				
+				Optional<EngineerUser> eu = eur.findByLoginId(id);
+				
+				eur.save(eu.map(x -> x.toBuilder().isApproved(1).build()).orElseThrow());
+				
+				result = 1;
+				
+			}else if(lr.findById(id).orElseThrow().getUserDiv() == 2) {
+				
+				Optional<CompanyUser> cu = cur.findByLoginId(id);
+				
+				cur.save(cu.map(x -> x.toBuilder().isApproved(1).build()).orElseThrow());
+				
+				result = 1;
+			}
 		}
 		
 		return result;
 	}
 	
 	@Override
-	public int approveEngineerUser(int engineerUserNo) {
+	public int pendingUser(String id) {
 		
-		if(eur.findById(engineerUserNo).isPresent()){
-			EngineerUser eu = eur.findById(engineerUserNo).orElseThrow();
-			
-			eur.save(EngineerUser.builder().engineerUserNo(eu.getEngineerUserNo()).engineerUserId(eu.getEngineerUserId())
-					.engineerUserPw(eu.getEngineerUserPw()).engineerUserBirth(eu.getEngineerUserBirth()).engineerUserAdd(eu.getEngineerUserAdd())
-					.engineerUserTel(eu.getEngineerUserTel()).engineerUserCareer(eu.getEngineerUserCareer()).engineerUserMajorCompany(eu.getEngineerUserMajorCompany())
-					.engineerUserPosition(eu.getEngineerUserPosition()).engineerUserJob(eu.getEngineerUserJob()).isApproved(1)
-					.isDeleted(eu.getIsDeleted()).build());
+		int result = 0;
+		
+		if(lr.findById(id).isPresent()){
+			if(lr.findById(id).orElseThrow().getUserDiv() == 1) {
+				
+				Optional<EngineerUser> eu = eur.findByLoginId(id);
+				
+				eur.save(eu.map(x -> x.toBuilder().isApproved(0).build()).orElseThrow());
+				
+				result = 0;
+				
+			}else if(lr.findById(id).orElseThrow().getUserDiv() == 2) {
+				
+				Optional<CompanyUser> cu = cur.findByLoginId(id);
+				
+				cur.save(cu.map(x -> x.toBuilder().isApproved(0).build()).orElseThrow());
+				
+				result = 0;
+			}
 		}
 		
-		return eur.findById(engineerUserNo).orElseThrow().getIsApproved();
+		return result;
 	}
 	
 	@Override
-	public int approveCompanyUser(int companyUserNo) {
+	public int disApprovedUser(String id) {
 		
-		if(cur.findById(companyUserNo).isPresent()) {
-			
-			CompanyUser cu = cur.findById(companyUserNo).orElseThrow();
-			
-			cur.save(CompanyUser.builder().companyUserNo(cu.getCompanyUserNo()).companyUserId(cu.getCompanyUserId())
-					.companyUserPw(cu.getCompanyUserPw()).companyNo(cu.getCompanyNo()).companyName(cu.getCompanyName())
-					.companyAdd(cu.getCompanyAdd()).companyTel(cu.getCompanyTel()).companyUserFax(cu.getCompanyUserFax())
-					.companyUserEmail(cu.getCompanyUserEmail()).companySiteAdd(cu.getCompanySiteAdd()).companyUserName(cu.getCompanyUserName())
-					.companyUserTel(cu.getCompanyUserTel()).isApproved(1).isDeleted(cu.getIsDeleted()).build());
+		int result = -1;
+		
+		if(lr.findById(id).isPresent()){
+			if(lr.findById(id).orElseThrow().getUserDiv() == 1) {
+				
+				Optional<EngineerUser> eu = eur.findByLoginId(id);
+				
+				eur.save(eu.map(x -> x.toBuilder().isApproved(-1).build()).orElseThrow());
+				
+				result = -1;
+				
+			}else if(lr.findById(id).orElseThrow().getUserDiv() == 2) {
+				
+				Optional<CompanyUser> cu = cur.findByLoginId(id);
+				
+				cur.save(cu.map(x -> x.toBuilder().isApproved(-1).build()).orElseThrow());
+				
+				result = -1;
+			}
 		}
 		
-		return cur.findById(companyUserNo).orElseThrow().getIsApproved();
-	}
-	
-	@Override
-	public int pendingEngineerUser(int engineerUserNo) {
-		
-		if(eur.findById(engineerUserNo).isPresent()){
-			EngineerUser eu = eur.findById(engineerUserNo).orElseThrow();
-			
-			eur.save(EngineerUser.builder().engineerUserNo(eu.getEngineerUserNo()).engineerUserId(eu.getEngineerUserId())
-					.engineerUserPw(eu.getEngineerUserPw()).engineerUserBirth(eu.getEngineerUserBirth()).engineerUserAdd(eu.getEngineerUserAdd())
-					.engineerUserTel(eu.getEngineerUserTel()).engineerUserCareer(eu.getEngineerUserCareer()).engineerUserMajorCompany(eu.getEngineerUserMajorCompany())
-					.engineerUserPosition(eu.getEngineerUserPosition()).engineerUserJob(eu.getEngineerUserJob()).isApproved(0)
-					.isDeleted(eu.getIsDeleted()).build());
-		}
-		
-		return eur.findById(engineerUserNo).orElseThrow().getIsApproved();
-	}
-	
-	@Override
-	public int pendingCompanyUser(int companyUserNo) {
-		
-		if(cur.findById(companyUserNo).isPresent()) {
-			
-			CompanyUser cu = cur.findById(companyUserNo).orElseThrow();
-			
-			cur.save(CompanyUser.builder().companyUserNo(cu.getCompanyUserNo()).companyUserId(cu.getCompanyUserId())
-					.companyUserPw(cu.getCompanyUserPw()).companyNo(cu.getCompanyNo()).companyName(cu.getCompanyName())
-					.companyAdd(cu.getCompanyAdd()).companyTel(cu.getCompanyTel()).companyUserFax(cu.getCompanyUserFax())
-					.companyUserEmail(cu.getCompanyUserEmail()).companySiteAdd(cu.getCompanySiteAdd()).companyUserName(cu.getCompanyUserName())
-					.companyUserTel(cu.getCompanyUserTel()).isApproved(0).isDeleted(cu.getIsDeleted()).build());
-		}
-		
-		return cur.findById(companyUserNo).orElseThrow().getIsApproved();
-	}
-	
-	@Override
-	public int disApprovedEngineerUser(int engineerUserNo) {
-		
-		if(eur.findById(engineerUserNo).isPresent()){
-			EngineerUser eu = eur.findById(engineerUserNo).orElseThrow();
-			
-			eur.save(EngineerUser.builder().engineerUserNo(eu.getEngineerUserNo()).engineerUserId(eu.getEngineerUserId())
-					.engineerUserPw(eu.getEngineerUserPw()).engineerUserBirth(eu.getEngineerUserBirth()).engineerUserAdd(eu.getEngineerUserAdd())
-					.engineerUserTel(eu.getEngineerUserTel()).engineerUserCareer(eu.getEngineerUserCareer()).engineerUserMajorCompany(eu.getEngineerUserMajorCompany())
-					.engineerUserPosition(eu.getEngineerUserPosition()).engineerUserJob(eu.getEngineerUserJob()).isApproved(-1)
-					.isDeleted(eu.getIsDeleted()).build());
-		}
-		
-		return eur.findById(engineerUserNo).orElseThrow().getIsApproved();
-	}
-	
-	@Override
-	public int disApprovedCompanyUser(int companyUserNo) {
-		
-		if(cur.findById(companyUserNo).isPresent()) {
-			
-			CompanyUser cu = cur.findById(companyUserNo).orElseThrow();
-			
-			cur.save(CompanyUser.builder().companyUserNo(cu.getCompanyUserNo()).companyUserId(cu.getCompanyUserId())
-					.companyUserPw(cu.getCompanyUserPw()).companyNo(cu.getCompanyNo()).companyName(cu.getCompanyName())
-					.companyAdd(cu.getCompanyAdd()).companyTel(cu.getCompanyTel()).companyUserFax(cu.getCompanyUserFax())
-					.companyUserEmail(cu.getCompanyUserEmail()).companySiteAdd(cu.getCompanySiteAdd()).companyUserName(cu.getCompanyUserName())
-					.companyUserTel(cu.getCompanyUserTel()).isApproved(-1).isDeleted(cu.getIsDeleted()).build());
-		}
-		
-		return cur.findById(companyUserNo).orElseThrow().getIsApproved();
+		return result;
 	}
 	
 	@Override
@@ -175,12 +149,20 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 
 	@Override
-	public boolean insertAdminUser(AdminUserDTO adminUserDTO) {
+	public boolean insertAdminUser(LoginDTO loginDTO, AdminUserDTO adminUserDTO) {
 		
 		boolean result = false;
 		
-		if(aur.findById(adminUserDTO.getAdminUserNo()).isEmpty()) {
-			aur.save(modelMapper.map(adminUserDTO, AdminUser.class));
+		if(lr.findById(loginDTO.getId()).isEmpty()) {
+			
+			Login login = Login.builder().userDiv(loginDTO.getUserDiv()).id(loginDTO.getId()).pw(loginDTO.getPw())
+					.build();
+			
+			lr.save(login);
+			
+			aur.save(AdminUser.builder().adminUserName(adminUserDTO.getAdminUserName())
+					.adminUserTel(adminUserDTO.getAdminUserTel()).login(login).build());
+			
 			result = true;
 		}
 		
@@ -188,27 +170,32 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 
 	@Override
-	public boolean modifyAdminUser(AdminUserDTO adminUserDTO) {
+	public boolean modifyAdminUser(LoginDTO loginDTO, AdminUserDTO adminUserDTO) {
 		
 		boolean result = false;
 		
-		if(aur.findById(adminUserDTO.getAdminUserNo()).isPresent()) {
-			aur.save(AdminUser.builder().adminUserNo(adminUserDTO.getAdminUserNo()).adminUserId(adminUserDTO.getAdminUserId())
-					.adminUserPw(adminUserDTO.getAdminUserPw()).adminUserName(adminUserDTO.getAdminUserName()).adminUserTel(adminUserDTO.getAdminUserTel()).build()); 
-			result = true;
-		}
-		
-		return result;
-	}
-
-	@Override
-	public boolean deleteAdminUser(int adminUserNo) {
-		
-		boolean result = false;
-		
-		if(aur.findById(adminUserNo).isPresent()) {
-			aur.deleteById(adminUserNo);
-			result = true;
+		if(lr.findById(loginDTO.getId()).isPresent()) {
+			
+			Login login = lr.findById(loginDTO.getId()).orElseThrow();
+			
+			login = login.toBuilder().pw(loginDTO.getPw()).build();
+			
+			lr.save(login);
+			
+			if(aur.findById(login.getAdminUser().getAdminUserNo()).isPresent()) {
+				
+				AdminUser adminUser = aur.findById(login.getAdminUser().getAdminUserNo()).orElseThrow();
+				
+				adminUser = adminUser.toBuilder()
+							.adminUserName(adminUserDTO.getAdminUserName())
+							.adminUserTel(adminUserDTO.getAdminUserTel())
+							.login(login)
+							.build();
+				
+				aur.save(adminUser);
+				
+				result = true;
+			}
 		}
 		
 		return result;

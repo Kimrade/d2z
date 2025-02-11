@@ -3,10 +3,14 @@ package org.d2z.config;
 import java.util.Optional;
 
 import org.d2z.domain.ChatMessage;
+import org.d2z.domain.CompanyUser;
 import org.d2z.domain.Contract;
+import org.d2z.domain.EngineerUser;
 import org.d2z.domain.Proposal;
 import org.d2z.dto.ChatMessageDTO;
+import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.ContractDTO;
+import org.d2z.dto.EngineerUserDTO;
 import org.d2z.dto.ProposalDTO;
 import org.d2z.repository.ChatRoomRepository;
 import org.d2z.repository.CompanyUserRepository;
@@ -117,6 +121,22 @@ public class RootConfig {
 	        .addMappings(mapper -> {
 	            mapper.map(src -> src.getEngineerUser().getEngineerUserNo(), ContractDTO::setEngineerUserNo);
 	            mapper.map(src -> src.getCompanyUser().getCompanyUserNo(), ContractDTO::setCompanyUserNo);
+        });
+        
+        modelMapper.typeMap(EngineerUser.class, EngineerUserDTO.class)
+	        .addMappings(mapper -> {
+	            mapper.map(src -> src.getLogin().getUserNo(), EngineerUserDTO::setUserNo);
+	            mapper.map(src -> src.getLogin().getId(), EngineerUserDTO::setId);
+	            mapper.map(src -> src.getLogin().getPw(), EngineerUserDTO::setPw);
+	            mapper.map(src -> src.getLogin().getUserDiv(), EngineerUserDTO::setUserDiv);
+        });
+        
+        modelMapper.typeMap(CompanyUser.class, CompanyUserDTO.class)
+	        .addMappings(mapper -> {
+	            mapper.map(src -> src.getLogin().getUserNo(), CompanyUserDTO::setUserNo);
+	            mapper.map(src -> src.getLogin().getId(), CompanyUserDTO::setId);
+	            mapper.map(src -> src.getLogin().getPw(), CompanyUserDTO::setPw);
+	            mapper.map(src -> src.getLogin().getUserDiv(), CompanyUserDTO::setUserDiv);
         });
         
         

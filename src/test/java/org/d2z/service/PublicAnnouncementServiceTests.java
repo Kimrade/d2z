@@ -17,12 +17,21 @@ public class PublicAnnouncementServiceTests {
 	@Autowired
 	private PublicAnnouncementService pas;
 	
-//	@Test
-//	public void insertTest() {
-//		pas.publicAnnouncementInsert(PublicAnnouncementDTO.builder().announcementName("그냥 적당히 긴 공고명이 있으면 좋겠다.")
-//				.announcementDescription("아주아주아주 긴 설명이 될거같아서 2000자 까지해놨는데 어찌될랑가").serviceAdd("강원도의 주소가 긴 어딘가가 있었으면 좋겠다.").serviceJob("가공").serviceDiv("방문").servicePeriod("2개월")
-//				.serviceCost(0).serviceTotalCost(0).ServicePersonnel(1).build());
-//	}
+	@Test
+	public void insertTest() {
+		pas.publicAnnouncementInsert(PublicAnnouncementDTO.builder()
+				.announcementName("그냥 적당히 긴 공고명이 있으면 좋겠asdaㅁㄴㅇ다.")
+				.announcementDescription("아주아주아주 긴 설명이 될거asd같아서 ㅁㄴㅇ2000자 까지해놨는데 어찌될랑가")
+				.serviceAdd("강원도의 주소가 긴 어딘가가 있었으면 좋겠다asd.ㅁㄴㅇ")
+				.serviceJob("가공ㅁasdㄴㅇ")
+				.serviceDiv("방ㅁㄴasdㅇ문")
+				.servicePeriod("2개월asdㅁㄴㅇ")
+				.serviceCost(0)
+				.serviceTotalCost(0)
+				.ServicePersonnel(1)
+				.companyUserNo(2)
+				.build());
+	}
 //	
 //	@Test
 //	public void manyInsertTest() {

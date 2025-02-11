@@ -7,6 +7,7 @@ import org.d2z.domain.PublicAnnouncement;
 import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PageResponseDTO;
 import org.d2z.dto.PublicAnnouncementDTO;
+import org.d2z.repository.CompanyUserRepository;
 import org.d2z.repository.PublicAnnouncementRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import lombok.extern.log4j.Log4j2;
 public class PublicAnnouncementServiceImpl implements PublicAnnouncementService {
 	
 	private final PublicAnnouncementRepository par;
+	private final CompanyUserRepository cur;
 	private final ModelMapper modelMapper;
 	
 	@Override
@@ -29,7 +31,23 @@ public class PublicAnnouncementServiceImpl implements PublicAnnouncementService 
 		boolean result = false;
 		
 		if(par.findById(publicAnnouncementDTO.getAnnouncementNo()).isEmpty()) {
-			par.save(modelMapper.map(publicAnnouncementDTO, PublicAnnouncement.class));
+			
+			PublicAnnouncement publicAnnouncement = PublicAnnouncement.builder()
+					.announcementName(publicAnnouncementDTO.getAnnouncementName())
+					.announcementDescription(publicAnnouncementDTO.getAnnouncementDescription())
+					.deadlineDate(publicAnnouncementDTO.getDeadlineDate())
+					.serviceAdd(publicAnnouncementDTO.getServiceAdd())
+					.serviceCost(publicAnnouncementDTO.getServiceCost())
+					.serviceDiv(publicAnnouncementDTO.getServiceDiv())
+					.serviceJob(publicAnnouncementDTO.getServiceJob())
+					.companyUser(cur.findById(publicAnnouncementDTO.getCompanyUserNo()).orElseThrow())
+					.serviceJob(publicAnnouncementDTO.getServiceJob())
+					.servicePeriod(publicAnnouncementDTO.getServicePeriod())
+					.ServicePersonnel(publicAnnouncementDTO.getServicePersonnel())
+					.serviceTotalCost(publicAnnouncementDTO.getServiceTotalCost()).build();
+			
+			par.save(publicAnnouncement);
+			
 			result = true;
 		}
 		

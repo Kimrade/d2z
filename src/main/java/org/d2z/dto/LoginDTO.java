@@ -9,20 +9,15 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminUserDTO {
-	
-	private int adminUserNo;
-	
-	private String adminUserName;
-	
-	private String adminUserTel;
+public class LoginDTO {
 	
 	private int userNo;
 	
-	private String id;
-	
 	private int userDiv;
 	
+	private String id;
+	
 	private String pw;
+	
 	
 }

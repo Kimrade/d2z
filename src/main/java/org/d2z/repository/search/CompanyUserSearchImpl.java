@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.d2z.domain.CompanyUser;
 import org.d2z.domain.QCompanyUser;
+import org.d2z.domain.QLogin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -24,8 +25,9 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 		// q 도메인 객체 생성
 		QCompanyUser companyUser = QCompanyUser.companyUser;
 		
-		// select * from CompanyUser;
-		JPQLQuery<CompanyUser> query = from(companyUser);
+		QLogin login = QLogin.login;
+		
+		JPQLQuery<CompanyUser> query = from(companyUser).leftJoin(companyUser.login, login);
 		
 		BooleanBuilder bb = new BooleanBuilder();
 		
@@ -59,8 +61,9 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 	public Page<CompanyUser> companyUserDisapprovecSearchByKeyword(String[] types, String keyword, Pageable pageable) {
 		QCompanyUser companyUser = QCompanyUser.companyUser;
 		
-		// select * from CompanyUser;
-		JPQLQuery<CompanyUser> query = from(companyUser);
+		QLogin login = QLogin.login;
+		
+		JPQLQuery<CompanyUser> query = from(companyUser).leftJoin(companyUser.login, login);
 		
 		BooleanBuilder bb = new BooleanBuilder();
 		
@@ -94,8 +97,9 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 	public Page<CompanyUser> companyUserPendingSearchByKeyword(String[] types, String keyword, Pageable pageable) {
 		QCompanyUser companyUser = QCompanyUser.companyUser;
 		
-		// select * from CompanyUser;
-		JPQLQuery<CompanyUser> query = from(companyUser);
+		QLogin login = QLogin.login;
+		
+		JPQLQuery<CompanyUser> query = from(companyUser).leftJoin(companyUser.login, login);
 		
 		BooleanBuilder bb = new BooleanBuilder();
 		

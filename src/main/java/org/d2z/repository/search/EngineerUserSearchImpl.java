@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.d2z.domain.EngineerUser;
 import org.d2z.domain.QEngineerUser;
+import org.d2z.domain.QLogin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +24,9 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		
 		QEngineerUser engineerUser = QEngineerUser.engineerUser;
 		
-		JPQLQuery<EngineerUser> query = from(engineerUser);
+		QLogin login = QLogin.login;
+		
+		JPQLQuery<EngineerUser> query = from(engineerUser).leftJoin(engineerUser.login, login);
 		
 		BooleanBuilder bb = new BooleanBuilder();
 		
@@ -57,7 +60,9 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 	public Page<EngineerUser> EngineerUserDisapprovedSearchByKeyword(String[] types, String keyword, Pageable pageable) {
 		QEngineerUser engineerUser = QEngineerUser.engineerUser;
 		
-		JPQLQuery<EngineerUser> query = from(engineerUser);
+		QLogin login = QLogin.login;
+		
+		JPQLQuery<EngineerUser> query = from(engineerUser).leftJoin(engineerUser.login, login);
 		
 		BooleanBuilder bb = new BooleanBuilder();
 		
@@ -91,7 +96,9 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 	public Page<EngineerUser> EngineerUserPendingSearchByKeyword(String[] types, String keyword, Pageable pageable) {
 		QEngineerUser engineerUser = QEngineerUser.engineerUser;
 		
-		JPQLQuery<EngineerUser> query = from(engineerUser);
+		QLogin login = QLogin.login;
+		
+		JPQLQuery<EngineerUser> query = from(engineerUser).leftJoin(engineerUser.login, login);
 		
 		BooleanBuilder bb = new BooleanBuilder();
 		
