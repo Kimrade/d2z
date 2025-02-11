@@ -7,11 +7,13 @@ import org.d2z.domain.CompanyUser;
 import org.d2z.domain.Contract;
 import org.d2z.domain.EngineerUser;
 import org.d2z.domain.Proposal;
+import org.d2z.domain.PublicAnnouncement;
 import org.d2z.dto.ChatMessageDTO;
 import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.ContractDTO;
 import org.d2z.dto.EngineerUserDTO;
 import org.d2z.dto.ProposalDTO;
+import org.d2z.dto.PublicAnnouncementDTO;
 import org.d2z.repository.ChatRoomRepository;
 import org.d2z.repository.CompanyUserRepository;
 import org.d2z.repository.EngineerUserRepository;
@@ -138,6 +140,11 @@ public class RootConfig {
 	            mapper.map(src -> src.getLogin().getPw(), CompanyUserDTO::setPw);
 	            mapper.map(src -> src.getLogin().getUserDiv(), CompanyUserDTO::setUserDiv);
         });
+        
+        modelMapper.typeMap(PublicAnnouncement.class, PublicAnnouncementDTO.class)
+	        .addMappings(mapper -> {
+	            mapper.map(src -> src.getCompanyUser().getCompanyUserNo(), PublicAnnouncementDTO::setCompanyUserNo);
+	    });
         
         
         

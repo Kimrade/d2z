@@ -60,7 +60,22 @@ public class PublicAnnouncementServiceImpl implements PublicAnnouncementService 
 		boolean result = false;
 		
 		if(par.findById(publicAnnouncementDTO.getAnnouncementNo()).isPresent()) {
-			par.save(modelMapper.map(publicAnnouncementDTO, PublicAnnouncement.class));
+			
+			PublicAnnouncement publicAnnouncement = par.findById(publicAnnouncementDTO.getAnnouncementNo()).orElseThrow();
+			
+			publicAnnouncement = publicAnnouncement.toBuilder()
+									.announcementName(publicAnnouncementDTO.getAnnouncementName())
+									.announcementDescription(publicAnnouncementDTO.getAnnouncementDescription())
+									.deadlineDate(publicAnnouncementDTO.getDeadlineDate())
+									.serviceAdd(publicAnnouncementDTO.getServiceAdd())
+									.serviceCost(publicAnnouncementDTO.getServiceCost())
+									.serviceDiv(publicAnnouncementDTO.getServiceDiv())
+									.serviceJob(publicAnnouncementDTO.getServiceJob())
+									.servicePeriod(publicAnnouncementDTO.getServicePeriod())
+									.ServicePersonnel(publicAnnouncementDTO.getServicePersonnel())
+									.serviceTotalCost(publicAnnouncementDTO.getServiceTotalCost()).build();
+			
+			par.save(publicAnnouncement);
 			result = true;
 		}
 		
