@@ -18,7 +18,7 @@ public class AdminUserServiceTests {
 	
 //	@Test
 //	public void approveTest() {
-//		aus.approveUser("a0");
+//		aus.approveUser("a45");
 //	}
 //
 //	@Test

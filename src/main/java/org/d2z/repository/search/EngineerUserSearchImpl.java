@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPQLQuery;
 
 public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements EngineerUserSearch {
@@ -121,6 +122,45 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		this.getQuerydsl().applyPagination(pageable, query);
 		
 		List<EngineerUser> list = query.fetch();
+		Long count = query.fetchCount();
+		
+		Page<EngineerUser> result = new PageImpl<>(list, pageable, count);
+		
+		return result;
+	}
+
+	@Override
+	public Page<EngineerUser> matchingEngineerUserSystem(String[] types, String keyword, Pageable pageable) {
+		
+		QEngineerUser engineer = QEngineerUser.engineerUser;
+		
+		QLogin login = QLogin.login;
+		
+		JPQLQuery<EngineerUser> query = from(engineer).leftJoin(engineer.login, login);
+		
+		BooleanBuilder bb = new BooleanBuilder();
+		
+		if(types != null && types.length > 0) {
+			for(String type : types) {
+				switch(type) {
+					case "":
+						
+					break;
+				}
+			}	
+		}
+		bb.and(engineer.isDeleted.eq(0));
+		
+		bb.and(engineer.isApproved.eq(1));
+		
+		query.where(bb);
+		
+		query.orderBy(Expressions.numberTemplate(Double.class, "function('rand')").asc());
+		
+		this.getQuerydsl().applyPagination(pageable, query);
+		
+		List<EngineerUser> list = query.fetch();
+		
 		Long count = query.fetchCount();
 		
 		Page<EngineerUser> result = new PageImpl<>(list, pageable, count);
