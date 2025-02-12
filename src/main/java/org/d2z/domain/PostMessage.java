@@ -2,6 +2,7 @@ package org.d2z.domain;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
@@ -41,10 +42,12 @@ public class PostMessage {
 	private String content;
 	
 	@Column(nullable = false)
-	private boolean deletedBySender;
+	@Builder.Default
+	private boolean deletedBySender = false;
 	
 	@Column(nullable = false)
-	private boolean deletedByReceiver;
+	@Builder.Default
+	private boolean deletedByReceiver = false;
 	
 	@Column(nullable = false)
 	@CreatedDate

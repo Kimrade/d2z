@@ -34,9 +34,7 @@ public class PostMessageSearchImpl extends QuerydslRepositorySupport implements 
 		
 		query.where(bb);
 		
-		Sort sort = Sort.by("createdTime").descending();
-		
-		Pageable newPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+		Pageable newPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort());
 		
 		this.getQuerydsl().applyPagination(newPageable, query);
 		
@@ -62,9 +60,7 @@ public class PostMessageSearchImpl extends QuerydslRepositorySupport implements 
 		
 		query.where(bb);
 		
-		Sort sort = Sort.by("createdTime").descending();
-		
-		Pageable newPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+		Pageable newPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort());
 		
 		this.getQuerydsl().applyPagination(newPageable, query);
 		
