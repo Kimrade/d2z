@@ -22,7 +22,7 @@ import lombok.ToString;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Builder
+@Builder(toBuilder = true)
 @ToString
 @Getter
 @NoArgsConstructor

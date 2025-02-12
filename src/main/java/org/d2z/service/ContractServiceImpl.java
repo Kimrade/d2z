@@ -9,6 +9,7 @@ import org.d2z.repository.ContractRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -27,6 +28,7 @@ public class ContractServiceImpl implements ContractService {
 	}
 
 	@Override
+	@Transactional
 	public boolean deleteContract(int contractNo) {
 		
 		boolean result = false;
@@ -52,6 +54,25 @@ public class ContractServiceImpl implements ContractService {
 	@Override
 	public List<ContractDTO> searchOneByCompanyUser(int companyUserNo) {
 		return cr.searchBycompanyUserNo(companyUserNo).stream().map(x -> modelMapper.map(x, ContractDTO.class)).collect(Collectors.toList());
+	}
+
+	@Override
+	public boolean modifyContract(ContractDTO contractDTO) {
+		
+		boolean result = false;
+		
+		if(cr.findById(contractDTO.getContractNo()).isPresent()) {
+			
+			Contract presentContract = cr.findById(contractDTO.getContractNo()).orElseThrow();
+			
+			presentContract = presentContract.toBuilder().processingTask(contractDTO.getProcessingTask()).build();
+			
+			cr.save(presentContract);
+			
+			result = true;
+		}
+		
+		return result;
 	}
 
 }

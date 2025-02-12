@@ -15,6 +15,9 @@ public interface ContractService {
 	// 계약 명세서 조회
 	public ContractDTO readOneContract(int contractNo);	
 	
+	// 계약 명세서 수정
+	public boolean modifyContract(ContractDTO contractDTO);
+	
 	// 계약자들의 정보를 통해 조회가 가능
 	// 엔지니어 정보를 통해 조회가 가능
 	public List<ContractDTO> searchOneByEngineerUser(int engineerUserNo);

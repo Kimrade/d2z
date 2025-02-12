@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -55,6 +56,7 @@ public class PublicAnnouncementServiceImpl implements PublicAnnouncementService 
 	}
 
 	@Override
+	@Transactional
 	public boolean publicAnnouncementModify(PublicAnnouncementDTO publicAnnouncementDTO) {
 		
 		boolean result = false;
@@ -83,6 +85,7 @@ public class PublicAnnouncementServiceImpl implements PublicAnnouncementService 
 	}
 
 	@Override
+	@Transactional
 	public boolean publicAnnouncementDelete(int announcementNo) {
 		
 		boolean result = false;

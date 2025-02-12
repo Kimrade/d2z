@@ -12,6 +12,7 @@ import org.d2z.repository.ChatRoomRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -50,6 +51,7 @@ public class ChatServiceImpl implements ChatService{
 	}
 	
 	@Override
+	@Transactional
 	public ChatMessageDTO chatOtherAndSaveRecord(ChatMessageDTO chatMessageDTO) {
 		
 		ChatMessage chatMessage = cmr.save(modelMapper.map(chatMessageDTO, ChatMessage.class));

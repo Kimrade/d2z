@@ -9,6 +9,7 @@ import org.d2z.repository.ProposalRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -22,12 +23,14 @@ public class ProposalServiceImpl implements ProposalService {
 	
 	
 	@Override
+	@Transactional
 	public void sendProposal(ProposalDTO proposalDTO) {
 		pr.save(modelMapper.map(proposalDTO , Proposal.class));
 	}
 
 
 	@Override
+	@Transactional
 	public boolean deleteProposal(int proposalNo) {
 		
 		boolean result = false;

@@ -24,6 +24,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -42,6 +43,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	
 	
 	@Override
+	@Transactional
 	public boolean deleteUser(String id) {
 		
 		boolean result = false;
@@ -55,6 +57,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 	
 	@Override
+	@Transactional
 	public int approveUser(String id) {
 		
 		int result = 0;
@@ -82,6 +85,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 	
 	@Override
+	@Transactional
 	public int pendingUser(String id) {
 		
 		int result = 0;
@@ -109,6 +113,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 	
 	@Override
+	@Transactional
 	public int disApprovedUser(String id) {
 		
 		int result = -1;
@@ -136,6 +141,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 	
 	@Override
+	@Transactional
 	public boolean deletePublicAnnouncement(int announcementNo) {
 		
 		boolean result = false;
@@ -170,6 +176,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 
 	@Override
+	@Transactional
 	public boolean modifyAdminUser(LoginDTO loginDTO, AdminUserDTO adminUserDTO) {
 		
 		boolean result = false;
