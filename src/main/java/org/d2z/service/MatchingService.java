@@ -12,6 +12,8 @@ public interface MatchingService {
 	// 검색을 키워드를 통해서 하며, page 처리를 통해 3명씩 엄선하여 추천을 진행, 나왔던 사람은 안나오게 처음 시작시에만 랜덤으로 값을 조정하여 페이지 처리하면 그 이후부터는 페이지가 달라지기에 나오지 않을것
 	public MatchingResponseDTO<EngineerUserDTO> recommendationEngineerMatching(MatchingRequestDTO matchingRequestDTO);
 	
+	// 매칭 시스템에 띄울 조건에 맞는 인원수
+	public int recommendationEngineerCount(MatchingRequestDTO matchingRequestDTO);
 	
 	
 	

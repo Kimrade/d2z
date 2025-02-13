@@ -44,7 +44,4 @@ public class PageRequestDTO {
 	public Pageable getPageable(String...props) {
 		return PageRequest.of(page-1, size, Sort.by(props).descending());
 	}
-	
-	
-	
 }

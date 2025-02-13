@@ -14,13 +14,19 @@ public class MatchingSystemTests {
 	@Autowired
 	private MatchingService ms;
 	
-	@Test
-	public void randomRecTest() {
-		
-		MatchingRequestDTO mr = MatchingRequestDTO.builder().build();
-		
-		ms.recommendationEngineerMatching(mr).getDtolist().forEach(x -> log.info("확인용 : "+x));
-	}
-	
+//	@Test
+//	public void randomRecTest() {
+//		
+//		MatchingRequestDTO mr = MatchingRequestDTO.builder().build();
+//		
+//		ms.recommendationEngineerMatching(mr).getDtolist().forEach(x -> log.info("확인용 : "+x));
+//	}
+//	
+//	@Test
+//	public void randomRecCountTest() {
+//		MatchingRequestDTO mr = MatchingRequestDTO.builder().build();
+//		
+//		log.info("확인용 : "+ms.recommendationEngineerCount(mr));
+//	}
 	
 }

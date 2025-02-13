@@ -97,4 +97,15 @@
     <button onclick="createChatRoom()">Create Room</button>
     <button onclick="loadChatRoom()">Load Chat Room Info</button>
 </body>
+
+<script layout:fragment="script" th:inline="javascript">
+// 아래의 내용은 spring security의 사용자 정보를 받을수 있는 값의 예시
+	const auth = [[${#authentication.principal}]]
+	
+	const errors = [[${errors}]]
+	console.log(errors);
+	
+</script>
+
+
 </html>

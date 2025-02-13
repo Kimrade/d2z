@@ -168,6 +168,41 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		return result;
 	}
 
+	@Override
+	public int matchingTotalEngineer(String[] types, String keyword, Pageable pageable) {
+		
+		QEngineerUser engineer = QEngineerUser.engineerUser;
+		
+		QLogin login = QLogin.login;
+		
+		JPQLQuery<EngineerUser> query = from(engineer).leftJoin(engineer.login, login);
+		
+		BooleanBuilder bb = new BooleanBuilder();
+		
+		if(types != null && types.length > 0) {
+			for(String type : types) {
+				switch(type) {
+					case "":
+						
+					break;
+				}
+			}	
+		}
+		bb.and(engineer.isDeleted.eq(0));
+		
+		bb.and(engineer.isApproved.eq(1));
+		
+		query.where(bb);
+		
+		query.orderBy(Expressions.numberTemplate(Double.class, "function('rand')").asc());
+		
+		List<EngineerUser> list = query.fetch();
+		
+		int count = (int)query.fetchCount();
+		
+		return count;
+	}
+
 	
 
 }

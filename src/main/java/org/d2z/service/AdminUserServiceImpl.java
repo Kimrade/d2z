@@ -8,13 +8,13 @@ import org.d2z.domain.AdminUser;
 import org.d2z.domain.CompanyUser;
 import org.d2z.domain.EngineerUser;
 import org.d2z.domain.Login;
+import org.d2z.domain.MemberRole;
 import org.d2z.dto.AdminUserDTO;
 import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.EngineerUserDTO;
 import org.d2z.dto.LoginDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PageResponseDTO;
-import org.d2z.dto.PublicAnnouncementDTO;
 import org.d2z.repository.AdminUserRepository;
 import org.d2z.repository.CompanyUserRepository;
 import org.d2z.repository.EngineerUserRepository;
@@ -63,7 +63,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 		int result = 0;
 		
 		if(lr.findById(id).isPresent()){
-			if(lr.findById(id).orElseThrow().getUserDiv() == 1) {
+			if(lr.findById(id).orElseThrow().getUserDiv().contains(MemberRole.EngineerUser)) {
 				
 				Optional<EngineerUser> eu = eur.findByLoginId(id);
 				
@@ -71,7 +71,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 				
 				result = 1;
 				
-			}else if(lr.findById(id).orElseThrow().getUserDiv() == 2) {
+			}else if(lr.findById(id).orElseThrow().getUserDiv().contains(MemberRole.CompanyUser)) {
 				
 				Optional<CompanyUser> cu = cur.findByLoginId(id);
 				
@@ -91,7 +91,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 		int result = 0;
 		
 		if(lr.findById(id).isPresent()){
-			if(lr.findById(id).orElseThrow().getUserDiv() == 1) {
+			if(lr.findById(id).orElseThrow().getUserDiv().contains(MemberRole.EngineerUser)) {
 				
 				Optional<EngineerUser> eu = eur.findByLoginId(id);
 				
@@ -99,7 +99,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 				
 				result = 0;
 				
-			}else if(lr.findById(id).orElseThrow().getUserDiv() == 2) {
+			}else if(lr.findById(id).orElseThrow().getUserDiv().contains(MemberRole.CompanyUser)) {
 				
 				Optional<CompanyUser> cu = cur.findByLoginId(id);
 				
@@ -119,7 +119,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 		int result = -1;
 		
 		if(lr.findById(id).isPresent()){
-			if(lr.findById(id).orElseThrow().getUserDiv() == 1) {
+			if(lr.findById(id).orElseThrow().getUserDiv().contains(MemberRole.EngineerUser)) {
 				
 				Optional<EngineerUser> eu = eur.findByLoginId(id);
 				
@@ -127,7 +127,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 				
 				result = -1;
 				
-			}else if(lr.findById(id).orElseThrow().getUserDiv() == 2) {
+			}else if(lr.findById(id).orElseThrow().getUserDiv().contains(MemberRole.CompanyUser)) {
 				
 				Optional<CompanyUser> cu = cur.findByLoginId(id);
 				
@@ -161,8 +161,12 @@ public class AdminUserServiceImpl implements AdminUserService{
 		
 		if(lr.findById(loginDTO.getId()).isEmpty()) {
 			
-			Login login = Login.builder().userDiv(loginDTO.getUserDiv()).id(loginDTO.getId()).pw(loginDTO.getPw())
+			Login login = Login.builder()
+					.id(loginDTO.getId())
+					.pw(loginDTO.getPw())
 					.build();
+			
+			login.addRole(MemberRole.AdminUser);
 			
 			lr.save(login);
 			

@@ -19,4 +19,8 @@ public interface EngineerUserSearch {
 	// 엔지니어 매칭을 위한 조회 서비스
 	public Page<EngineerUser> matchingEngineerUserSystem(String[] types, String keyword, Pageable pageable);
 	
+	// 엔지니어 매칭 조회의 인원수 측정
+	public int matchingTotalEngineer(String[] types, String keyword, Pageable pageable);
+
+	
 }

@@ -1,7 +1,5 @@
 package org.d2z.domain;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -65,12 +63,12 @@ public class EngineerUser {
 	private String engineerUserInfo;
 	
 	// 아이디 삭제 유무
-	@ColumnDefault("0")
-	private int isDeleted;
+	@Builder.Default
+	private int isDeleted=0;
 	
 	// 아이디 승인 유무
-	@ColumnDefault("0")
-	private int isApproved;
+	@Builder.Default
+	private int isApproved=0;
 	
 	@OneToOne
 	@JoinColumn(name = "login_user_no", nullable = false)

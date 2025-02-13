@@ -1,12 +1,18 @@
 package org.d2z.repository;
 
+import java.lang.reflect.Member;
+
 import org.d2z.domain.EngineerUser;
+import org.d2z.domain.Login;
+import org.d2z.domain.MemberRole;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 
 @SpringBootTest
@@ -16,6 +22,50 @@ public class EngineerUserRepositoryTests {
 	@Autowired
 	private EngineerUserRepository eur;
 	
+	@Autowired
+	private LoginRepository lr;
+	
+	@Autowired
+	private PasswordEncoder pe;
+	
+//	@Test
+//	public void insertTestUnderSecurity() {
+//		
+//		Login login = Login.builder()
+//						.id("member")
+//						.pw(pe.encode("1111"))
+//						.build();
+//		
+//		login.addRole(MemberRole.EngineerUser);
+//		
+//		log.info("확인용 : "+login);
+//		
+//		lr.save(login);
+//		
+//		EngineerUser engineerUser = EngineerUser.builder()
+//						.engineerUserAdd("이거는 주소다")
+//						.engineerUserCareer(4)
+//						.engineerUserEmail("a@naver.com")
+//						.engineerUserJob("주조")
+//						.engineerUserMajorCompany("어느 주요 근무지")
+//						.engineerUserPosition("팀장이였던것")
+//						.engineerUserTel("010-2578-1565")
+//						.login(login)
+//						.build();
+//		
+//		log.info("확인용 : "+engineerUser);
+//		
+//		log.info("확인용 : "+eur.save(engineerUser));
+//	}
+//	
+//	@Test
+//	@Transactional
+//	public void readTestUnderSercurity() {
+//		log.info("확인용 : "+lr.findById("member").orElseThrow());
+//		
+//		log.info("확인용 : "+lr.findById("member").orElseThrow().getUserDiv());
+//	}
+//	
 //	@Test
 //	public void insertTest() {
 //		eur.save(EngineerUser.builder().engineerUserId("aaa").engineerUserPw("bbb")

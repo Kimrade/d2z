@@ -1,8 +1,14 @@
 package org.d2z.domain;
 
+
+import java.util.Set;
+import java.util.HashSet;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,7 +22,7 @@ import lombok.ToString;
 @Entity
 @Builder(toBuilder = true)
 @Getter
-@ToString
+@ToString(exclude = "userDiv")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Login {
@@ -25,9 +31,10 @@ public class Login {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userNo;
 	
-	// 1 - 엔지니어 , 2 - 사업주 , 0 - 관리자
-	@Column(nullable = false)
-	private int userDiv;
+	// 엔지니어 , 사업주 , 관리자
+	@ElementCollection(fetch = FetchType.LAZY)
+	@Builder.Default
+	private Set<MemberRole> userDiv = new HashSet<>();
 	
 	@Column(nullable = false, unique=true)
 	private String id;
@@ -43,5 +50,13 @@ public class Login {
 
     @OneToOne(mappedBy = "login", cascade = CascadeType.ALL)
     private AdminUser adminUser;
+    
+    public void addRole(MemberRole memberRole) {
+    	this.userDiv.add(memberRole);
+    }
+    
+    public void clearRole() {
+    	this.userDiv.clear();
+    }
 	
 }

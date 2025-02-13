@@ -1,5 +1,7 @@
 package org.d2z.dto;
 
+import org.d2z.domain.MemberRole;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +23,7 @@ public class AdminUserDTO {
 	
 	private String id;
 	
-	private int userDiv;
+	private MemberRole userDiv;
 	
 	private String pw;
 	

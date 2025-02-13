@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.d2z.domain.CompanyUser;
 import org.d2z.domain.Login;
+import org.d2z.domain.MemberRole;
 import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.LoginDTO;
 import org.d2z.dto.PageRequestDTO;
@@ -38,10 +39,12 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 		if(lr.findById(loginDTO.getId()).isEmpty()) {
 			
 			Login login = 
-					Login.builder().userDiv(loginDTO.getUserDiv())
+					Login.builder()
 						.id(loginDTO.getId())
 						.pw(loginDTO.getPw())
 						.build();
+			
+			login.addRole(MemberRole.CompanyUser);
 			
 			lr.save(login);
 			
@@ -164,7 +167,7 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 					.id(id)
 					.pw(login.getPw())
 					.userNo(login.getUserNo())
-					.userDiv(login.getUserDiv())
+					.userDiv(MemberRole.CompanyUser)
 					.build();
 		}
 		

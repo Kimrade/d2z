@@ -36,4 +36,11 @@ public class MatchingServiceImpl implements MatchingService {
 		return result;
 	}
 
+
+	@Override
+	public int recommendationEngineerCount(MatchingRequestDTO matchingRequestDTO) {
+		
+		return eur.matchingTotalEngineer(matchingRequestDTO.getTypes(), matchingRequestDTO.getKeyword(), matchingRequestDTO.getPageable());
+	}
+
 }

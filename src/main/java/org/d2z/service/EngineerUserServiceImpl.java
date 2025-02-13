@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.d2z.domain.EngineerUser;
 import org.d2z.domain.Login;
+import org.d2z.domain.MemberRole;
 import org.d2z.dto.EngineerUserDTO;
 import org.d2z.dto.LoginDTO;
 import org.d2z.dto.PageRequestDTO;
@@ -37,8 +38,12 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 		
 		if(lr.findById(loginDTO.getId()).isEmpty()) {
 			
-			Login login = Login.builder().userDiv(loginDTO.getUserDiv()).id(loginDTO.getId()).pw(loginDTO.getPw())
+			Login login = Login.builder()
+					.id(loginDTO.getId())
+					.pw(loginDTO.getPw())
 					.build();
+			
+			login.addRole(MemberRole.EngineerUser);
 			
 			lr.save(login);
 			
@@ -155,7 +160,7 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 					.id(id)
 					.pw(login.getPw())
 					.userNo(login.getUserNo())
-					.userDiv(login.getUserDiv())
+					.userDiv(MemberRole.EngineerUser)
 					.build();
 		}
 		
