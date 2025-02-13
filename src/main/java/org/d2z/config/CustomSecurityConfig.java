@@ -33,7 +33,7 @@ public class CustomSecurityConfig {
 		log.info("-------------------------------configure--------------------------------");
 		
 		// 로그인이 필요한 경우 loginPage() 내부의 경로 이동함 => 커스텀 로그인 페이지
-		http.formLogin().loginPage("/member/login");
+		http.formLogin().loginPage("/test/login");
 		// csrf 토큰 비활성화
 		http.csrf().disable();
 		

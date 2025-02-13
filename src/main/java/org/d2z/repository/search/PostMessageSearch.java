@@ -1,7 +1,6 @@
 package org.d2z.repository.search;
 
 import org.d2z.domain.PostMessage;
-import org.d2z.domain.PostMessageUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

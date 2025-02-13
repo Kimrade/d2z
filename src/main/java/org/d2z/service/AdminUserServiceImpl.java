@@ -22,6 +22,7 @@ import org.d2z.repository.LoginRepository;
 import org.d2z.repository.PublicAnnouncementRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -39,6 +40,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	private final PublicAnnouncementRepository par;
 	private final AdminUserRepository aur;
 	private final LoginRepository lr;
+	private final PasswordEncoder passwordEncoder;
 	
 	
 	
@@ -163,7 +165,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 			
 			Login login = Login.builder()
 					.id(loginDTO.getId())
-					.pw(loginDTO.getPw())
+					.pw(passwordEncoder.encode(loginDTO.getPw()))
 					.build();
 			
 			login.addRole(MemberRole.AdminUser);
@@ -189,7 +191,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 			
 			Login login = lr.findById(loginDTO.getId()).orElseThrow();
 			
-			login = login.toBuilder().pw(loginDTO.getPw()).build();
+			login = login.toBuilder().pw(passwordEncoder.encode(loginDTO.getPw())).build();
 			
 			lr.save(login);
 			

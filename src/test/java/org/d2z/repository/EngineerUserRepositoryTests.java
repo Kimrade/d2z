@@ -32,8 +32,8 @@ public class EngineerUserRepositoryTests {
 //	public void insertTestUnderSecurity() {
 //		
 //		Login login = Login.builder()
-//						.id("member")
-//						.pw(pe.encode("1111"))
+//						.id("member3")
+//						.pw(pe.encode("1234"))
 //						.build();
 //		
 //		login.addRole(MemberRole.EngineerUser);

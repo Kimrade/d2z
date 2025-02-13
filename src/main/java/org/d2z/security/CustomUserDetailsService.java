@@ -10,9 +10,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -21,11 +21,10 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService{
 	
-	private PasswordEncoder passwordEncoder;
-	
-	private LoginRepository lr;
+	private final LoginRepository lr;
 	
 	@Override
+	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		log.info("LoadUserByUserName : "+username);
@@ -45,6 +44,9 @@ public class CustomUserDetailsService implements UserDetailsService{
 				login.getUserNo(),
 				login.getUserDiv().stream().map(x -> new SimpleGrantedAuthority("ROLE_"+x.name())).collect(Collectors.toList())
 				);
+		
+		log.info("확인용 : "+loginDTO.getId());
+		log.info("확인용 : "+loginDTO.getPassword());
 		
 		return loginDTO;
 	}

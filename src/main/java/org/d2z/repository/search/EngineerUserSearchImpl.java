@@ -196,8 +196,6 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		
 		query.orderBy(Expressions.numberTemplate(Double.class, "function('rand')").asc());
 		
-		List<EngineerUser> list = query.fetch();
-		
 		int count = (int)query.fetchCount();
 		
 		return count;

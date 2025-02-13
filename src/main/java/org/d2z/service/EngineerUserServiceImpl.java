@@ -15,6 +15,7 @@ import org.d2z.repository.EngineerUserRepository;
 import org.d2z.repository.LoginRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -29,6 +30,7 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 	private final EngineerUserRepository eur;
 	private final LoginRepository lr;
 	private final ModelMapper modelMapper;
+	private final PasswordEncoder passwordEncoder;
 	
 	
 	@Override
@@ -40,7 +42,7 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 			
 			Login login = Login.builder()
 					.id(loginDTO.getId())
-					.pw(loginDTO.getPw())
+					.pw(passwordEncoder.encode(loginDTO.getPw()))
 					.build();
 			
 			login.addRole(MemberRole.EngineerUser);
@@ -74,7 +76,7 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 	    if (lr.findById(loginDTO.getId()).isPresent()) {
 	        Login login = lr.findById(loginDTO.getId()).orElseThrow();
 	        login = login.toBuilder()
-	                .pw(loginDTO.getPw())
+	                .pw(passwordEncoder.encode(loginDTO.getPw()))
 	                .build();
 	        lr.save(login);
 

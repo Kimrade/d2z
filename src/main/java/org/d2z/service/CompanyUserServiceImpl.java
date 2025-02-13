@@ -15,6 +15,7 @@ import org.d2z.repository.CompanyUserRepository;
 import org.d2z.repository.LoginRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -29,6 +30,7 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 	private final ModelMapper modelMapper;
 	private final LoginRepository lr;
 	private final CompanyUserRepository cur;
+	private final PasswordEncoder passwordEncoder;
 	
 	
 	@Override
@@ -41,7 +43,7 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 			Login login = 
 					Login.builder()
 						.id(loginDTO.getId())
-						.pw(loginDTO.getPw())
+						.pw(passwordEncoder.encode(loginDTO.getPw()))
 						.build();
 			
 			login.addRole(MemberRole.CompanyUser);
@@ -78,7 +80,7 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 			Login login = lr.findById(loginDTO.getId()).orElseThrow();
 			
 			login = login.toBuilder()
-						.pw(loginDTO.getPw())
+						.pw(passwordEncoder.encode(loginDTO.getPw()))
 						.build();
 			
 			lr.save(login);
