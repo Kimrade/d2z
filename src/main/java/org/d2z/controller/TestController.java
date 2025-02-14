@@ -40,8 +40,4 @@ public class TestController {
 		return "redirect:/test/";
 		
 	}
-	
-	
-	
-	
 }
