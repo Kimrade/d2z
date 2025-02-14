@@ -26,6 +26,7 @@ public class CustomSecurityConfig {
 	
 	private final DataSource dataSource;
 	private final CustomUserDetailsService userDetailsService;
+	private final CustomAuthenticationSuccessHandler successHander;
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -33,15 +34,15 @@ public class CustomSecurityConfig {
 		log.info("-------------------------------configure--------------------------------");
 		
 		// 로그인이 필요한 경우 loginPage() 내부의 경로 이동함 => 커스텀 로그인 페이지
-		http.formLogin().loginPage("/test/login");
-		// csrf 토큰 비활성화
-		http.csrf().disable();
+		http.formLogin(x -> x.loginPage("/d2z/login").successHandler(successHander));
 		
-		http.rememberMe()
-				.key("12345678")
+		http.csrf(x -> x.disable());
+		
+		http.rememberMe(x -> x
+				.key("d2zSecretAndUnique")
 				.tokenRepository(persistentTokenRepository())
 				.userDetailsService(userDetailsService)
-				.tokenValiditySeconds(60*60*24*30);
+				.tokenValiditySeconds(60*60*24*30));
 		
 		// filter 처리
 		return http.build();
