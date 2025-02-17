@@ -34,7 +34,7 @@ public class CustomSecurityConfig {
 		log.info("-------------------------------configure--------------------------------");
 		
 		// 로그인이 필요한 경우 loginPage() 내부의 경로 이동함 => 커스텀 로그인 페이지
-		http.formLogin(x -> x.loginPage("/d2z/login").successHandler(successHander));
+		http.formLogin(x -> x.loginPage("/d2z/login").failureForwardUrl("/d2z/loginError").successHandler(successHander));
 		
 		http.csrf(x -> x.disable());
 		

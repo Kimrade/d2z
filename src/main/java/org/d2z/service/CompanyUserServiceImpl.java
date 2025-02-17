@@ -8,7 +8,7 @@ import org.d2z.domain.CompanyUser;
 import org.d2z.domain.Login;
 import org.d2z.domain.MemberRole;
 import org.d2z.dto.CompanyUserDTO;
-import org.d2z.dto.LoginDTO;
+import org.d2z.dto.LoginUserDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PageResponseDTO;
 import org.d2z.repository.CompanyUserRepository;
@@ -34,16 +34,16 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 	
 	
 	@Override
-	public boolean companyUserInfoInsert(LoginDTO loginDTO, CompanyUserDTO companyUserDTO) {
+	public boolean companyUserInfoInsert(LoginUserDTO loginUserDTO, CompanyUserDTO companyUserDTO) {
 		
 		boolean result = false;
 		
-		if(lr.findById(loginDTO.getId()).isEmpty()) {
+		if(lr.findById(loginUserDTO.getId()).isEmpty()) {
 			
 			Login login = 
 					Login.builder()
-						.id(loginDTO.getId())
-						.pw(passwordEncoder.encode(loginDTO.getPw()))
+						.id(loginUserDTO.getId())
+						.pw(passwordEncoder.encode(loginUserDTO.getPw()))
 						.build();
 			
 			login.addRole(MemberRole.CompanyUser);
@@ -71,16 +71,16 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 
 	@Override
 	@Transactional
-	public boolean companyUserInfoModify(LoginDTO loginDTO, CompanyUserDTO companyUserDTO) {
+	public boolean companyUserInfoModify(LoginUserDTO loginUserDTO, CompanyUserDTO companyUserDTO) {
 		
 		boolean result = false;
 		
-		if(lr.findById(loginDTO.getId()).isPresent()) {
+		if(lr.findById(loginUserDTO.getId()).isPresent()) {
 			
-			Login login = lr.findById(loginDTO.getId()).orElseThrow();
+			Login login = lr.findById(loginUserDTO.getId()).orElseThrow();
 			
 			login = login.toBuilder()
-						.pw(passwordEncoder.encode(loginDTO.getPw()))
+						.pw(passwordEncoder.encode(loginUserDTO.getPw()))
 						.build();
 			
 			lr.save(login);

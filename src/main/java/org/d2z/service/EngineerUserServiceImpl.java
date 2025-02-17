@@ -8,7 +8,7 @@ import org.d2z.domain.EngineerUser;
 import org.d2z.domain.Login;
 import org.d2z.domain.MemberRole;
 import org.d2z.dto.EngineerUserDTO;
-import org.d2z.dto.LoginDTO;
+import org.d2z.dto.LoginUserDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PageResponseDTO;
 import org.d2z.repository.EngineerUserRepository;
@@ -34,23 +34,25 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 	
 	
 	@Override
-	public boolean engineerUserInfoInsert(LoginDTO loginDTO, EngineerUserDTO engineerUserDTO) {
+	public boolean engineerUserInfoInsert(LoginUserDTO loginUserDTO, EngineerUserDTO engineerUserDTO) {
 		
 		boolean result = false;
 		
-		if(lr.findById(loginDTO.getId()).isEmpty()) {
+		if(lr.findById(loginUserDTO.getId()).isEmpty()) {
 			
 			Login login = Login.builder()
-					.id(loginDTO.getId())
-					.pw(passwordEncoder.encode(loginDTO.getPw()))
+					.id(loginUserDTO.getId())
+					.pw(passwordEncoder.encode(loginUserDTO.getPw()))
 					.build();
 			
 			login.addRole(MemberRole.EngineerUser);
 			
 			lr.save(login);
 			
-			eur.save(EngineerUser.builder().
-					engineerUserAdd(engineerUserDTO.getEngineerUserAdd())
+			eur.save(EngineerUser.builder()
+					.engineerUserName(engineerUserDTO.getEngineerUserName())
+					.engineerUserBirth(engineerUserDTO.getEngineerUserBirth())
+					.engineerUserAdd(engineerUserDTO.getEngineerUserAdd())
 					.engineerUserTel(engineerUserDTO.getEngineerUserTel())
 					.engineerUserCareer(engineerUserDTO.getEngineerUserCareer())
 					.engineerUserMajorCompany(engineerUserDTO.getEngineerUserMajorCompany())
@@ -69,20 +71,22 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 
 	@Override
 	@Transactional
-	public boolean engineerUserInfoModify(LoginDTO loginDTO, EngineerUserDTO engineerUserDTO) {
+	public boolean engineerUserInfoModify(LoginUserDTO loginUserDTO, EngineerUserDTO engineerUserDTO) {
 		
 		boolean result = false;
 
-	    if (lr.findById(loginDTO.getId()).isPresent()) {
-	        Login login = lr.findById(loginDTO.getId()).orElseThrow();
+	    if (lr.findById(loginUserDTO.getId()).isPresent()) {
+	        Login login = lr.findById(loginUserDTO.getId()).orElseThrow();
 	        login = login.toBuilder()
-	                .pw(passwordEncoder.encode(loginDTO.getPw()))
+	                .pw(passwordEncoder.encode(loginUserDTO.getPw()))
 	                .build();
 	        lr.save(login);
 
 	        if (eur.findById(login.getEngineerUser().getEngineerUserNo()).isPresent()) {
 	            EngineerUser engineerUser = eur.findById(login.getEngineerUser().getEngineerUserNo()).orElseThrow();
 	            engineerUser = engineerUser.toBuilder()
+	            		.engineerUserName(engineerUserDTO.getEngineerUserName())
+	            		.engineerUserBirth(engineerUserDTO.getEngineerUserBirth())
 	                    .engineerUserAdd(engineerUserDTO.getEngineerUserAdd())
 	                    .engineerUserTel(engineerUserDTO.getEngineerUserTel())
 	                    .engineerUserCareer(engineerUserDTO.getEngineerUserCareer())
@@ -148,6 +152,8 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 			
 			return EngineerUserDTO.builder()
 					.engineerUserNo(engineerUser.getEngineerUserNo())
+					.engineerUserName(engineerUser.getEngineerUserName())
+					.engineerUserBirth(engineerUser.getEngineerUserBirth())
 					.engineerUserAdd(engineerUser.getEngineerUserAdd())
 					.engineerUserTel(engineerUser.getEngineerUserTel())
 					.engineerUserMajorCompany(engineerUser.getEngineerUserMajorCompany())

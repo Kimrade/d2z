@@ -1,17 +1,17 @@
 package org.d2z.service;
 
 import org.d2z.dto.CompanyUserDTO;
-import org.d2z.dto.LoginDTO;
+import org.d2z.dto.LoginUserDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PageResponseDTO;
 
 public interface CompanyUserService {
 	
 	// 사업주 사용자 등록(회원가입)
-	public boolean companyUserInfoInsert(LoginDTO loginDTO, CompanyUserDTO companyUserDTO);
+	public boolean companyUserInfoInsert(LoginUserDTO loginUserDTO, CompanyUserDTO companyUserDTO);
 	
 	// 사업주 사용자 회원정보 수정
-	public boolean companyUserInfoModify(LoginDTO loginDTO, CompanyUserDTO companyUserDTO);
+	public boolean companyUserInfoModify(LoginUserDTO loginUserDTO, CompanyUserDTO companyUserDTO);
 	
 	// 사업주 사용자 회원정보 완전 삭제(관리자 삭제)
 	public boolean companyUserInfoDelete(String id);

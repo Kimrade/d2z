@@ -12,7 +12,7 @@ import org.d2z.domain.MemberRole;
 import org.d2z.dto.AdminUserDTO;
 import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.EngineerUserDTO;
-import org.d2z.dto.LoginDTO;
+import org.d2z.dto.LoginUserDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PageResponseDTO;
 import org.d2z.repository.AdminUserRepository;
@@ -157,15 +157,15 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 
 	@Override
-	public boolean insertAdminUser(LoginDTO loginDTO, AdminUserDTO adminUserDTO) {
+	public boolean insertAdminUser(LoginUserDTO loginUserDTO, AdminUserDTO adminUserDTO) {
 		
 		boolean result = false;
 		
-		if(lr.findById(loginDTO.getId()).isEmpty()) {
+		if(lr.findById(loginUserDTO.getId()).isEmpty()) {
 			
 			Login login = Login.builder()
-					.id(loginDTO.getId())
-					.pw(passwordEncoder.encode(loginDTO.getPw()))
+					.id(loginUserDTO.getId())
+					.pw(passwordEncoder.encode(loginUserDTO.getPw()))
 					.build();
 			
 			login.addRole(MemberRole.AdminUser);
@@ -183,15 +183,15 @@ public class AdminUserServiceImpl implements AdminUserService{
 
 	@Override
 	@Transactional
-	public boolean modifyAdminUser(LoginDTO loginDTO, AdminUserDTO adminUserDTO) {
+	public boolean modifyAdminUser(LoginUserDTO loginUserDTO, AdminUserDTO adminUserDTO) {
 		
 		boolean result = false;
 		
-		if(lr.findById(loginDTO.getId()).isPresent()) {
+		if(lr.findById(loginUserDTO.getId()).isPresent()) {
 			
-			Login login = lr.findById(loginDTO.getId()).orElseThrow();
+			Login login = lr.findById(loginUserDTO.getId()).orElseThrow();
 			
-			login = login.toBuilder().pw(passwordEncoder.encode(loginDTO.getPw())).build();
+			login = login.toBuilder().pw(passwordEncoder.encode(loginUserDTO.getPw())).build();
 			
 			lr.save(login);
 			

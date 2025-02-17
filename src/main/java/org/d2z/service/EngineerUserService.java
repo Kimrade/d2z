@@ -1,17 +1,17 @@
 package org.d2z.service;
 
 import org.d2z.dto.EngineerUserDTO;
-import org.d2z.dto.LoginDTO;
+import org.d2z.dto.LoginUserDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PageResponseDTO;
 
 public interface EngineerUserService {
 	
 	// 엔지니어 정보 등록(회원가입)
-	public boolean engineerUserInfoInsert(LoginDTO loginDTO, EngineerUserDTO engineerUserDTO);
+	public boolean engineerUserInfoInsert(LoginUserDTO loginUserDTO, EngineerUserDTO engineerUserDTO);
 	
 	// 엔지니어 정보 수정
-	public boolean engineerUserInfoModify(LoginDTO loginDTO, EngineerUserDTO engineerUserDTO);
+	public boolean engineerUserInfoModify(LoginUserDTO loginUserDTO, EngineerUserDTO engineerUserDTO);
 	
 	// 엔지니어 정보 완전 삭제(관리자 삭제)
 	public boolean engineerUserInfoDelete(String id);

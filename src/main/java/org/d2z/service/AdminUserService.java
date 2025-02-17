@@ -3,7 +3,7 @@ package org.d2z.service;
 import org.d2z.dto.AdminUserDTO;
 import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.EngineerUserDTO;
-import org.d2z.dto.LoginDTO;
+import org.d2z.dto.LoginUserDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PageResponseDTO;
 
@@ -37,8 +37,8 @@ public interface AdminUserService {
 	public boolean deletePublicAnnouncement(int announcementNo);
 	
 	// 관리자 정보 등록
-	public boolean insertAdminUser(LoginDTO loginDTO, AdminUserDTO adminUserDTO);
+	public boolean insertAdminUser(LoginUserDTO loginUserDTO, AdminUserDTO adminUserDTO);
 	
 	// 관리자 정보 수정
-	public boolean modifyAdminUser(LoginDTO loginDTO, AdminUserDTO adminUserDTO);
+	public boolean modifyAdminUser(LoginUserDTO loginUserDTO, AdminUserDTO adminUserDTO);
 }

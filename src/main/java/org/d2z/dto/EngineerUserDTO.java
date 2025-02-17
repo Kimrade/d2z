@@ -15,6 +15,10 @@ public class EngineerUserDTO {
 	
 	private int engineerUserNo;
 	
+	private String engineerUserName;
+	
+	private String engineerUserBirth;
+	
 	private String engineerUserAdd;
 	
 	private String engineerUserTel;

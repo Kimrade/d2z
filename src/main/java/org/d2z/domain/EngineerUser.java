@@ -30,6 +30,9 @@ public class EngineerUser {
 	@Column(nullable = false)
 	private String engineerUserAdd;
 	
+	@Column(nullable = false)
+	private String engineerUserName;
+	
 	// 엔지니어 사용자 전화번호
 	@Column(nullable = false)
 	private String engineerUserTel;
@@ -61,6 +64,9 @@ public class EngineerUser {
 	// 엔지니어 프로필 소개 내용
 	@Column(nullable = true,length = 2000)
 	private String engineerUserInfo;
+	
+	@Column(nullable = false)
+	private String engineerUserBirth;
 	
 	// 아이디 삭제 유무
 	@Builder.Default
