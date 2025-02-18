@@ -22,7 +22,8 @@
 
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
-
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  
   <style>
     .login-form {
       margin-top: 150px;
@@ -32,6 +33,30 @@
     #tel, #email {
       display: none;
     }
+    
+    .btn-outline-primary {
+      width: 100%;  /* 버튼의 너비를 부모 요소에 맞춰서 100%로 설정 */
+      max-width: 500px; /* 최대 너비를 500px로 설정 */
+      height: 50px;  /* 버튼의 높이를 50px로 고정 */
+      padding: 0;  /* 패딩을 제거하여 버튼 크기를 일관되게 설정 */
+      box-sizing: border-box; /* padding과 border를 포함한 크기 계산 */
+      display: flex;  /* 플렉스 박스를 사용하여 정렬 */
+      justify-content: center;  /* 가로로 가운데 정렬 */
+      align-items: center;  /* 세로로 가운데 정렬 */
+      text-align: center;  /* 텍스트가 버튼 내에서 정확히 가운데로 위치 */
+    }
+input[type="submit"] {
+  display: block;  /* 버튼을 블록 요소로 만들어 전체 너비를 차지하도록 설정 */
+  margin-left: auto;  /* 왼쪽 마진을 자동으로 설정하여 오른쪽 정렬 */
+  margin-right: 0;  /* 오른쪽 마진을 0으로 설정 */
+  margin-top: 10px;  /* 위쪽 여백을 추가 */
+  margin-bottom: 10px;  /* 아래쪽 여백을 추가 */
+  padding: 8px 16px;  /* 버튼의 패딩을 줄여서 크기 축소 */
+  width: auto;  /* 너비를 자동으로 설정하여 너무 넓어지지 않도록 */
+  max-width: 200px;  /* 최대 너비를 200px로 설정하여 크기를 제한 */
+  text-align: center;  /* 버튼 내 텍스트 중앙 정렬 */
+  font-size: 14px;  /* 글자 크기 조정 */
+  height: 40px;  /* 버튼 높이를 40px로 설정 */
   </style>
 </head>
 
@@ -39,10 +64,10 @@
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
+      <a href="/d2z/main" class="logo d-flex align-items-center me-auto">
         <h1 class="sitename">D2Z</h1>
       </a>
-      <a href="/main" class="active">Home<br></a>
+      <a href="/d2z/main" class="active">Home<br></a>
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </div>
   </header>
@@ -50,25 +75,24 @@
   <main class="main" style="min-height: 80vh; margin-top: 20px;">
     <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
       <div class="login-form p-4 shadow-lg rounded">
-        <h2 class="text-center mb-4">D2Z - 아이디 찾기</h2>
-        <form action="#" method="POST">
-          
+        <h2 class="text-center mb-4" >D2Z - 아이디 찾기</h2>
+        <form action="/d2z/findid" method="post">
           <div class="mb-3">
-            <input type="radio" class="btn btn-primary" id="findByPhone" value="등록한 전화번호로 찾기" name="findid">
-            <label for="findByPhone" style="display: inline;">등록한 전화번호로 찾기</label>
+          	<input type="text" value="" name="type" id="type" hidden>
+            <input type="radio" class="btn-check" id="findByPhone" value="등록한 전화번호로 찾기" name="findid">
+            <label class="btn btn-outline-primary" for="findByPhone">연락처로 찾기</label>
             <div id="tel" class="input-form" style="display: none;">
-              <input type="text" placeholder="회원가입시 입력한 전화번호를 입력해주세요." style="width: 500px;">
-              <input type="submit" value="아이디 찾기">
+              <input type="text" placeholder="회원가입시 입력한 전화번호를 입력해주세요." name="userTel" style="width: 350px; padding: 10px;">
+              <input class="btn btn-primary" type="submit" value="아이디 찾기">
             </div>
           </div>
-          
-         
+
           <div class="mb-3">
-            <input type="radio" class="btn btn-primary" id="findByEmail" value="등록한 이메일로 찾기" name="findid">
-            <label for="findByEmail" style="display: inline;">등록한 이메일로 찾기</label>
+            <input type="radio" class="btn-check" id="findByEmail" value="등록한 이메일로 찾기" name="findid">
+            <label class="btn btn-outline-primary" for="findByEmail">이메일로 찾기</label>
             <div id="email" class="input-form" style="display: none;">
-              <input type="text" placeholder="회원가입시 입력한 이메일을 입력해주세요." style="width: 500px;">
-              <input type="submit" value="아이디 찾기">
+              <input type="email" placeholder="회원가입시 입력한 이메일을 입력해주세요." name="userEmail" style="width: 350px; padding: 10px;">
+              <input class="btn btn-primary" type="submit" value="아이디 찾기">
             </div>
           </div>
         </form>
@@ -76,10 +100,33 @@
     </div>
   </main>
 
-  <footer id="footer" class="footer light-background">
+ <footer id="footer" class="footer light-background">
+
     <div class="container footer-top">
-      <!-- Footer Content -->
+      <div class="row gy-4">
+        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+          <h4>Contact Us</h4>
+          <p>Across the E-Mart</p>
+          <p>ChunCheon-si, Kangwon-do</p>
+          <p>Republic of Korea</p>
+          <p class="mt-4"><strong>Phone:</strong> <span>+82 10-1234-5678</span></p>
+          <p><strong>Email:</strong> <span>info@example.com</span></p>
+        </div>
+
+      </div>
     </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">OnePage</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>D2Z
+      </div>
+    </div>
+
   </footer>
 
   <!-- Vendor JS Files -->
@@ -97,26 +144,32 @@
 
   <!-- Script to toggle forms -->
   <script>
-    const findByPhone = document.getElementById('findByPhone');
-    const findByEmail = document.getElementById('findByEmail');
+    document.addEventListener("DOMContentLoaded", function () {
+        const findByPhone = document.getElementById("findByPhone");
+        const findByEmail = document.getElementById("findByEmail");
+        const tel = document.getElementById("tel");
+        const email = document.getElementById("email");
+        const typeInput = document.getElementById("type");
 
-    const tel = document.getElementById('tel');
-    const email = document.getElementById('email');
+        function toggleForm() {
+            if (findByPhone.checked) {
+                tel.style.display = "block";
+                email.style.display = "none";
+                typeInput.value = "전화";  // 선택한 값 설정
+            } else if (findByEmail.checked) {
+                tel.style.display = "none";
+                email.style.display = "block";
+                typeInput.value = "이메일";  // 선택한 값 설정
+            }
+        }
 
-    function toggleForm() {
-      if (findByPhone.checked) {
-        tel.style.display = 'block';  
-        email.style.display = 'none';  
-      } else if (findByEmail.checked) {
-        tel.style.display = 'none'; 
-        email.style.display = 'block';  
-      }
-    }
-
-   
-    findByPhone.addEventListener('change', toggleForm);
-    findByEmail.addEventListener('change', toggleForm);
+        findByPhone.addEventListener("change", toggleForm);
+        findByEmail.addEventListener("change", toggleForm);
+    });
   </script>
+  
+  
+  
 
 </body>
 

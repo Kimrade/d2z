@@ -194,4 +194,24 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 		return cur.totalCompanyCount();
 	}
 
+	@Override
+	public String findCompanyUserByEmail(String companyUserEmail) {
+		
+		if(cur.findByCompanyUserEmail(companyUserEmail).isPresent()) {
+			return cur.findByCompanyUserEmail(companyUserEmail).orElseThrow().getLogin().getId();
+		}else {
+			return null;
+		}
+	}
+
+	@Override
+	public String findCompanyUserByTelNo(String companyUserTel) {
+		if(cur.findByCompanyUserTel(companyUserTel).isPresent()) {
+			return cur.findByCompanyUserTel(companyUserTel).orElseThrow().getLogin().getId();
+		}else {
+			return null;
+		}
+		
+	}
+
 }

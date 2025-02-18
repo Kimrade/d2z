@@ -29,6 +29,11 @@ public class EngineerUserRepositoryTests {
 	private PasswordEncoder pe;
 	
 //	@Test
+//	public void findByEmail() {
+//		log.info("확인용 : "+eur.findByEngineerUserEmail("a@naver.com").orElseThrow().getLogin().getId());
+//	}
+//	
+//	@Test
 //	public void insertTestUnderSecurity() {
 //		
 //		Login login = Login.builder()

@@ -18,6 +18,11 @@ public class CompanyUserServiceTests {
 	private CompanyUserService cus;
 	
 //	@Test
+//	public void findTestEmail() {
+//		log.info("확인용 : "+cus.findCompanyUserByEmail("a1@naver.com"));
+//	}
+//	
+//	@Test
 //	public void insertTest() {
 //		
 //		LoginDTO login = LoginDTO.builder().id("bbb").pw("ccc").userDiv(2).build();

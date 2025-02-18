@@ -27,4 +27,10 @@ public interface EngineerUserService {
 	
 	// 인증받은 엔지니어 수 조회
 	public int totalEngineerCount();
+	
+	// 등록된 엔지니어 이메일로 id 찾기
+	public String findEngineerUserByEmail(String engineerUserEmail);
+	
+	// 등록된 엔지니어 전화번호로 id 찾기
+	public String findEngineerUserByTelNo(String engineerUserTel);
 }

@@ -26,39 +26,31 @@
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
 <style>
-    .login-form {
-      margin-top: 150px;
+    .main {
+        padding-top: 50px; /* 본문 상단 여유 */
     }
-
-    #tel, #email {
-      display: none;
+ 
+    .login-form input[type="submit"] {
+        float: right;
     }
-
-    .btn-outline-primary {
-      width: 100%;  /* 버튼의 너비를 부모 요소에 맞춰서 100%로 설정 */
-      max-width: 500px; /* 최대 너비를 500px로 설정 */
-      height: 50px;  /* 버튼의 높이를 50px로 고정 */
-      padding: 0;  /* 패딩을 제거하여 버튼 크기를 일관되게 설정 */
-      box-sizing: border-box; /* padding과 border를 포함한 크기 계산 */
-      display: flex;  /* 플렉스 박스를 사용하여 정렬 */
-      justify-content: center;  /* 가로로 가운데 정렬 */
-      align-items: center;  /* 세로로 가운데 정렬 */
-      text-align: center;  /* 텍스트가 버튼 내에서 정확히 가운데로 위치 */
+    table {
+      border: 1px solid black;
+      border-collapse: collapse;
+      margin: 20px; 
+      padding: 10px; 
     }
-input[type="submit"] {
-  display: block;  /* 버튼을 블록 요소로 만들어 전체 너비를 차지하도록 설정 */
-  margin-left: auto;  /* 왼쪽 마진을 자동으로 설정하여 오른쪽 정렬 */
-  margin-right: 0;  /* 오른쪽 마진을 0으로 설정 */
-  margin-top: 10px;  /* 위쪽 여백을 추가 */
-  margin-bottom: 10px;  /* 아래쪽 여백을 추가 */
-  padding: 8px 16px;  /* 버튼의 패딩을 줄여서 크기 축소 */
-  width: auto;  /* 너비를 자동으로 설정하여 너무 넓어지지 않도록 */
-  max-width: 200px;  /* 최대 너비를 200px로 설정하여 크기를 제한 */
-  text-align: center;  /* 버튼 내 텍스트 중앙 정렬 */
-  font-size: 14px;  /* 글자 크기 조정 */
-  height: 40px;  /* 버튼 높이를 40px로 설정 */
+    
+      th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  label {
+  text-align: left;
+   display: block;
 }
-  </style>
+    </style>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -76,37 +68,33 @@ input[type="submit"] {
       <nav id="navmenu" class="navmenu">-
         <ul>
           <li><a href="/d2z/main">Home<br></a></li>
-           </ul>
+        </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
     </div>
   </header>
 
   <main class="main" style="min-height: 80vh;">
-<section>
-    <!-- Page Title -->
-    <form action="/d2z/findPwConfirm" method="get">
-     <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
+<div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
       <div class="login-form p-5 shadow-lg rounded">
-       <h2>비밀번호 변경 - 아이디 확인</h2>
- 
+    <!-- Page Title -->
+       <h2>비밀 번호 변경</h2>
+ <form action="/d2z/findPwConfirm" method="post">
+ 	<input type="text" th:value="${id}" name="id" hidden>
   <div class="mb-3">
-    <label for="password" class="form-label">아이디를 입력해주세요</label>
-    <input type="text" class="form-control" id="password" name="id">
+    <label for="password" class="form-label">변경할 비밀번호를 입력해주세요</label>
+    <input type="password" class="form-control" id="password" name="pw">
   </div>
   
   <div class="mb-3">
-    <label for="chkpassword" class="form-label">이메일을 입력해주세요</label>
-    <input type="email" class="form-control" id="chkpassword" name="email"  style="width: 500px;">
+    <label for="chkpassword" class="form-label">비밀번호를 한번더 입력해주세요</label>
+    <input type="password" class="form-control" id="chkpassword" name="passWordConfirm" style="width: 500px;">
    </div>
    
    <input class="btn btn-primary" type="submit" value="변경하기">
-  
-  </div>
-  </div>
-  </form>
-    </section><!-- /Starter Section Section -->
-
+</form>
+</div>
+</div>
   </main>
 
   <footer id="footer" class="footer light-background">
@@ -143,6 +131,15 @@ input[type="submit"] {
 
   <!-- Preloader -->
   <div id="preloader"></div>
+  
+  <script th:inline="javascript">
+  	let pwAlert = [[${pwAlert}]]
+  	
+  	if(pwAlert){
+  		alert(pwAlert);
+  	}
+  </script>
+  
 
   <!-- Vendor JS Files -->
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

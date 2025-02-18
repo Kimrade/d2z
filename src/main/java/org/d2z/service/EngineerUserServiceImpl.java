@@ -193,4 +193,24 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 		return eur.totalApprovedEngineerCount();
 	}
 
+	@Override
+	public String findEngineerUserByEmail(String engineerUserEmail) {
+		if(eur.findByEngineerUserEmail(engineerUserEmail).isPresent()) {
+			return eur.findByEngineerUserEmail(engineerUserEmail).orElseThrow().getLogin().getId();
+		}else {
+			return null;
+		}
+		
+	}
+
+	@Override
+	public String findEngineerUserByTelNo(String engineerUserTel) {
+		if(eur.findByEngineerUserTel(engineerUserTel).isPresent()) {
+			return eur.findByEngineerUserTel(engineerUserTel).orElseThrow().getLogin().getId();
+		}else {
+			return null;
+		}
+		
+	}
+
 }

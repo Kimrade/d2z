@@ -27,4 +27,10 @@ public interface CompanyUserService {
 	
 	// 인증받은 사업주 사용자 수
 	public int totalCompanyUserCount();
+	
+	// 등록된 이메일주소로 id 찾기
+	public String findCompanyUserByEmail(String companyUserEmail);
+	
+	// 등록된 담당자 연락처로 id 찾기
+	public String findCompanyUserByTelNo(String companyUserTel);
 }
