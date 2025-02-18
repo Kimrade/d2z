@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>신규가입 회원 관리</title>
+<style>
+    table,th,tr,td {
+        border: 1px solid black;
+        border-collapse: collapse;
+         text-align: center;
+    vertical-align: middle;
+    }
+</style>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<h1>신규 가입 신청 확인 및 승인 화면</h1>
+<table>
+<tr> <th>id</th> <th>이름</th> <th>주소</th> <th>전화번호</th> <th>경력</th> <th>주요근무지</th> <th>지도분야</th> <th>이메일</th> <th>비고</th> <th>승인</th><th>보류</th></tr>
+<tr><td>ddrdr</td> <td>홍길동</td> <td>강원도 원주시</td> <td>010-0014-4477</td> <td>25년 5개월</td> <td>원주시</td> <td>금형</td> <td>qwer@asdf.com</td> <td></td><td><input type="checkbox" name="memberin"></td><td><input type="checkbox" name="memberno"></td></tr>
+<tr><td>bbcfd</td> <td>김김</td> <td>강원도 춘천시</td> <td>010-1597-3579</td> <td>19년 3개월</td> <td>구미시</td> <td>기타</td> <td>asdf@zxcv.com</td> <td>사출(선택지에없어서 기타체크)</td><td><input type="checkbox" name="memberin"></td><td><input type="checkbox" name="memberno"></td></tr>
+</table>
+  <button type="button" class="btn btn-primary">일괄승인</button>
+  <button type="button" class="btn btn-danger">일괄보류</button>
+</body>
+</html>

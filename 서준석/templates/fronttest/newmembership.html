@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>신규가입 회원 관리</title>
+<style>
+    table,th,tr,td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<h1>신규 가입 신청 확인 및 승인 화면</h1>
+<table>
+<tr> <th>사업체명</th> <th>사업자 번호</th> <th>업체명</th> <th>담당자</th> <th>담당자 전화번호</th> <th>이메일주소</th><th>승인</th><th>보류</th></tr>
+  <tr><td>aadnc</td> <td>221-54-88821</td> <td>AA다이캐스팅</td> <td>김감자</td> <td>033-254-5454</td> <td>aadnc@aadnc.co.kr</td><td><input type="checkbox" name="memberin"></td><td><input type="checkbox" name="memberno"></td></tr>
+  <tr><td>bbdnc</td> <td>221-45-12888</td> <td>BB다이캐스팅</td> <td>김밥</td> <td>033-245-4545</td> <td>bbdnc@bbdnc.co.kr</td><td><input type="checkbox" name="memberin"></td><td><input type="checkbox" name="memberno"></td></tr>
+ </table>
+  <button type="button" class="btn btn-primary">일괄승인</button>
+  <button type="button" class="btn btn-danger">일괄보류</button>
+</body>
+</html>

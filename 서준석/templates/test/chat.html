@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>1:1 채팅</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script th:inline="javascript">
+        var stompClient = null;
+        var roomId = null;
+
+        // WebSocket 연결
+        function connect() {
+            var socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function (frame) {
+                console.log('Connected: ' + frame);
+
+                // 채팅방 구독
+                roomId = document.getElementById("roomId").value;
+                stompClient.subscribe('/topic/chat/' + roomId, function (message) {
+                    showMessage(JSON.parse(message.body));
+                });
+            });
+        }
+
+        // 메시지 전송
+        function sendMessage() {
+            var sender = document.getElementById("sender").value;
+            var content = document.getElementById("content").value;
+
+            if (stompClient && roomId) {
+                var message = {
+                    sender: sender,
+                    content: content,
+                    roomId: roomId
+                };
+                stompClient.send("/app/chat/" + roomId, {}, JSON.stringify(message));
+                document.getElementById("content").value = "";
+            }
+        }
+
+        // 메시지 표시
+        function showMessage(message) {
+            var chatBox = document.getElementById("chatBox");
+            var p = document.createElement("p");
+            p.textContent = message.sender + ": " + message.content;
+            chatBox.appendChild(p);
+        }
+    </script>
+</head>
+<body>
+    <h2>1:1 실시간 채팅</h2>
+
+    <!-- 채팅방 ID 입력 -->
+    <label>채팅방 ID:</label>
+    <input type="text" id="roomId" th:value="${roomId}">
+    <button onclick="connect()">채팅방 입장</button>
+
+    <br><br>
+
+    <!-- 보내는 사람 및 메시지 입력 -->
+    <label>보내는 사람:</label>
+    <input type="text" id="sender">
+
+    <label>메시지:</label>
+    <input type="text" id="content">
+    <button onclick="sendMessage()">전송</button>
+
+    <!-- 채팅 로그 -->
+    <h3>채팅 로그:</h3>
+    <div id="chatBox" style="border:1px solid black; width:300px; height:200px; overflow:auto;"></div>
+</body>
+</html>

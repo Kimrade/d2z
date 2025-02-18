@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>D2Z - Membership</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="/css/main.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: OnePage
+  * Template URL: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3                                                                                                                                                                                                                            
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+  <style>
+    .login-form {
+      margin-top: 50px; 
+    }
+  </style>
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="/main" class="logo d-flex align-items-center me-auto">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1 class="sitename">D2Z</h1>
+      </a>
+      <a href="/main" class="active">Home<br></a>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </div>
+  </header>
+
+ 
+	<main class="main" style="min-height: 80vh;">
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
+      <div class="login-form p-5 shadow-lg rounded">
+        <h2 class="text-left mb-3">회원가입</h2>
+        <form action="#" method="POST" id="signup">
+        <input type = "radio" value = "사업체" name = "usertype" id = "businessRadio"> 사업장 가입
+        <input type = "radio" value = "엔지니어" name = "usertype" id = "engineerRadio"> 엔지니어 가입
+        <br>
+        <br>
+        <div id = "engineer" style="display: none;">
+          <div class="mb-3"> 
+            <label for="username" class="form-label">ID</label>
+            <input type="text" class="form-control" id="username" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" required>
+          </div>
+          <div class="mb-3">
+            <label for="birthday" class="form-label">생년월일(ex.19990108)</label>
+            <input type="text" class="form-control" id="birthday" required>
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">주소</label>
+            <input type="text" class="form-control" id="address" style="width: 500px;" required>
+          </div>
+          <div class="mb-3">
+            <label for="tel" class="form-label">전화번호</label>
+            <input type="tel" class="form-control" id="tel" required>
+          </div>
+          <div class="mb-3">
+            <label for="carrer" class="form-label">경력</label>
+            <input type="text" class="form-control" id="career"  required>
+          </div>
+          
+            <div class="mb-3">
+            <label for="carrer" class="form-label">주요근무지</label>
+            <input type="text" class="form-control" id="career"  required>
+          </div>
+          <div class="mb-3">
+            <label for="guide" class="form-label">지도분야선택</label>&nbsp; &nbsp;  
+            	<select>
+            		<option value="">주조</option>
+            		<option value="">가공</option>
+            		<option value="">후처리</option>
+            		<option value="">금형</option>
+            		<option value="">설비</option>
+            		<option value="">품질</option>
+            		<option value="">품질</option>
+            		<option value="">생산</option>
+            		<option value="">안전</option>
+            		<option value="">기타</option>
+            	</select>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">이메일주소</label>
+            <input type="text" class="form-control" id="email"  required>
+          </div>
+            <div class="mb-3">
+            <label for="etc" class="form-label">기타(의견제시)</label>
+            <input type="text" class="form-control" id="etc" placeholder="지도분야를 기타로 선택하신분은 지도분야를 꼭 적어주세요">
+          </div>
+          <input type="submit" class="btn btn-primary" value="회원가입">
+        </div>
+
+          <div id = "business" style="display: none">
+          
+            <div class = "mb-3">
+              <label for="username" class="form-label">ID</label>
+              <input type="text" class="form-control" id="username" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" required>
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">사업장명</label>
+              <input type="text" class="form-control" id="businessName" style="width: 500px;" required>
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">사업자 등록 번호</label>
+              <input type="text" class="form-control" id="businessNum" style="width: 500px;" required>
+            </div>
+            <div class="mb-3">
+              <label for="tel" class="form-label">사업장 주소(소재지)</label>
+              <input type="tel" class="form-control" id="address" required>
+            </div>
+            <div class="mb-3">
+              <label for="businessNum" class="form-label">전화번호</label>
+              <input type="text" class="form-control" id="tel" required>
+            </div>
+            <div class="mb-3">
+              <label for="conTel" class="form-label">사업장 연락처</label>
+              <input type="text" class="form-control" id="comTel"  required>
+            </div>
+            <div class="mb-3">
+              <label for="comPerson" class="form-label">담당자</label>
+              <input type="text" class="form-control" id="comPerson"  required>
+            </div>
+            <div class="mb-3">
+              <label for="comPersonTel" class="form-label">담당자 연락처</label>
+              <input type="text" class="form-control" id="comPersonTel"  required>
+            </div>
+            <div class="mb-3">
+              <label for="comPersonEmail" class="form-label">담당자 이메일</label>
+              <input type="text" class="form-control" id="comPersonEmail"  required>
+            <div class="mb-3">
+              <label for="etc" class="form-label">비고</label>
+              <input type="text" class="form-control" id="etc" placeholder="의견제시나 하고싶은말을 적어주세요">
+            </div>
+            <input type="submit" class="btn btn-primary" value="회원가입">
+          </div>
+          </div>
+        </form>
+      </div>
+      <script>
+        const businessRadio = document.getElementById('businessRadio');
+        const engineerRadio = document.getElementById('engineerRadio');
+
+        const businessForm = document.getElementById('business');
+        const engineerForm = document.getElementById('engineer');
+	
+        function toggleForm() {
+          if (businessRadio.checked) {
+            businessForm.style.display = 'block';
+            engineerForm.style.display = 'none';
+          } else if (engineerRadio.checked) {
+            businessForm.style.display = 'none';
+            engineerForm.style.display = 'block';
+          }
+        }
+        businessRadio.addEventListener('change', toggleForm);
+        engineerRadio.addEventListener('change', toggleForm);
+      </script>
+    </div>
+  
+  </main>
+   
+  <footer id="footer" class="footer light-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-5 col-md-12 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">D2Z</span>
+          </a>
+          <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
+        </div>
+
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Terms of service</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="#">Web Design</a></li>
+            <li><a href="#">Web Development</a></li>
+            <li><a href="#">Product Management</a></li>
+            <li><a href="#">Marketing</a></li>
+            <li><a href="#">Graphic Design</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+          <h4>Contact Us</h4>
+          <p>A108 Adam Street</p>
+          <p>New York, NY 535022</p>
+          <p>United States</p>
+          <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+          <p><strong>Email:</strong> <span>info@example.com</span></p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">OnePage</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>ThemeWagon
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/php-email-form/validate.js"></script>
+  <script src="/vendor/aos/aos.js"></script>
+  <script src="/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="/js/main.js"></script>
+
+</body>
+
+</html>
