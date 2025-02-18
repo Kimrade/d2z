@@ -188,4 +188,10 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 		return result;
 	}
 
+	@Override
+	public int totalCompanyUserCount() {
+		
+		return cur.totalCompanyCount();
+	}
+
 }

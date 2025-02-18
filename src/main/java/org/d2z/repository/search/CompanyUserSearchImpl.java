@@ -129,6 +129,26 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 		return result;
 	}
 
+	@Override
+	public int totalCompanyCount() {
+		
+		QCompanyUser companyUser = QCompanyUser.companyUser;
+		
+		JPQLQuery<CompanyUser> query = from(companyUser);
+		
+		BooleanBuilder bb = new BooleanBuilder();
+		
+		bb.and(companyUser.isApproved.eq(1));
+		
+		bb.and(companyUser.isDeleted.eq(0));
+		
+		query.where(bb);
+		
+		int count = (int)query.fetchCount();
+		
+		return count;
+	}
+
 	
 
 }

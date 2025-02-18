@@ -25,4 +25,6 @@ public interface CompanyUserService {
 	// 사업주 사용자 조회 (사업주 정보 조회) - 페이지 처리
 	public PageResponseDTO<CompanyUserDTO> companyUserSearchByKeyword(PageRequestDTO pageRequestDTO);
 	
+	// 인증받은 사업주 사용자 수
+	public int totalCompanyUserCount();
 }

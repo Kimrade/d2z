@@ -201,6 +201,26 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		return count;
 	}
 
+	@Override
+	public int totalApprovedEngineerCount() {
+		
+		QEngineerUser engineer = QEngineerUser.engineerUser;
+		
+		JPQLQuery<EngineerUser> query = from(engineer);
+		
+		BooleanBuilder bb = new BooleanBuilder();
+		
+		bb.and(engineer.isDeleted.eq(0));
+		
+		bb.and(engineer.isApproved.eq(1));
+		
+		query.where(bb);
+		
+		int count = (int)query.fetchCount();
+		
+		return count;
+	}
+
 	
 
 }

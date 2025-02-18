@@ -25,4 +25,10 @@ public interface ContractService {
 	// 사업주 정보를 통해 조회가 가능
 	public List<ContractDTO> searchOneByCompanyUser(int companyUserNo);
 	
+	// 체결되어 진행중인 사업 갯수
+	public int totalCountOnGoingContract();
+	
+	// 체결되어 완료된 사업 갯수
+	public int totalCountCompletedContract();
+	
 }

@@ -28,13 +28,23 @@
   <link href="/css/main.css" rel="stylesheet">
 
   <style>
-    table, tr, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-      margin: 20px; 
-      padding: 10px; 
-    }
-    
+	table, tr, td {
+	  border-collapse: collapse;
+	  margin: 20px;
+	  padding: 10px;
+	}
+	
+	th, td {
+	  border: 1px solid white;
+	  text-align: center;
+	}
+	
+	tr:first-child td {
+	  background-color: #2487CE;
+	  color: white;
+	  font-weight: bold;
+	}  
+	
      .portfolio-description h2 {
     text-align: center; 
   }
@@ -49,7 +59,7 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/engineer/engineer" class="logo d-flex align-items-center me-auto">
+      <a href="/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
@@ -65,7 +75,7 @@
               <li><a href="/engineeredit">내정보 수정</a></li>
               <li><a href="/message">쪽지함 확인</a></li>
             </ul> 
-            <li><a>[[${#authentication.principal}]]님 환영합니다</a></li>
+            <li><a>김감자님 환영합니다</a></li>
         </ul>
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </nav>
@@ -103,7 +113,7 @@
             <h2>현재 사업 진행 현황</h2>
             <p>
               <table>
-                <tr><th>no</th> <th>지원한공고</th> <th>지도분야</th> <th>기간</th> <th>업체명</th> <th>담당자명</th> <th>담당자 연락처</th> <th>진행상황</th> <th>마감여부</th> </tr>
+                <tr><td>no</td> <td>지원한공고</td> <td>지도분야</td> <td>기간</td> <td>업체명</td> <td>담당자명</td> <td>담당자 연락처</td> <td>진행상황</td> <td>마감여부</td> </tr>
                 <tr><td>1</td> <td><a href="/companyProgress">AA다이캐스팅 원격지도</a></td> <td>주조</td> <td>25.02.01 ~ 25.06.30</td> <td>AA다이캐스팅</td> <td>김나물</td> <td>033-254-5454</td> <td>계약완료</td> <td>공고마감</td></tr>
                 <tr><td>2</td> <td></a>BB다이캐스팅 현장방문</a></td> <td>가공</td><td>25.02.01 ~ 25.06.30</td> <td>BB다이캐스팅</td> <td>김밥</td> <td>033-245-4545</td><td>지원완료</td><td>지원가능</td></tr>
                 <tr><td>3</td> <td></a>CC다이캐스팅</a></td> <td>후처리</td><td>25.02.01 ~ 25.06.30</td> <td>CC다이캐스팅</td><td>김가루</td> <td>031-904-4444</td><td>지원완료</td><td>공고마감</td></tr>

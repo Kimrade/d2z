@@ -41,4 +41,7 @@ public interface AdminUserService {
 	
 	// 관리자 정보 수정
 	public boolean modifyAdminUser(LoginUserDTO loginUserDTO, AdminUserDTO adminUserDTO);
+	
+	// 관리자 정보 조회
+	public AdminUserDTO findByAdminId(String id);
 }

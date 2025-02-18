@@ -27,32 +27,20 @@
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
   <style>
-	table, tr, td {
-	  border-collapse: collapse;
-	  margin: 20px;
-	  padding: 10px;
-	}
-	
-	th, td {
-	  border: 1px solid white;
-	  text-align: center;
-	}
-	
-	tr:first-child td {
-	  background-color: #2487CE;
-	  color: white;
-	  font-weight: bold;
-	}  
-	
+    table, tr, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      margin: 20px; 
+      padding: 10px; 
+    }
+    
      .portfolio-description h2 {
-	    text-align: center; 
-	  }
-		.portfolio-description table {
-	    margin: 20px auto; 
-	  }
-  
+    text-align: center; 
+  }
+.portfolio-description table {
+    margin: 20px auto; 
+  }
   </style>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="portfolio-details-page">
@@ -60,28 +48,16 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/main" class="logo d-flex align-items-center me-auto">
+      <a href="/d2z/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
       </a>
 
-      <nav id="navmenu" class="navmenu">
+      <nav id="navmenu" class="navmenu">-
         <ul>
-          <li><a href="/main">Home<br></a></li>
-          <li><a href="/announce">공고 등록</a></li>
-          <li><a href="/searchAnn">공고 조회</a></li>
-          <li><a href="/findEngineer">엔지니어 조회</a></li>
-		<ul>
-            <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-              	<li><a>AA다이캐스팅님 환영합니다</a></li>
-                <li><a href="/companyedit">내정보 수정</a></li>
-                <li><a href="/message">쪽지함 확인</a></li>
-              </ul>
-   		 </ul>
-           
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          <li><a href="/d2z/main">Home<br></a></li>
+		</ul>
       </nav>
     </div>
   </header>
@@ -91,10 +67,10 @@
     <!-- Page Title -->
     <div class="page-title accent-background">
       <div class="container">
-        <h1>기업체 여러분 환영합니다</h1>
+        <h1>D/C 제조사 정보입니다.</h1><br>
         <nav class="breadcrumbs">
           <ol>
-          	<li class="current">귀사의 발전에 다장이 함께 하겠습니다.</li>
+          	<li class="current">훌륭한 제조사 정보를 제공합니다.</li>
           </ol>
         </nav>
       </div>
@@ -104,39 +80,78 @@
     <!-- Portfolio Details Section -->
     <section id="portfolio-details" class="portfolio-details section">
 
-    
-
-
         <div class="row justify-content-between gy-4 mt-4">
 
           <div class="col-lg-8" data-aos="fade-up" >
             <div class="portfolio-description">
-              <h2>현재 사업 진행 현황</h2>
+              <h2></h2>
               <p>
                 <table>
-                  <tr><td>no</td> <td>공고명</td> <td>기간</td> <td>과제명</td> <td>매칭여부</td> <td>엔지니어</td> </tr>
-                  <tr><td>1</td> <td><a href="/companyProgress">AA다이캐스팅 지도방문</a></td> <td>25.02.01 ~ 25.06.30</td> <td>AA다이캐스팅 지도방문</td><td>O</td> <td>김감자</td></tr>
-                  <tr><td>2</td> <td><a>AA다이캐스팅 현장방문</a></td> <td>25.02.01 ~ 25.06.30</td> <td>AA다이캐스팅 현장방문</td><td>X</td> <td>지원자없음</td></tr>
+                  <div class="portfolio-description" style="text-align: center;">
+                    <h2>D/C 제조사 정보</h2>
+                    <table style="margin: auto;">
+                        <tr>
+                            <th>NO</th>
+                            <th>업체명</th>
+                            <th>업체주소</th>
+                            <th>전화번호</th>
+                            <th>주생산품</th>
+                            <th>보유설비</th>
+                            <th>이메일</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>DnK모빌리티</td>
+                            <td>울산시 울주군 온산읍 화산리 872번지</td>
+                            <td>052-239-0300</td>
+                            <td>Transmission Case, Valve Body, Converter Housing</td>
+                            <td>Cold Cham. : 2250∼350 Ton 27대</td>
+                            <td><a href="http://dnkmbt.com/page/group" target="_blank">링크</a></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>경림다이캐스팅</td>
+                            <td>경기도 김포시 대곶면 초원지리 448-1</td>
+                            <td></td>
+                            <td>자동차 부품 및 건설차량 부품, 전장부기구</td>
+                            <td>다이캐스팅 머신 350톤 대 2대</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>경성산업</td>
+                            <td>부산광역시 강서구 낙동남로 533번길 14(녹산동)</td>
+                            <td>051-324-3669</td>
+                            <td>Sus Cut Wire, Al, Zn, Fe Shot Ball</td>
+                            <td>Cold Cham. : 250∼150 Ton 4대</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>경원다이캐스팅</td>
+                            <td>경기도 김포시 대곶면 초원지리 448-1</td>
+                            <td>032-563-0203</td>
+                            <td>자동차 부품 및 건설자재, 주방기구</td>
+                            <td>다이캐스팅 머신 350톤 2대</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>금오EMS(주)</td>
+                            <td>대구시 달성군 현풍면 중리 510-2</td>
+                            <td>053-582-2870</td>
+                            <td>자동차 포그램프 반사경, 자동차 체인지 레바, 자동차 헤드램프 롤다</td>
+                            <td>Cold Cham. : 350∼125 Ton 7대, Hot Cham. : 150 Ton 1대</td>
+                            <td><a href="http://www.kumohdc.com/" target="_blank">링크</a></td>
+                        </tr>
+                    </table>
+                </div>
+                
                 </table>
+              </p>
             </div>
           </div>
-
-          <div class="col-lg-3" data-aos="fade-up" data-aos-delay="100">
-            <div class="portfolio-info">
-              <h3>이곳에 프로젝트 진행도가 나오면 어떨까</h3>
-              <ul>
-                <li><strong>Category</strong> Web design</li>
-                <li><strong>Client</strong> ASU Company</li>
-                <li><strong>Project date</strong> 01 March, 2020</li>
-                <li><strong>Project URL</strong> <a href="#">www.example.com</a></li>
-                <li><a href="#" class="btn-visit align-self-start">Visit Website</a></li>
-              </ul>
-            </div>
-          </div>
-
         </div>
-
-      </div>
 
     </section><!-- /Portfolio Details Section -->
 
@@ -146,41 +161,12 @@
 
     <div class="container footer-top">
       <div class="row gy-4">
-        <div class="col-lg-5 col-md-12 footer-about">
-          <a href="/main" class="logo d-flex align-items-center">
-            <span class="sitename">D2Z</span>
-          </a>
-          <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
-        </div>
-
-        <div class="col-lg-2 col-6 footer-links">
-          <h4>D2Z</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-2 col-6 footer-links">
-          <h4>Our Services</h4>
-          <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
-          </ul>
-        </div>
-
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
           <h4>Contact Us</h4>
-          <p>A108 Adam Street</p>
-          <p>New York, NY 535022</p>
-          <p>United States</p>
-          <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+          <p>Across the E-Mart</p>
+          <p>ChunCheon-si, Kangwon-do</p>
+          <p>Republic of Korea</p>
+          <p class="mt-4"><strong>Phone:</strong> <span>+82 10-1234-5678</span></p>
           <p><strong>Email:</strong> <span>info@example.com</span></p>
         </div>
 
@@ -194,7 +180,7 @@
         <!-- You can delete the links only if you've purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>ThemeWagon
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>D2Z
       </div>
     </div>
 
@@ -220,4 +206,5 @@
   <script src="/js/main.js"></script>
 
 </body>
+
 </html>

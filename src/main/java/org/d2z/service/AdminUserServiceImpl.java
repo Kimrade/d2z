@@ -261,6 +261,12 @@ public class AdminUserServiceImpl implements AdminUserService{
 		
 		return result;
 	}
+
+	@Override
+	public AdminUserDTO findByAdminId(String id) {
+		
+		return modelMapper.map(aur.findByLoginId(id).orElseThrow(), AdminUserDTO.class);
+	}
 	
 	
 	

@@ -187,4 +187,10 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 		return result;
 	}
 
+	@Override
+	public int totalEngineerCount() {
+		
+		return eur.totalApprovedEngineerCount();
+	}
+
 }

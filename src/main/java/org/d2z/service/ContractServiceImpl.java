@@ -75,4 +75,16 @@ public class ContractServiceImpl implements ContractService {
 		return result;
 	}
 
+	@Override
+	public int totalCountOnGoingContract() {
+		
+		return cr.onGoingCount();
+	}
+
+	@Override
+	public int totalCountCompletedContract() {
+		
+		return cr.completedCount();
+	}
+
 }

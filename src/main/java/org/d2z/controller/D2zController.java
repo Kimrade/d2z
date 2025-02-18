@@ -4,9 +4,11 @@ import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.EngineerUserDTO;
 import org.d2z.dto.LoginUserDTO;
 import org.d2z.service.CompanyUserService;
+import org.d2z.service.ContractService;
 import org.d2z.service.EngineerUserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +26,21 @@ public class D2zController {
 	
 	private final EngineerUserService eus;
 	private final CompanyUserService cus;
+	private final ContractService cs;
 	
 	@PreAuthorize("permitAll")
 	@GetMapping({"/","/main"})
-	public String mainGet() {
+	public String mainGet(Model model) {
 		log.info("main get 진입 - main 화면 조회");
+		
+		model.addAttribute("engineerCount", eus.totalEngineerCount());
+		
+		model.addAttribute("companyCount", cus.totalCompanyUserCount());
+		
+		model.addAttribute("completeCount", cs.totalCountCompletedContract());
+		
+		model.addAttribute("onGoingCount", cs.totalCountOnGoingContract());
+		
 		return "/d2z/main";
 	}
 	
@@ -77,6 +89,21 @@ public class D2zController {
 		}
 		
 		return "redirect:/d2z/";
+	}
+	
+	@GetMapping("/informationHistory")
+	public void informationHistoryGet() {
+		
+	}
+	
+	@GetMapping("/informationManufacturer")
+	public void informationManufacturerGet() {
+		
+	}
+	
+	@GetMapping("/informationMarket")
+	public void informationMarketGet() {
+		
 	}
 	
 	

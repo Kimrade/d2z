@@ -6,6 +6,7 @@ import org.d2z.domain.Contract;
 import org.d2z.domain.QContract;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.JPQLQuery;
 
 public class ContractSearchImpl extends QuerydslRepositorySupport implements ContractSearch {
@@ -59,6 +60,43 @@ public class ContractSearchImpl extends QuerydslRepositorySupport implements Con
 		List<Contract> list = query.fetch();
 		
 		return list;
+	}
+
+	@Override
+	public int onGoingCount() {
+		
+		QContract contract = QContract.contract;
+		
+		JPQLQuery<Contract> query = from(contract);
+		
+		BooleanBuilder bb = new BooleanBuilder();
+		
+		bb.and(contract.processingTask.ne(5));
+		bb.and(contract.processingTask.ne(0));
+		
+		query.where(bb);
+		
+		int count = (int)query.fetchCount();
+		
+		return count;
+	}
+
+	@Override
+	public int completedCount() {
+		
+		QContract contract = QContract.contract;
+		
+		JPQLQuery<Contract> query = from(contract);
+		
+		BooleanBuilder bb = new BooleanBuilder();
+		
+		bb.and(contract.processingTask.eq(5));
+		
+		query.where(bb);
+		
+		int count = (int)query.fetchCount();
+		
+		return count;
 	}
 	
 	
