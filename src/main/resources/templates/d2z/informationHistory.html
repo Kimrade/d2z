@@ -27,20 +27,51 @@
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
   <style>
-    table, tr, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-      margin: 20px; 
-      padding: 10px; 
-    }
-    
-     .portfolio-description h2 {
-    text-align: center; 
-  }
+	table, tr, td {
+	  border-collapse: collapse;
+	  margin: 20px;
+	  padding: 10px;
+	  margin-left:auto;
+	  margin-right:auto;
+	}
+	
+	th, td {
+	  border: 1px solid white;
+	  text-align: center;
+	}
+	
+	tr:first-child td {
+	  background-color: #2487CE;
+	  color: white;
+	  font-weight: bold;
+	}  
+	.portfolio-details {
+  display: flex;
+  flex-direction: column;  
+  justify-content: center; 
+  align-items: center;    
+  height: 100vh;           
+  text-align: center;      
+}
+
+.portfolio-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.portfolio-description h2 {
+  margin-bottom: 20px; 
+}
+
 .portfolio-description table {
-    margin: 20px auto; 
-  }
+  margin: 0 auto; 
+  width: 80%; 
+}
   </style>
+   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="portfolio-details-page">
@@ -54,7 +85,7 @@
         <h1 class="sitename">D2Z</h1>
       </a>
 
-      <nav id="navmenu" class="navmenu">-
+      <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="/d2z/main">Home<br></a></li>
 		</ul>
@@ -80,67 +111,60 @@
 
     <!-- Portfolio Details Section -->
     <section id="portfolio-details" class="portfolio-details section">
-
     
-
-
-        <div class="row justify-content-between gy-4 mt-4">
-
-          <div class="col-lg-8" data-aos="fade-up" >
-            <div class="portfolio-description">
+        <div class="col-lg-8 mx-auto" data-aos="fade-up">
               <h2>D/C 역사관</h2>
-              <p>
                   <table>
                       <tr>
-                          <th>내용</th>
-                          <th>관련정보</th>
+                          <td>내용</td>
+                          <td>관련영상</td>
                       </tr>
-                      <tr>
+                      <tr class="table-info">
                           <td>수동주탕</td>
                           <td><a href="https://www.youtube.com/shorts/QvJQLrhOBF0" target="_blank">영상 보기</a></td>
                       </tr>
-                      <tr>
+                      <tr class="table-info">
                           <td>자동주탕</td>
                           <td><a href="https://www.youtube.com/shorts/K1RQ70odv7Q" target="_blank">영상 보기</a></td>
                       </tr>
-                      <tr>
+                      <tr class="table-info">
                           <td>수동취출</td>
                           <td><a href="https://www.youtube.com/watch?v=smv1S1uzins" target="_blank">영상 보기</a></td>
                       </tr>
-                      <tr>
+                      <tr class="table-info">
                           <td>원태_1</td>
                           <td><a href="https://www.youtube.com/watch?v=tBg_r2TXMBg" target="_blank">영상 보기</a></td>
                       </tr>
-                      <tr>
+                      <tr class="table-info">
                           <td>원태_2</td>
                           <td><a href="https://www.youtube.com/watch?v=OioCYRCB-uw" target="_blank">영상 보기</a></td>
                       </tr>
-                      <tr>
+                      <tr class="table-info">
                           <td>코넥</td>
                           <td><a href="https://www.youtube.com/watch?v=oi5WiNgDORU" target="_blank">영상 보기</a></td>
                       </tr>
-                      <tr>
+                      <tr class="table-info">
                           <td>테슬라_공장</td>
                           <td><a href="https://www.youtube.com/watch?v=oDYgT9S1NRU&t=179s" target="_blank">영상 보기</a></td>
                       </tr>
-                      <tr>
+                      <tr class="table-info">
                           <td>기가프레스</td>
                           <td><a href="https://www.youtube.com/watch?v=jqtzFi7r9Vc" target="_blank">영상 보기</a></td>
                       </tr>
-                      <tr>
+                      <tr class="table-info">
                           <td>테슬라_기가프레스</td>
                           <td><a href="https://www.youtube.com/watch?v=QAQSHNs7tIc" target="_blank">영상 보기</a></td>
                       </tr>
-                      <tr>
+                      <tr class="table-info">
                           <td>상기</td>
                           <td><a href="https://www.youtube.com/watch?v=D4KdEpsqyyk" target="_blank">영상 보기</a></td>
                       </tr>
-                      <tr>
+                      <tr class="table-info">
                           <td>동서</td>
                           <td><a href="https://www.youtube.com/watch?v=78YZO_Wl9Kw" target="_blank">영상 보기</a></td>
                       </tr>
                   </table>
-              </p>
+              </div>
           </div>
           
 
@@ -153,9 +177,44 @@
   </main>
 
   <footer id="footer" class="footer light-background">
-
-    <div class="container footer-top">
+	<div class="container footer-top">
       <div class="row gy-4">
+      	
+      	<div class="col-lg-2 col-6 footer-links">
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+      	
+        <div class="col-lg-2 col-6 footer-links">
+          <a href="/d2z/informationHistory"><h4>D/C 역사관</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+    
+        <div class="col-lg-2 col-6 footer-links">
+          <a href="/d2z/informationMarket"><h4>D/C 원자재</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+    
+        <div class="col-lg-2 col-6 footer-links">
+          <a href="/d2z/informationManufacturer"><h4>D/C 제조사</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+	
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
           <h4>Contact Us</h4>
           <p>Across the E-Mart</p>
@@ -164,8 +223,7 @@
           <p class="mt-4"><strong>Phone:</strong> <span>+82 10-1234-5678</span></p>
           <p><strong>Email:</strong> <span>info@example.com</span></p>
         </div>
-
-      </div>
+    </div>
     </div>
 
     <div class="container copyright text-center mt-4">
@@ -201,5 +259,4 @@
   <script src="/js/main.js"></script>
 
 </body>
-
 </html>

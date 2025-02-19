@@ -3,7 +3,9 @@ package org.d2z.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.d2z.domain.CompanyUser;
 import org.d2z.domain.PublicAnnouncement;
+import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PageResponseDTO;
 import org.d2z.dto.PublicAnnouncementDTO;
@@ -27,7 +29,7 @@ public class PublicAnnouncementServiceImpl implements PublicAnnouncementService 
 	private final ModelMapper modelMapper;
 	
 	@Override
-	public boolean publicAnnouncementInsert(PublicAnnouncementDTO publicAnnouncementDTO) {
+	public boolean publicAnnouncementInsert(PublicAnnouncementDTO publicAnnouncementDTO, CompanyUserDTO companyUserDTO) {
 		
 		boolean result = false;
 		
@@ -41,11 +43,12 @@ public class PublicAnnouncementServiceImpl implements PublicAnnouncementService 
 					.serviceCost(publicAnnouncementDTO.getServiceCost())
 					.serviceDiv(publicAnnouncementDTO.getServiceDiv())
 					.serviceJob(publicAnnouncementDTO.getServiceJob())
-					.companyUser(cur.findById(publicAnnouncementDTO.getCompanyUserNo()).orElseThrow())
 					.serviceJob(publicAnnouncementDTO.getServiceJob())
 					.servicePeriod(publicAnnouncementDTO.getServicePeriod())
 					.ServicePersonnel(publicAnnouncementDTO.getServicePersonnel())
-					.serviceTotalCost(publicAnnouncementDTO.getServiceTotalCost()).build();
+					.serviceTotalCost(publicAnnouncementDTO.getServiceTotalCost())
+					.companyUser(modelMapper.map(companyUserDTO, CompanyUser.class))
+					.build();
 			
 			par.save(publicAnnouncement);
 			

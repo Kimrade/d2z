@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="kr">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>D2Z - 비밀번호 찾기</title>
+  <title>D2Z - 공고작성</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="/img/favicon.png" rel="icon">
-  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -25,78 +24,111 @@
 
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
-<style>
-    .main {
-        padding-top: 50px; /* 본문 상단 여유 */
+
+  <!-- =======================================================
+  * Template Name: OnePage
+  * Template URL: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3                                                                                                                                                                                                                            
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+  <style>
+    .login-form {
+      margin-top: 50px; 
     }
- 
-    .login-form input[type="submit"] {
-        float: right;
-    }
-    table {
-      border: 1px solid black;
-      border-collapse: collapse;
-      margin: 20px; 
-      padding: 10px; 
-    }
-    
-      th, td {
-    border: 1px solid black;
-    padding: 10px;
-    text-align: center;
-    vertical-align: middle;
-  }
-  label {
-  text-align: left;
-   display: block;
-}
-    </style>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  </style>
 </head>
 
-<body class="starter-page-page">
+<body class="index-page">
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/d2z/main" class="logo d-flex align-items-center me-auto">
+      <a href="/company/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
       </a>
-
-      <nav id="navmenu" class="navmenu">-
+      <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="/d2z/main">Home<br></a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+          <li><a href="/company/announce">공고 등록</a></li>
+          <li><a href="/company/searchAnn">공고 조회</a></li>
+          <li><a href="/company/findEngineer">엔지니어 조회</a></li>
+          <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+            	
+              <li><a href="/company/companyedit">내정보 수정</a></li>
+              <li><a href="/company/message">쪽지함 확인</a></li>
+            </ul>
+          <li><a>[[${companyUserDTO.companyUserName}]]님 환영합니다</a></li>
+   		 </ul>
+   		</nav>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </div>
   </header>
 
-  <main class="main" style="min-height: 80vh;">
-<div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
+ 
+	<main class="main" style="min-height: 80vh;">
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
       <div class="login-form p-5 shadow-lg rounded">
-    <!-- Page Title -->
-       <h2>비밀 번호 변경</h2>
- <form action="/d2z/findPwConfirm" method="post">
- 	<input type="text" th:value="${id}" name="id" hidden>
-  <div class="mb-3">
-    <label for="password" class="form-label">변경할 비밀번호를 입력해주세요</label>
-    <input type="password" class="form-control" id="password" name="pw">
-  </div>
+        <h1 class="text-left mb-3">공고 작성</h1>
+        <form action="/company/announce" method="post" id="signup">
+        <br>
+        <br>
+        <div id = "engineer">
+          <div class="mb-3"> 
+            <label for="announcename" class="form-label">공 고 명</label>
+            <input type="text" class="form-control" id="announcename" name="announcementName" required>
+          </div>
+          <div class="mb-3"> 
+            <label for="announcename" class="form-label">공고 내용</label>
+            <input type="text" class="form-control" id="announcename" name="announcementDescription" required>
+          </div>
+          <div class="mb-3">
+            <label for="announcecost" class="form-label">모집 인원</label>
+            <input type="number" class="form-control" id="announcecost" name="servicePersonnel">
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">근무지 주소</label>
+            <input type="text" class="form-control" id="address" name="serviceAdd" style="width: 500px;" required>
+          </div>
+          <div class="mb-3">
+            <label for="tel" class="form-label">서비스 구분</label>
+            <input type="text" class="form-control" id="tel" placeholder="ex> 원격, 방문, 제조 참여 등" name="serviceDiv" required>
+          </div>
+          <div class="mb-3">
+            <label for="guide" class="form-label">근무 분야</label>
+            <input type="text" class="form-control" name="serviceJob" placeholder="ex> 가공, 금형, 사출 등" id="career"  required>
+          </div>
+           <div class="mb-3">
+            <label for="carrer" class="form-label">근무 기간</label>
+            <input type="text" class="form-control" id="career" placeholder="ex> 2개월, 4일 등" name="servicePeriod" required>
+          </div>
+           <div class="mb-3">
+            <label for="carrer" class="form-label">공고 비용</label>
+            <input type="number" class="form-control" name="serviceCost" value=0 id="career">
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">총 공고 비용</label>
+            <input type="number" class="form-control" id="address" value=0 name="serviceTotalCost">
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">공고 마감 기한</label>
+            <input type="datetime-local" class="form-control" id="address" name="deadlineDate">
+          </div>
+          엔지니어 추천을 받으시겠습니까? <br> <br>
+          <input type="radio" id="recommand" name="rec" value="rec" checked>추천받기
+          <input type="radio" id="recommand" name="rec" value="rec">추천받지 않기 <br><br>
+          <input type="submit" class="btn btn-primary" value="공고 등록">
+          <a class="btn btn-primary" href="/company/company">돌아가기</a>
+        </div>
+        </form>
+    </div>
+    </div>
   
-  <div class="mb-3">
-    <label for="chkpassword" class="form-label">비밀번호를 한번더 입력해주세요</label>
-    <input type="password" class="form-control" id="chkpassword" name="passWordConfirm" style="width: 500px;">
-   </div>
-   
-   <input class="btn btn-primary" type="submit" value="변경하기">
-</form>
-</div>
-</div>
   </main>
-
+   
   <footer id="footer" class="footer light-background">
 	<div class="container footer-top">
       <div class="row gy-4">
@@ -165,15 +197,6 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
-  
-  <script th:inline="javascript">
-  	let pwAlert = [[${pwAlert}]]
-  	
-  	if(pwAlert){
-  		alert(pwAlert);
-  	}
-  </script>
-  
 
   <!-- Vendor JS Files -->
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

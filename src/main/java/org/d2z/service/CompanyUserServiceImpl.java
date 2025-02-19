@@ -60,6 +60,7 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 						.companySiteAdd(companyUserDTO.getCompanySiteAdd())
 						.companyUserName(companyUserDTO.getCompanyUserName())
 						.companyUserTel(companyUserDTO.getCompanyUserTel())
+						.companyNote(companyUserDTO.getCompanyNote())
 						.login(login)
 						.build());
 			
@@ -98,6 +99,8 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 						.companySiteAdd(companyUserDTO.getCompanySiteAdd())
 						.companyUserName(companyUserDTO.getCompanyUserName())
 						.companyUserTel(companyUserDTO.getCompanyUserTel())
+						.companyInfo(companyUserDTO.getCompanyInfo())
+						.companyNote(companyUserDTO.getCompanyNote())
 						.isDeleted(companyUserDTO.getIsDeleted())
 						.isApproved(companyUserDTO.getIsApproved())
 						.login(login)

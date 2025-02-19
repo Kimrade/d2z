@@ -1,5 +1,6 @@
 package org.d2z.service;
 
+import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PageResponseDTO;
 import org.d2z.dto.PublicAnnouncementDTO;
@@ -7,7 +8,7 @@ import org.d2z.dto.PublicAnnouncementDTO;
 public interface PublicAnnouncementService {
 	
 	// 공고 게시글 등록
-	public boolean publicAnnouncementInsert(PublicAnnouncementDTO publicAnnouncementDTO);
+	public boolean publicAnnouncementInsert(PublicAnnouncementDTO publicAnnouncementDTO, CompanyUserDTO companyUserDTO);
 	
 	// 공고 게시글 수정
 	public boolean publicAnnouncementModify(PublicAnnouncementDTO publicAnnouncementDTO);

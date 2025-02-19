@@ -27,20 +27,53 @@
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
   <style>
-    table, tr, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-      margin: 20px; 
-      padding: 10px; 
-    }
-    
-     .portfolio-description h2 {
-    text-align: center; 
-  }
+	table, tr, td {
+	  border-collapse: collapse;
+	  margin: 20px;
+	  padding: 10px;
+	  margin-left:auto;
+	  margin-right:auto;
+	}
+	
+	th, td {
+	  border: 1px solid white;
+	  text-align: center;
+	  
+	}
+	
+	tr:first-child td {
+	  background-color: #2487CE;
+	  color: white;
+	  font-weight: bold;
+	}  
+	.portfolio-details {
+  display: flex;
+  flex-direction: column;  
+  justify-content: center; 
+  align-items: center;    
+  height: 100vh;           
+  text-align: center;      
+}
+
+.portfolio-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.portfolio-description h2 {
+  margin-bottom: 20px; 
+}
+
 .portfolio-description table {
-    margin: 20px auto; 
-  }
+  margin: 0 auto; 
+  width: 80%; 
+}
+
   </style>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="portfolio-details-page">
@@ -54,12 +87,11 @@
         <h1 class="sitename">D2Z</h1>
       </a>
 
-      <nav id="navmenu" class="navmenu">-
+      <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="/d2z/main">Home<br></a></li>
 		</ul>
       </nav>
-      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </div>
   </header>
 
@@ -74,33 +106,26 @@
           	<li class="current">훌륭한 제조사 정보를 제공합니다.</li>
           </ol>
         </nav>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </div>
     </div>
     <!-- End Page Title -->
 
     <!-- Portfolio Details Section -->
-    <section id="portfolio-details" class="portfolio-details section">
-
-        <div class="row justify-content-between gy-4 mt-4">
-
-          <div class="col-lg-8" data-aos="fade-up" >
-            <div class="portfolio-description">
-              <h2></h2>
-              <p>
-                <table>
-                  <div class="portfolio-description" style="text-align: center;">
+  <section id="portfolio-details" class="portfolio-details section">
+        <div class="col-lg-8 mx-auto" data-aos="fade-up">
                     <h2>D/C 제조사 정보</h2>
                     <table style="margin: auto;">
                         <tr>
-                            <th>NO</th>
-                            <th>업체명</th>
-                            <th>업체주소</th>
-                            <th>전화번호</th>
-                            <th>주생산품</th>
-                            <th>보유설비</th>
-                            <th>이메일</th>
+                            <td>No</td>
+                            <td width = 130px;>업체명</td>
+                            <td width = 300px;>업체주소</td>
+                            <td width = 130px;>전화번호</td>
+                            <td>주생산품</td>
+                            <td>보유설비</td>
+                            <td width = 90px;>홈페이지</td>
                         </tr>
-                        <tr>
+                        <tr class="table-info">
                             <td>1</td>
                             <td>DnK모빌리티</td>
                             <td>울산시 울주군 온산읍 화산리 872번지</td>
@@ -109,7 +134,7 @@
                             <td>Cold Cham. : 2250∼350 Ton 27대</td>
                             <td><a href="http://dnkmbt.com/page/group" target="_blank">링크</a></td>
                         </tr>
-                        <tr>
+                        <tr class="table-info">
                             <td>2</td>
                             <td>경림다이캐스팅</td>
                             <td>경기도 김포시 대곶면 초원지리 448-1</td>
@@ -118,7 +143,7 @@
                             <td>다이캐스팅 머신 350톤 대 2대</td>
                             <td></td>
                         </tr>
-                        <tr>
+                        <tr class="table-info">
                             <td>3</td>
                             <td>경성산업</td>
                             <td>부산광역시 강서구 낙동남로 533번길 14(녹산동)</td>
@@ -127,7 +152,7 @@
                             <td>Cold Cham. : 250∼150 Ton 4대</td>
                             <td></td>
                         </tr>
-                        <tr>
+                        <tr class="table-info">
                             <td>4</td>
                             <td>경원다이캐스팅</td>
                             <td>경기도 김포시 대곶면 초원지리 448-1</td>
@@ -136,7 +161,7 @@
                             <td>다이캐스팅 머신 350톤 2대</td>
                             <td></td>
                         </tr>
-                        <tr>
+                        <tr class="table-info">
                             <td>5</td>
                             <td>금오EMS(주)</td>
                             <td>대구시 달성군 현풍면 중리 510-2</td>
@@ -147,21 +172,49 @@
                         </tr>
                     </table>
                 </div>
-                
-                </table>
-              </p>
-            </div>
-          </div>
-        </div>
-
     </section><!-- /Portfolio Details Section -->
 
   </main>
 
   <footer id="footer" class="footer light-background">
-
-    <div class="container footer-top">
+	<div class="container footer-top">
       <div class="row gy-4">
+      	
+      	<div class="col-lg-2 col-6 footer-links">
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+      	
+        <div class="col-lg-2 col-6 footer-links">
+          <a href="/d2z/informationHistory"><h4>D/C 역사관</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+    
+        <div class="col-lg-2 col-6 footer-links">
+          <a href="/d2z/informationMarket"><h4>D/C 원자재</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+    
+        <div class="col-lg-2 col-6 footer-links">
+          <a href="/d2z/informationManufacturer"><h4>D/C 제조사</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+	
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
           <h4>Contact Us</h4>
           <p>Across the E-Mart</p>
@@ -170,8 +223,7 @@
           <p class="mt-4"><strong>Phone:</strong> <span>+82 10-1234-5678</span></p>
           <p><strong>Email:</strong> <span>info@example.com</span></p>
         </div>
-
-      </div>
+    </div>
     </div>
 
     <div class="container copyright text-center mt-4">

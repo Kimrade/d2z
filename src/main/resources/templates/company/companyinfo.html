@@ -26,20 +26,51 @@
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
 <style>
-    table {
-      border: 1px solid black;
-      border-collapse: collapse;
-      margin: 20px; 
-      padding: 10px; 
-    }
-    
-      th, td {
-    border: 1px solid black;
-    padding: 10px;
-    text-align: center;
-    vertical-align: middle;
-  }
+	table, tr, td {
+	  border-collapse: collapse;
+	  margin: 20px;
+	  padding: 10px;
+	  margin-left:auto;
+	  margin-right:auto;
+	}
+	
+	th, td {
+	  border: 1px solid white;
+	  text-align: center;
+	}
+	
+	tr:first-child td {
+	  background-color: #2487CE;
+	  color: white;
+	  font-weight: bold;
+	}  
+	.portfolio-details {
+  display: flex;
+  flex-direction: column;  
+  justify-content: center; 
+  align-items: center;    
+  height: 100vh;           
+  text-align: center;      
+}
+
+.portfolio-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.portfolio-description h2 {
+  margin-bottom: 20px; 
+}
+
+.portfolio-description table {
+  margin: 0 auto; 
+  width: 80%; 
+}
     </style>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="starter-page-page">
@@ -47,7 +78,7 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/main" class="logo d-flex align-items-center me-auto">
+      <a href="/d2z/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
@@ -55,12 +86,16 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="/main">Home<br></a></li>
-          <li><a href="/announce">공고 등록</a></li>
-          <li><a href="/searchAnn">공고 조회</a></li>
-          <li><a href="/findEngineer">엔지니어 조회</a></li>
-           <ul>
-           <li><a>숙주나물님 환영합니다</a></li>
+          <li><a href="/company/announce">공고 등록</a></li>
+          <li><a href="/company/searchAnn">공고 조회</a></li>
+          <li><a href="/company/findEngineer">엔지니어 조회</a></li>
+            <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="/company/companyedit">내정보 수정</a></li>
+                <li><a href="/company/message">쪽지함 확인</a></li>
+              </ul>
+           <li><a>[[${companyUserDTO.companyUserName}]]님 환영합니다</a></li>
+   		 </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
     </div>
@@ -83,60 +118,102 @@
     <section id="starter-section" class="starter-section section" >
 
       <div class="container" data-aos="fade-up">
-<table>
-<tr> <th>사업체명</th> <th>사업자 번호</th> <th>업체명</th> <th>담당자</th> <th>담당자 전화번호</th> <th>이메일주소</th></tr>
-  <tr><td>aadnc</td> <td>221-54-88821</td> <td>AA다이캐스팅</td> <td>김감자</td> <td>033-254-5454</td> <td>aadnc@aadnc.co.kr</td></tr>
-  <tr><td>bbdnc</td> <td>221-45-12888</td> <td>BB다이캐스팅</td> <td>김밥</td> <td>033-245-4545</td> <td>bbdnc@bbdnc.co.kr</td></tr>
- </table>
+		<table>
+			<tr>
+				<td>
+					사업체명
+				</td>
+				<td>
+					사업자 번호
+				</td>
+				<td>
+					업체명
+				</td>
+				<td>
+					담당자
+				</td>
+				<td>
+					담당자 전화번호
+				</td>
+				<td>
+					이메일주소
+				</td>
+			</tr>
+		  	<tr class="table-info">
+		  		<td>
+		  			aadnc
+		  		</td>
+		  		<td>
+		  			221-54-88821
+		  		</td>
+		  		<td>
+		  			AA다이캐스팅
+		  		</td>
+		  		<td>
+		  			김감자
+		  		</td>
+		  		<td>
+		  			033-254-5454
+		  		</td>
+		  		<td>
+		  			aadnc@aadnc.co.kr
+		  		</td>
+		  	</tr>
+		</table>
       </div>
 
     </section><!-- /Starter Section Section -->
 
   </main>
 
-  <footer id="footer" class="footer light-background" >
-
-    <div class="container footer-top">
+  <footer id="footer" class="footer light-background">
+	<div class="container footer-top">
       <div class="row gy-4">
-        <div class="col-lg-5 col-md-12 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">D2Z</span>
-          </a>
-          <p>대한민국 다이캐스팅 산업의 도우미 다장입니다.</p>
+      	
+      	<div class="col-lg-2 col-6 footer-links">
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
         </div>
-
+      	
         <div class="col-lg-2 col-6 footer-links">
-          <h4>다이캐스팅 역사관</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
-          </ul>
+          <a href="/d2z/informationHistory"><h4>D/C 역사관</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
         </div>
-
+    
         <div class="col-lg-2 col-6 footer-links">
-          <h4>다이캐스팅 소개</h4>
-          <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
-          </ul>
+          <a href="/d2z/informationMarket"><h4>D/C 원자재</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
         </div>
-
+    
+        <div class="col-lg-2 col-6 footer-links">
+          <a href="/d2z/informationManufacturer"><h4>D/C 제조사</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+	
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-          <h4>다이캐스팅 어쩌구~</h4>
-          <p>A108 Adam Street</p>
-          <p>New York, NY 535022</p>
-          <p>United States</p>
-          <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+          <h4>Contact Us</h4>
+          <p>Across the E-Mart</p>
+          <p>ChunCheon-si, Kangwon-do</p>
+          <p>Republic of Korea</p>
+          <p class="mt-4"><strong>Phone:</strong> <span>+82 10-1234-5678</span></p>
           <p><strong>Email:</strong> <span>info@example.com</span></p>
         </div>
-
-      </div>
+    </div>
     </div>
 
     <div class="container copyright text-center mt-4">
@@ -146,7 +223,7 @@
         <!-- You can delete the links only if you've purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>ThemeWagon
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>D2Z
       </div>
     </div>
 

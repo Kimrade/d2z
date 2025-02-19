@@ -55,15 +55,19 @@ public class D2zController {
 	}
 	
 	@GetMapping("/loginError")
-	public String loginErrorGet() {
+	public String loginErrorGet(RedirectAttributes ra) {
 		log.info("/loginError get 진입");
+		
+		ra.addFlashAttribute("loginError", "ID 혹은 PW가 틀립니다.");
 		
 		return "redirect:/d2z/login";
 	}
 	
 	@PostMapping("/loginError")
-	public String loginErrorPost() {
+	public String loginErrorPost(RedirectAttributes ra) {
 		log.info("/loginError post 진입");
+		
+		ra.addFlashAttribute("loginError", "ID 혹은 PW가 틀립니다.");
 		
 		return "redirect:/d2z/login";
 	}
@@ -95,21 +99,25 @@ public class D2zController {
 		return "redirect:/d2z/";
 	}
 	
+	@PreAuthorize("permitAll")
 	@GetMapping("/informationHistory")
 	public void informationHistoryGet() {
 		
 	}
 	
+	@PreAuthorize("permitAll")
 	@GetMapping("/informationManufacturer")
 	public void informationManufacturerGet() {
 		
 	}
 	
+	@PreAuthorize("permitAll")
 	@GetMapping("/informationMarket")
 	public void informationMarketGet() {
 		
 	}
 	
+	@PreAuthorize("permitAll")
 	@GetMapping("/findid")
 	public void findIdGet() {
 		
@@ -148,12 +156,13 @@ public class D2zController {
 		return "redirect:/d2z/login";
 	}
 	
-	
+	@PreAuthorize("permitAll")
 	@GetMapping("/findpw")
 	public void findPwGet() {
 		
 	}
 	
+	@PreAuthorize("permitAll")
 	@GetMapping("/findPwConfirm")
 	public String findPwConfirmGet(@RequestParam("id")String id, @RequestParam("email")String email, Model model, RedirectAttributes ra) {
 		

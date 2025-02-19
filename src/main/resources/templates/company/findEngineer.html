@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>D2Z - 회원탈퇴관리</title>
+  <title>D2Z - 엔지니어조회</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -21,26 +21,35 @@
   <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="/vendor/aos/aos.css" rel="stylesheet">
   <link href="/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
 <style>
-    table {
-      border: 1px solid black;
-      border-collapse: collapse;
-      margin: 20px; 
-      padding: 10px; 
+	table, tr, td {
+	  border-collapse: collapse;
+	  margin: 20px;
+	  padding: 10px;
+	}
+	
+	th, td {
+	  border: 1px solid white;
+	  text-align: center;
+	}
+	
+	tr:first-child td {
+	  background-color: #2487CE;
+	  color: white;
+	  font-weight: bold;
+	}  
+	
+  
+      .checkbox-group {
+      text-align: left;  /* 왼쪽 정렬 */
+      margin-left: 10px; /* 여백을 줘서 깔끔하게 정렬 */
     }
-    
-      th, td {
-    border: 1px solid black;
-    padding: 10px;
-    text-align: center;
-    vertical-align: middle;
-  }
     </style>
-      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="starter-page-page">
@@ -48,7 +57,7 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/main" class="logo d-flex align-items-center me-auto">
+      <a href="/d2z/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
@@ -56,12 +65,19 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="/main">Home<br></a></li>
+          <li><a href="/d2z/main">Home<br></a></li>
           <li><a href="/announce">공고 등록</a></li>
           <li><a href="/searchAnn">공고 조회</a></li>
           <li><a href="/findEngineer">엔지니어 조회</a></li>
            <ul>
-           <li><a>숙주나물님 환영합니다</a></li>
+            <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+               <li><a>AA다이캐스팅님 환영합니다</a></li>
+                <li><a href="/companyedit">내정보 수정</a></li>
+                <li><a href="/message">쪽지함 확인</a></li>
+              </ul>
+          </ul>
+          
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
     </div>
@@ -72,8 +88,11 @@
     <!-- Page Title -->
     <div class="page-title accent-background">
       <div class="container">
-        <h1>탈퇴 신청 회원</h1><br>
+        <h1>엔지니어 조회</h1><br>
         <div>이곳에 검색창이 들어갈거에요</div><br>
+        모집분야 &nbsp;<input type="checkbox" value="금형">금형 <input type="checkbox" value="사출">사출<br>
+ 		선호 근무방식 &nbsp;<input type="checkbox" value="현장">현장 <input type="checkbox" value="현장">원격<br>
+ 		기타등등조건 &nbsp;<input type="checkbox" value="기타">기타등등 <input type="checkbox" value="기타">기타등등<br>
 		<input type = "text"> <button type="button" class="btn btn-success">검색하기</button>
         <nav class="breadcrumbs">
         </nav>
@@ -84,13 +103,13 @@
     <section id="starter-section" class="starter-section section" >
 
       <div class="container" data-aos="fade-up">
-<table>
-<tr><th>구분</th> <th>이름or업체명</th> <th>전화번호</th> <th>탈퇴사유</th><th>승인</th> </tr>
-  <tr><td>사업체</td> <td>AA다이캐스팅</td> <td>033-255-1111</td> <td>엔지니어의 풀이 너무좁다</td><td><input type="checkbox" name="memberout"></tr>
-  <tr><td>엔지니어</td> <td>김감자</td> <td>010-9955-5511</td> <td>사업체와의 다툼</td> <td><input type="checkbox" name="memberout"></tr>
-</table>
+         <table style="margin: 0 auto;">
+         	<tr><td>이름</td> <td>주소</td> <td>전화번호</td> <td>주 분야</td>  <td>경력</td> <td>특이사항</td> </tr>
+  			<tr class="table-info"><td>홍길동</td> <td>강원도 춘천시</td> <td>010-1225-5588</td> <td>금형</td> <td>23년 4개월</td> <td>원격지도 선호</td></tr>
+  			<tr class="table-info"><td>감자</td> <td>강원도 원주시</td> <td>010-9955-5511</td> <td>사출</td> <td>18년 9개월</td> <td>현장 근무 선호</td></tr>
+        </table>
       </div>
-  <button type="button" class="btn btn-primary">탈퇴승인</button>
+
     </section><!-- /Starter Section Section -->
 
   </main>
