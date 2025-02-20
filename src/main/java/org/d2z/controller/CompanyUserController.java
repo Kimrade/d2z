@@ -148,6 +148,12 @@ public class CompanyUserController {
 		model.addAttribute("pageResponseDTO", pas.publicAnnouncementSearchByKeyword(pageRequestDTO));
 	}
 	
+	@PostMapping("/delete")
+	public String companyUserCheckDeleted(@AuthenticationPrincipal UserDetails userDetails, RedirectAttributes ra) {
+		cus.companyUserInfoCheckDeleted(userDetails.getUsername());
+		ra.addFlashAttribute("deleteAlert", "탈퇴 신천이 완료되었습니다. 관리자와 연락하시기 바랍니다.");
+		return "redirect:/d2z/main";
+	}
 	
 	
 

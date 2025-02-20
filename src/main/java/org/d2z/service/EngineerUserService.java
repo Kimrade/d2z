@@ -36,4 +36,5 @@ public interface EngineerUserService {
 	
 	// 엔지니어 정보 검색 - 경력 추가
 	public PageResponseDTO<EngineerUserDTO> engineerUserSearchByKeywordAndCareer(PageRequestDTO pageRequestDTO, double fromNo, double toNo);
+	
 }

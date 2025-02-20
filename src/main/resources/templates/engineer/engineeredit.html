@@ -68,7 +68,7 @@
      <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
       <div class="login-form p-5 shadow-lg rounded">
        <h2>회원 정보 수정</h2>
-		<form action="/engineer/engineeredit" method="post">
+		<form action="/engineer/engineeredit" method="post" id="f1">
 			<div class="mb-3">
 			    <label for="password" class="form-label">비밀번호</label>
 			    <input type="password" class="form-control" id="password" name="pw">
@@ -135,9 +135,8 @@
 			  </div>
 			  
 			  <input type="submit" class="btn btn-primary" value="정보수정">
-			
+			  <input type="button" class="btn btn-danger" value="회원 탈퇴 신청" id="btnRemove">
 			</form>
-			
 			</div>
 		</div>
     </section><!-- /Starter Section Section -->
@@ -212,7 +211,24 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
+  
+  <script th:inline="javascript">
+		 
+		document.querySelector("#btnRemove").addEventListener("click", function(e){
+			e.preventDefault();
+			e.stopPropagation();
 
+			if (confirm("확인 버튼을 누르면 탈퇴신청이 완료됩니다. 정말 탈퇴신청을 하시겠습니까?")) {
+				document.querySelector("#f1").action = "/engineer/delete";
+				document.querySelector("#f1").method = "post";
+				document.querySelector("#f1").submit();
+	        }else{
+	        	alert("탈퇴신청이 취소되었습니다.");
+	        }
+		});
+  </script>
+	
+	
   <!-- Vendor JS Files -->
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/vendor/php-email-form/validate.js"></script>

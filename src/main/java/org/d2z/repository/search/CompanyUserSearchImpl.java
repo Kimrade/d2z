@@ -76,8 +76,14 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 		if((types != null && types.length > 0) && keyword != null) {
 			for(String type : types) {
 				switch(type) {
-					case "":
-						
+					case "n":
+						bb.or(companyUser.companyName.contains(keyword));
+					break;
+					case "a":
+						bb.or(companyUser.companyAdd.contains(keyword));
+					break;
+					case "i":
+						bb.or(companyUser.companyNote.contains(keyword));
 					break;
 				}
 			}
@@ -112,8 +118,14 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 		if((types != null && types.length > 0) && keyword != null) {
 			for(String type : types) {
 				switch(type) {
-					case "":
-						
+					case "n":
+						bb.or(companyUser.companyName.contains(keyword));
+					break;
+					case "a":
+						bb.or(companyUser.companyAdd.contains(keyword));
+					break;
+					case "i":
+						bb.or(companyUser.companyNote.contains(keyword));
 					break;
 				}
 			}
@@ -153,6 +165,22 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 		int count = (int)query.fetchCount();
 		
 		return count;
+	}
+
+	@Override
+	public List<CompanyUser> companyUserDeletedList() {
+		
+		QCompanyUser companyUser = QCompanyUser.companyUser;
+		
+		JPQLQuery<CompanyUser> query = from(companyUser);
+		
+		BooleanBuilder bb = new BooleanBuilder();
+		
+		bb.and(companyUser.isDeleted.eq(1));
+		
+		query.where(bb);
+		
+		return query.fetch();
 	}
 
 	

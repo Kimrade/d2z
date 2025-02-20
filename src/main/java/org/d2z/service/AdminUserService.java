@@ -1,5 +1,7 @@
 package org.d2z.service;
 
+import java.util.List;
+
 import org.d2z.dto.AdminUserDTO;
 import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.EngineerUserDTO;
@@ -33,6 +35,12 @@ public interface AdminUserService {
 	// 관리자의 엔지니어 보류 사용자 조회 (검색 및 페이지 처리)
 	public PageResponseDTO<EngineerUserDTO> searchPendingEngineerUserByKeyword(PageRequestDTO pageRequestDTO);
 	
+	// 관리자의 사업주 사용자 탈퇴신청 조회
+	public List<EngineerUserDTO> listByEngineerUserDeleted();
+	
+	// 관리자의 엔지니어 사용자 탈퇴 신청 조회
+	public List<CompanyUserDTO> listByCompanyUserDeleted();
+	
 	// 관리자의 게시글 삭제
 	public boolean deletePublicAnnouncement(int announcementNo);
 	
@@ -44,4 +52,11 @@ public interface AdminUserService {
 	
 	// 관리자 정보 조회
 	public AdminUserDTO findByAdminId(String id);
+	
+	// 대량의 사업체 사용자 탈퇴 처리
+	public void deleteAllCompanyUserById(List<Integer> companyUserNo);
+	
+	// 대량의 엔지니어 사용자 탈퇴 처리
+	public void deleteAllEngineerUserById(List<Integer> engineerUserNo);
+	
 }

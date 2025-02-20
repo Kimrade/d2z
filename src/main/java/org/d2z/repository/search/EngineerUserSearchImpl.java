@@ -73,9 +73,12 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		if((types != null && types.length > 0) && keyword != null) {
 			for(String type : types) {
 				switch(type) {
-					case "":
-						
-					break;
+				case "n":
+					bb.or(engineerUser.engineerUserName.contains(keyword));
+				break;
+				case "j":
+					bb.or(engineerUser.engineerUserJob.contains(keyword));
+				break;
 				}
 			}
 		}
@@ -109,8 +112,11 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		if((types != null && types.length > 0) && keyword != null) {
 			for(String type : types) {
 				switch(type) {
-					case "":
-						
+					case "n":
+						bb.or(engineerUser.engineerUserName.contains(keyword));
+					break;
+					case "j":
+						bb.or(engineerUser.engineerUserJob.contains(keyword));
 					break;
 				}
 			}
@@ -266,6 +272,22 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		Page<EngineerUser> result = new PageImpl<>(list, pageable, count);
 		
 		return result;
+	}
+
+	@Override
+	public List<EngineerUser> engineerUserListByDeleted() {
+		
+		QEngineerUser engineerUser = QEngineerUser.engineerUser;
+		
+		JPQLQuery<EngineerUser> query = from(engineerUser);
+		
+		BooleanBuilder bb = new BooleanBuilder();
+		
+		bb.and(engineerUser.isDeleted.eq(1));
+		
+		query.where(bb);
+		
+		return query.fetch();
 	}
 
 	

@@ -1,5 +1,7 @@
 package org.d2z.repository.search;
 
+import java.util.List;
+
 import org.d2z.domain.EngineerUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +29,9 @@ public interface EngineerUserSearch {
 	
 	// 총 가입된 엔지니어 인원수
 	public int totalApprovedEngineerCount();
+	
+	// 엔지니어 사용자 탈퇴 처리 조회
+	public List<EngineerUser> engineerUserListByDeleted();
 
 	
 }

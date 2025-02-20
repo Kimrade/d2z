@@ -137,6 +137,7 @@
 			  </div>
 
 			  <input type="submit" class="btn btn-primary" value="회원 정보 수정">
+			  <input type="button" class="btn btn-danger" value="회원 탈퇴 신청" id="btnRemove">
 			  </form>
 			  
 			</div>
@@ -213,6 +214,22 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
+  
+  <script th:inline="javascript">
+		 
+		document.querySelector("#btnRemove").addEventListener("click", function(e){
+			e.preventDefault();
+			e.stopPropagation();
+
+			if (confirm("확인 버튼을 누르면 탈퇴신청이 완료됩니다. 정말 탈퇴신청을 하시겠습니까?")) {
+				document.querySelector("#f1").action = "/company/delete";
+				document.querySelector("#f1").method = "post";
+				document.querySelector("#f1").submit();
+	        }else{
+	        	alert("탈퇴신청이 취소되었습니다.");
+	        }
+		});
+  </script>
 
   <!-- Vendor JS Files -->
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

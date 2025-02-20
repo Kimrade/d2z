@@ -267,6 +267,30 @@ public class AdminUserServiceImpl implements AdminUserService{
 		
 		return modelMapper.map(aur.findByLoginId(id).orElseThrow(), AdminUserDTO.class);
 	}
+
+	@Override
+	public List<EngineerUserDTO> listByEngineerUserDeleted() {
+		
+		return eur.engineerUserListByDeleted().stream().map(x -> modelMapper.map(x, EngineerUserDTO.class)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<CompanyUserDTO> listByCompanyUserDeleted() {
+		
+		return cur.companyUserDeletedList().stream().map(x -> modelMapper.map(x, CompanyUserDTO.class)).collect(Collectors.toList());
+	}
+
+	@Override
+	public void deleteAllCompanyUserById(List<Integer> companyUserNo) {
+		
+		cur.deleteAllById(companyUserNo);		
+	}
+
+	@Override
+	public void deleteAllEngineerUserById(List<Integer> engineerUserNo) {
+		
+		eur.deleteAllById(engineerUserNo);
+	}
 	
 	
 	
