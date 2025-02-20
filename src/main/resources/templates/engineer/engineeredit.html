@@ -25,28 +25,13 @@
 
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
-<style>
-    table {
-      border: 1px solid black;
-      border-collapse: collapse;
-      margin: 20px; 
-      padding: 10px; 
-    }
-    
-      th, td {
-    border: 1px solid black;
-    padding: 10px;
-    text-align: center;
-    vertical-align: middle;
-  }
-  label {
-  text-align: left;
-   display: block;
-}
-select {
-  text-align: left;
-  width: 100%; /* 필요에 따라 조정 */
-}
+	<style>
+		main.main {
+		  padding: 40px; 
+		}
+		footer#footer {
+		  padding: 40px 0; 
+		}
     </style>
 </head>
 
@@ -55,132 +40,158 @@ select {
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/main" class="logo d-flex align-items-center me-auto">
+      <a href="/engineer/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
       </a>
-
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="/main">Home<br></a></li>
-          <li><a href="/searchAnn">공고 조회</a></li>
-          <li><a href="/findCompany">사업체 조회</a></li>
-          <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="/engineeredit">내정보 수정</a></li>
-              <li><a href="/message">쪽지함 확인</a></li>
-            </ul> 
-            <li><a>김감자님 환영합니다</a></li>
-        </ul>
-      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-    </nav>
+          <li><a href="/engineer/searchAnn">공고 조회</a></li>
+          <li><a href="/engineer/findCompany">사업체 조회</a></li>
+          <li><a href="/engineer/engineerinfo">엔지니어 조회</a></li>
+            <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="/engineer/engineeredit">내정보 수정</a></li>
+                <li><a href="/engineer/message">쪽지함 확인</a></li>
+              </ul>
+           <li><a>[[${engineerUserDTO.engineerUserName}]]님 환영합니다</a></li>
+   		 </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
     </div>
   </header>
 
-  <main class="main">
-
+  <main class="main" style="min-height: 80vh;">
+<section>
     <!-- Page Title -->
-    <div class="page-title accent-background">
-      <div class="container">
+     <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
+      <div class="login-form p-5 shadow-lg rounded">
        <h2>회원 정보 수정</h2>
- 
- <div class="mb-3">
-    <label for="password" class="form-label">Password</label>
-    <input type="password" class="form-control" id="password">
-  </div>
-  
-  <div class="mb-3">
-    <label for="birthday" class="form-label">생년월일(ex.19990108)</label>
-    <input type="text" class="form-control" id="birthday">
-  </div>
-  <div class="mb-3">
-    <label for="address" class="form-label">주소</label>
-    <input type="text" class="form-control" id="address">
-  </div>
-  <div class="mb-3">
-    <label for="tel" class="form-label">전화번호</label>
-    <input type="tel" class="form-control" id="tel">
-  </div>
-  <div class="mb-3">
-    <label for="carrer" class="form-label">경력</label>
-    <input type="text" class="form-control" id="career">
-  </div>
-  <div class="mb-3">
-    <label for="guide" class="form-label">지도분야선택</label>&nbsp; &nbsp;  
-      <select>
-        <option value="">주조</option>
-        <option value="">가공</option>
-        <option value="">후처리</option>
-        <option value="">금형</option>
-        <option value="">설비</option>
-        <option value="">품질</option>
-        <option value="">품질</option>
-        <option value="">생산</option>
-        <option value="">안전</option>
-        <option value="">기타</option>
-      </select>
-  </div>
-  <div class="mb-3">
-    <label for="email" class="form-label">이메일주소</label>
-    <input type="text" class="form-control" id="email">
-  </div>
-  <div class="mb-3">
-  <label for="etc" class="form-label">비고</label>
-  <input type="text" class="form-control" id="etc" placeholder="지도분야에 기타를 골라주신분은 상세사항을 적어주세요">
-  </div>
-  <input type="submit" class="btn btn-primary" value="정보수정">
-</div>
-
-
-
+		<form action="/engineer/engineeredit" method="post">
+			<div class="mb-3">
+			    <label for="password" class="form-label">비밀번호</label>
+			    <input type="password" class="form-control" id="password" name="pw">
+			  </div>
+			  
+			  <div class="mb-3">
+			    <label for="password" class="form-label">비밀번호 확인</label>
+			    <input type="password" class="form-control" id="password" name="pwConfirm">
+			  </div>
+			  
+			  <div class="mb-3">
+			    <label for="password" class="form-label">엔지니어 성명</label>
+			    <input type="password" class="form-control" id="password" th:value="${engineerUserDTO.engineerUserName}" name="engineerUserName">
+			  </div>
+			  
+			  <div class="mb-3">
+			    <label for="birthday" class="form-label">생년월일</label>
+			    <input type="text" class="form-control" id="birthday" th:value="${engineerUserDTO.engineerUserBirth}" name="engineerUserBirth">
+			  </div>
+			
+			  <div class="mb-3">
+			    <label for="address" class="form-label">주 소</label>
+			    <input type="text" class="form-control" id="address" th:value="${engineerUserDTO.engineerUserAdd}" name="engineerUserAdd">
+			  </div>
+			
+			  <div class="mb-3">
+			    <label for="tel" class="form-label">연락처</label>
+			    <input type="tel" class="form-control" id="tel" th:value="${engineerUserDTO.engineerUserTel}" name="engineerUserTel">
+			  </div>
+			
+			  <div class="mb-3">
+			    <label for="carrer" class="form-label">경 력</label>
+			    <input type="text" class="form-control" id="career" th:value="${engineerUserDTO.engineerUserCareer}" name="engineerUserCareer">
+			  </div>
+			
+			  <div class="mb-3">
+			    <label for="guide" class="form-label">주분야</label>&nbsp; &nbsp;  
+			      <select name="engineerUserJob">
+			        <option value="주조">주조</option>
+			        <option value="가공">가공</option>
+			        <option value="후처리">후처리</option>
+			        <option value="금형">금형</option>
+			        <option value="설비">설비</option>
+			        <option value="품질">품질</option>
+			        <option value="생산">생산</option>
+			        <option value="안전">안전</option>
+			        <option value="기타">기타</option>
+			      </select>
+			  </div>
+			
+			  <div class="mb-3">
+			    <label for="email" class="form-label">이메일주소</label>
+			    <input type="text" class="form-control" id="email" th:value="${engineerUserDTO.engineerUserEmail}" name="engineerUserEmail">
+			  </div>
+			  
+			  <div class="mb-3">
+			  	<label for="etc" class="form-label" style="width: 500px;">비고</label>
+			  	<input type="text" class="form-control" id="etc" th:value="${engineerUserDTO.engineerUserNote}" name="engineerUserNote">
+			  </div>
+			  
+			  <div class="mb-3">
+			  	<label for="etc" class="form-label" style="width: 500px;">소개</label>
+			  	<textarea class="form-control" id="etc" name="engineerUserInfo" th:text="engineerUserInfo">개인 소개, 정보 글등을 적어주시기 바랍니다.</textarea>
+			  </div>
+			  
+			  <input type="submit" class="btn btn-primary" value="정보수정">
+			
+			</form>
+			
+			</div>
+		</div>
     </section><!-- /Starter Section Section -->
 
   </main>
 
-  <footer id="footer" class="footer light-background" >
-
-    <div class="container footer-top">
+ <footer id="footer" class="footer light-background">
+   <div class="container footer-top">
       <div class="row gy-4">
-        <div class="col-lg-5 col-md-12 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">D2Z</span>
-          </a>
-          <p>대한민국 다이캐스팅 산업의 도우미 다장입니다.</p>
+         
+         <div class="col-lg-2 col-6 footer-links">
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
         </div>
-
+         
         <div class="col-lg-2 col-6 footer-links">
-          <h4>다이캐스팅 역사관</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
-          </ul>
+          <a href="/d2z/informationHistory"><h4>D/C 역사관</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
         </div>
-
+    
         <div class="col-lg-2 col-6 footer-links">
-          <h4>다이캐스팅 소개</h4>
-          <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
-          </ul>
+          <a href="/d2z/informationMarket"><h4>D/C 원자재</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
         </div>
-
+    
+        <div class="col-lg-2 col-6 footer-links">
+          <a href="/d2z/informationManufacturer"><h4>D/C 제조사</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+   
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-          <h4>다이캐스팅 어쩌구~</h4>
-          <p>A108 Adam Street</p>
-          <p>New York, NY 535022</p>
-          <p>United States</p>
-          <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+          <h4>Contact Us</h4>
+          <p>Across the E-Mart</p>
+          <p>ChunCheon-si, Kangwon-do</p>
+          <p>Republic of Korea</p>
+          <p class="mt-4"><strong>Phone:</strong> <span>+82 10-1234-5678</span></p>
           <p><strong>Email:</strong> <span>info@example.com</span></p>
         </div>
-
-      </div>
+    </div>
     </div>
 
     <div class="container copyright text-center mt-4">
@@ -190,7 +201,7 @@ select {
         <!-- You can delete the links only if you've purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>ThemeWagon
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>D2Z
       </div>
     </div>
 

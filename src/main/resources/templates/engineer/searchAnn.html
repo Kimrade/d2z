@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="kr">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>D2Z - 엔지니어조회</title>
+  <title>D2Z - 다장</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -43,11 +44,6 @@
 	  font-weight: bold;
 	}  
 	
-  
-      .checkbox-group {
-      text-align: left;  /* 왼쪽 정렬 */
-      margin-left: 10px; /* 여백을 줘서 깔끔하게 정렬 */
-    }
     </style>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -57,24 +53,23 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/company/main" class="logo d-flex align-items-center me-auto">
+      <a href="/engineer/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
       </a>
 
-      <nav id="navmenu" class="navmenu">
+	<nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="/company/announce">공고 등록</a></li>
-          <li><a href="/company/searchAnn">공고 조회</a></li>
-          <li><a href="/company/companyinfo">사업체 조회</a></li>
-          <li><a href="/company/findEngineer">엔지니어 조회</a></li>
+          <li><a href="/engineer/searchAnn">공고 조회</a></li>
+          <li><a href="/engineer/findCompany">사업체 조회</a></li>
+          <li><a href="/engineer/engineerinfo">엔지니어 조회</a></li>
             <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-                <li><a href="/company/companyedit">내정보 수정</a></li>
-                <li><a href="/company/message">쪽지함 확인</a></li>
+                <li><a href="/engineer/engineeredit">내정보 수정</a></li>
+                <li><a href="/engineer/message">쪽지함 확인</a></li>
               </ul>
-           <li><a>[[${companyUserDTO.companyUserName}]]님 환영합니다</a></li>
+           <li><a>[[${engineerUserDTO.engineerUserName}]]님 환영합니다</a></li>
    		 </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -86,17 +81,18 @@
     <!-- Page Title -->
     <div class="page-title accent-background">
       <div class="container">
-        <h1>엔지니어 조회</h1><br>
+        <h1>공고 조회</h1><br>
         <section>
-			<form action="/company/findEngineer" method="get">
+			<form action="/engineer/searchAnn" method="get">
 				<select name="type">
 					<option value="">선택</option>
-					<option value="n">이름</option>
-					<option value="j">분야</option>
-					<option value="nj">이름과 분야</option>
+					<option value="n">공고명</option>
+					<option value="j">모집분야</option>
+					<option value="a">근무위치</option>
+					<option value="d">근무방식</option>
+					<option value="p">근무기간</option>
 				</select>
-				<br>	
-				경력 - <input type="number" th:value="${calDTO.toNo}" name="fromNo"> 년 ~ <input type="number" th:value="${calDTO.toNo}" name="toNo"> 년
+				<br>
 				<br>
 				<input type="text" class="text" name="keyword" placeholder="Keyword"/>
 				<button type="submit" class="btn btn-success">검색하기</button>
@@ -110,48 +106,52 @@
 
       <div class="container" data-aos="fade-up">
          <table style="margin: 0 auto;">
-         	<tr>
-         		<td>
-         			순 번
-         		</td>
-         		<td>
-         			이 름
-         		</td>
-         		<td>
-         			주 소
-         		</td>
-         		<td>
-         			연락처
-         		</td>
-         		<td>
-         			분 야
-         		</td>
-         		<td>
-         			경 력
-         		</td>
-         		<td>
-         			특이 사항
-         		</td>
-         	</tr>	
-  			<tr class="table-info" th:each="dtolist:${pageResponseDTO.dtolist}">
-		  		<td th:text="${dtolist.engineerUserNo}"></td>
-		  		<td th:text="${dtolist.engineerUserName}"></td>
-		  		<td th:text="${dtolist.engineerUserAdd}"></td>
-		  		<td th:text="${dtolist.engineerUserTel}"></td>
-		  		<td th:text="${dtolist.engineerUserJob}"></td>
-		  		<td th:text="${dtolist.engineerUserCareer}"></td>
-		  		<td th:text="${dtolist.engineerUserNote}"></td>
+        	<tr>
+        		<td>
+        			순번
+        		</td>
+        		<td>
+        			공고명
+        		</td>
+        		<td>
+        			모집분야
+        		</td>
+        		<td>
+        			모집인원
+        		</td>
+        		<td>
+        			근무위치
+        		</td>
+        		<td>
+        			근무방식
+        		</td>
+        		<td>
+        			근무기간
+        		</td>
+        		<td>
+        			업체명
+        		</td>
+        	</tr>
+    		<tr class="table-info" th:each="dtolist:${pageResponseDTO.dtolist}">
+		  		<td th:text="${dtolist.announcementNo}"></td>
+		  		<td th:text="${dtolist.announcementName}"></td>
+		  		<td th:text="${dtolist.serviceJob}"></td>
+		  		<td th:text="${dtolist.servicePersonnel}"></td>
+		  		<td th:text="${dtolist.serviceAdd}"></td>
+		  		<td th:text="${dtolist.serviceDiv}"></td>
+		  		<td th:text="${dtolist.servicePeriod}"></td>
+		  		<td th:text="${dtolist.companyName}"></td>
 		  	</tr>
-  			</table>
-  			
-  		<div>
+        </table>
+        
+         <div>
 		  <ul class="pagination">
 		    <li class="page-item disabled" th:if="${pageResponseDTO.prev}">
-		    	<a class="page-link" th:href="@{/company/findEngineer(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Prev" class="button prev">Prev</a>
+		    	<a class="page-link" th:href="@{/company/searchAnn(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Prev" class="button prev">Prev</a>
 		    </li>
 		    
 		    <li class="page-item" th:each="num:${#numbers.sequence(pageResponseDTO.start,pageResponseDTO.end)}">
-		    	<a class="page-link" th:href="@{/company/findEngineer(page=${num},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}">
+		    	<a class="page-link" th:href="@{/company/searchAnn(page=${num},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}">
 		    		<th:block th:if="${num==pageResponseDTO.page}">
 						<span th:text="${num}"></span>
 					</th:block>
@@ -162,11 +162,12 @@
 		    </li>
 		    
 		    <li class="page-item" th:if="${pageResponseDTO.next}">
-		      <a class="page-link" th:href="@{/company/findEngineer(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Next" class="button next">Next</a>
+		      <a class="page-link" th:href="@{/company/searchAnn(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Next" class="button next">Next</a>
 		    </li>
 		  </ul>
 		 </div>
-  			
+        
+        
       </div>
 
     </section><!-- /Starter Section Section -->

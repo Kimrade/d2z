@@ -52,6 +52,7 @@
     margin: 20px auto; 
   }
   </style>
+   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="portfolio-details-page">
@@ -59,26 +60,26 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/main" class="logo d-flex align-items-center me-auto">
+      <a href="/engineer/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
       </a>
 
-      <nav id="navmenu" class="navmenu">-
+      <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="/main">Home<br></a></li>
-          <li><a href="/searchAnn">공고 조회</a></li>
-          <li><a href="/findCompany">사업체 조회</a></li>
-          <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="/engineeredit">내정보 수정</a></li>
-              <li><a href="/message">쪽지함 확인</a></li>
-            </ul> 
-            <li><a>김감자님 환영합니다</a></li>
-        </ul>
-      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-    </nav>
+          <li><a href="/engineer/searchAnn">공고 조회</a></li>
+          <li><a href="/engineer/findCompany">사업체 조회</a></li>
+          <li><a href="/engineer/engineerinfo">엔지니어 조회</a></li>
+            <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="/engineer/engineeredit">내정보 수정</a></li>
+                <li><a href="/engineer/message">쪽지함 확인</a></li>
+              </ul>
+           <li><a>[[${engineerUserDTO.engineerUserName}]]님 환영합니다</a></li>
+   		 </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
 
 
    <!--   <a class="btn-getstarted" href="#about">Get Started</a> --> 
@@ -102,34 +103,53 @@
 
     <!-- Portfolio Details Section -->
     <section id="portfolio-details" class="portfolio-details section">
-
-    
-
-
       <div class="row justify-content-between gy-4 mt-4">
-
         <div class="col-lg-8" data-aos="fade-up" >
-          <div class="portfolio-description">
-            <h2>현재 사업 진행 현황</h2>
-            <p>
-              <table>
-                <tr><td>no</td> <td>지원한공고</td> <td>지도분야</td> <td>기간</td> <td>업체명</td> <td>담당자명</td> <td>담당자 연락처</td> <td>진행상황</td> <td>마감여부</td> </tr>
-                <tr><td>1</td> <td><a href="/companyProgress">AA다이캐스팅 원격지도</a></td> <td>주조</td> <td>25.02.01 ~ 25.06.30</td> <td>AA다이캐스팅</td> <td>김나물</td> <td>033-254-5454</td> <td>계약완료</td> <td>공고마감</td></tr>
-                <tr><td>2</td> <td></a>BB다이캐스팅 현장방문</a></td> <td>가공</td><td>25.02.01 ~ 25.06.30</td> <td>BB다이캐스팅</td> <td>김밥</td> <td>033-245-4545</td><td>지원완료</td><td>지원가능</td></tr>
-                <tr><td>3</td> <td></a>CC다이캐스팅</a></td> <td>후처리</td><td>25.02.01 ~ 25.06.30</td> <td>CC다이캐스팅</td><td>김가루</td> <td>031-904-4444</td><td>지원완료</td><td>공고마감</td></tr>
-              </table>
-          
-            <p>
-              
-            </p>
-
-            <div class="testimonial-item">
+            <div class="portfolio-description">
+              <h2>현재 사업 진행 현황</h2>
               <p>
-                <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
-              </p>
+                <table>
+                  <tr>
+                  	<td>
+                  		순번
+                  	</td>
+                  	<td>
+                  		계약명
+                  	</td>
+                  	<td>
+                  		계약내용
+                  	</td>
+                  	<td>
+                  		처리과정
+                  	</td>
+                  	<td>
+                  		사업체
+                  	</td>
+                  </tr>
+                  <tr class="table-info" th:each="dto:${contractList}">
+                  	<td th:text="${dto.contractNo}">
+                  		1
+                  	</td>
+                  	<td>
+                  		<a th:href="@{/engineer/engineerProgress(contractNo=${dto.contractNo})}">[[${dto.contractName}]]</a>
+                  	</td>
+                  	<td th:text="${dto.contractDescription}">
+                  		asdasdqweqwe
+                  	</td>
+                  	<td>
+                  		<th:block th:if="${dto.processingTask==1}"><span>계약성립</span></th:block>
+                  		<th:block th:if="${dto.processingTask==2}"><span>협의, 설계</span></th:block>
+                  		<th:block th:if="${dto.processingTask==3}"><span>작  업</span></th:block>
+                  		<th:block th:if="${dto.processingTask==4}"><span>보고, 테스트</span></th:block>
+                  		<th:block th:if="${dto.processingTask==5}"><span>계약완료</span></th:block>
+                  	</td>
+                  	<td th:text="${dto.companyUserName}">
+                  		김감자
+                  	</td>
+                  </tr>
+                 </table>
             </div>
           </div>
-        </div>
 
         <div class="col-lg-3" data-aos="fade-up" data-aos-delay="100">
           <div class="portfolio-info">
@@ -153,68 +173,67 @@
 </main>
 
 <footer id="footer" class="footer light-background">
-
-  <div class="container footer-top">
-    <div class="row gy-4">
-      <div class="col-lg-5 col-md-12 footer-about">
-        <a href="/main" class="logo d-flex align-items-center">
-          <span class="sitename">D2Z</span>
-        </a>
-        <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
-        <div class="social-links d-flex mt-4">
-          <a href=""><i class="bi bi-twitter-x"></i></a>
-          <a href=""><i class="bi bi-facebook"></i></a>
-          <a href=""><i class="bi bi-instagram"></i></a>
-          <a href=""><i class="bi bi-linkedin"></i></a>
+   <div class="container footer-top">
+      <div class="row gy-4">
+         
+         <div class="col-lg-2 col-6 footer-links">
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
         </div>
-      </div>
-
-      <div class="col-lg-2 col-6 footer-links">
-        <h4>D2Z</h4>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About us</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Terms of service</a></li>
-          <li><a href="#">Privacy policy</a></li>
-        </ul>
-      </div>
-
-      <div class="col-lg-2 col-6 footer-links">
-        <h4>Our Services</h4>
-        <ul>
-          <li><a href="#">Web Design</a></li>
-          <li><a href="#">Web Development</a></li>
-          <li><a href="#">Product Management</a></li>
-          <li><a href="#">Marketing</a></li>
-          <li><a href="#">Graphic Design</a></li>
-        </ul>
-      </div>
-
-      <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-        <h4>Contact Us</h4>
-        <p>A108 Adam Street</p>
-        <p>New York, NY 535022</p>
-        <p>United States</p>
-        <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-        <p><strong>Email:</strong> <span>info@example.com</span></p>
-      </div>
-
+         
+        <div class="col-lg-2 col-6 footer-links">
+          <a href="/d2z/informationHistory"><h4>D/C 역사관</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+    
+        <div class="col-lg-2 col-6 footer-links">
+          <a href="/d2z/informationMarket"><h4>D/C 원자재</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+    
+        <div class="col-lg-2 col-6 footer-links">
+          <a href="/d2z/informationManufacturer"><h4>D/C 제조사</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+   
+        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+          <h4>Contact Us</h4>
+          <p>Across the E-Mart</p>
+          <p>ChunCheon-si, Kangwon-do</p>
+          <p>Republic of Korea</p>
+          <p class="mt-4"><strong>Phone:</strong> <span>+82 10-1234-5678</span></p>
+          <p><strong>Email:</strong> <span>info@example.com</span></p>
+        </div>
     </div>
-  </div>
-
-  <div class="container copyright text-center mt-4">
-    <p>© <span>Copyright</span> <strong class="px-1 sitename">OnePage</strong> <span>All Rights Reserved</span></p>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you've purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>ThemeWagon
     </div>
-  </div>
 
-</footer>
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">OnePage</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>D2Z
+      </div>
+    </div>
+
+  </footer>
 
 <!-- Scroll Top -->
 <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

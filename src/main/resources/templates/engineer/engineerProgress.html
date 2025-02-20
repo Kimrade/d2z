@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>D2Z - 엔지니어조회</title>
+  <title>D2Z - 진행상황조회</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -30,6 +30,8 @@
 	  border-collapse: collapse;
 	  margin: 20px;
 	  padding: 10px;
+	  margin-left:auto;
+	  margin-right:auto;
 	}
 	
 	th, td {
@@ -42,12 +44,31 @@
 	  color: white;
 	  font-weight: bold;
 	}  
-	
-  
-      .checkbox-group {
-      text-align: left;  /* 왼쪽 정렬 */
-      margin-left: 10px; /* 여백을 줘서 깔끔하게 정렬 */
-    }
+	.portfolio-details {
+  display: flex;
+  flex-direction: column;  
+  justify-content: center; 
+  align-items: center;    
+  height: 100vh;           
+  text-align: center;      
+}
+
+.portfolio-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.portfolio-description h2 {
+  margin-bottom: 20px; 
+}
+
+.portfolio-description table {
+  margin: 0 auto; 
+  width: 80%; 
+}
     </style>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -57,28 +78,27 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/company/main" class="logo d-flex align-items-center me-auto">
+      <a href="d2z/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
       </a>
-
-      <nav id="navmenu" class="navmenu">
+     <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="/company/announce">공고 등록</a></li>
-          <li><a href="/company/searchAnn">공고 조회</a></li>
-          <li><a href="/company/companyinfo">사업체 조회</a></li>
-          <li><a href="/company/findEngineer">엔지니어 조회</a></li>
+          <li><a href="/engineer/searchAnn">공고 조회</a></li>
+          <li><a href="/engineer/findCompany">사업체 조회</a></li>
+          <li><a href="/engineer/engineerinfo">엔지니어 조회</a></li>
             <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-                <li><a href="/company/companyedit">내정보 수정</a></li>
-                <li><a href="/company/message">쪽지함 확인</a></li>
+                <li><a href="/engineer/engineeredit">내정보 수정</a></li>
+                <li><a href="/engineer/message">쪽지함 확인</a></li>
               </ul>
-           <li><a>[[${companyUserDTO.companyUserName}]]님 환영합니다</a></li>
+           <li><a>[[${engineerUserDTO.engineerUserName}]]님 환영합니다</a></li>
    		 </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
     </div>
+    
   </header>
 
   <main class="main">
@@ -86,22 +106,10 @@
     <!-- Page Title -->
     <div class="page-title accent-background">
       <div class="container">
-        <h1>엔지니어 조회</h1><br>
-        <section>
-			<form action="/company/findEngineer" method="get">
-				<select name="type">
-					<option value="">선택</option>
-					<option value="n">이름</option>
-					<option value="j">분야</option>
-					<option value="nj">이름과 분야</option>
-				</select>
-				<br>	
-				경력 - <input type="number" th:value="${calDTO.toNo}" name="fromNo"> 년 ~ <input type="number" th:value="${calDTO.toNo}" name="toNo"> 년
-				<br>
-				<input type="text" class="text" name="keyword" placeholder="Keyword"/>
-				<button type="submit" class="btn btn-success">검색하기</button>
-			</form>
-		</section>
+        <h1>현재 진행 상황</h1><br>
+        <div></div><br>
+        <nav class="breadcrumbs">
+        </nav>
       </div>
     </div><!-- End Page Title -->
 
@@ -109,82 +117,34 @@
     <section id="starter-section" class="starter-section section" >
 
       <div class="container" data-aos="fade-up">
-         <table style="margin: 0 auto;">
-         	<tr>
-         		<td>
-         			순 번
-         		</td>
-         		<td>
-         			이 름
-         		</td>
-         		<td>
-         			주 소
-         		</td>
-         		<td>
-         			연락처
-         		</td>
-         		<td>
-         			분 야
-         		</td>
-         		<td>
-         			경 력
-         		</td>
-         		<td>
-         			특이 사항
-         		</td>
-         	</tr>	
-  			<tr class="table-info" th:each="dtolist:${pageResponseDTO.dtolist}">
-		  		<td th:text="${dtolist.engineerUserNo}"></td>
-		  		<td th:text="${dtolist.engineerUserName}"></td>
-		  		<td th:text="${dtolist.engineerUserAdd}"></td>
-		  		<td th:text="${dtolist.engineerUserTel}"></td>
-		  		<td th:text="${dtolist.engineerUserJob}"></td>
-		  		<td th:text="${dtolist.engineerUserCareer}"></td>
-		  		<td th:text="${dtolist.engineerUserNote}"></td>
-		  	</tr>
-  			</table>
-  			
-  		<div>
-		  <ul class="pagination">
-		    <li class="page-item disabled" th:if="${pageResponseDTO.prev}">
-		    	<a class="page-link" th:href="@{/company/findEngineer(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Prev" class="button prev">Prev</a>
-		    </li>
-		    
-		    <li class="page-item" th:each="num:${#numbers.sequence(pageResponseDTO.start,pageResponseDTO.end)}">
-		    	<a class="page-link" th:href="@{/company/findEngineer(page=${num},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}">
-		    		<th:block th:if="${num==pageResponseDTO.page}">
-						<span th:text="${num}"></span>
-					</th:block>
-					<th:block th:unless="${num==pageResponseDTO.page}">
-						<span th:text="${num}"></span>
-					</th:block>
-		    	</a>
-		    </li>
-		    
-		    <li class="page-item" th:if="${pageResponseDTO.next}">
-		      <a class="page-link" th:href="@{/company/findEngineer(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Next" class="button next">Next</a>
-		    </li>
-		  </ul>
-		 </div>
-  			
+<table>
+<tr> <td>no</td> <td>지원한공고</td> <td>지도분야</td> <td>기간</td> <td>업체명</td> <td>담당자명</td> <td>담당자 연락처</td> <td>진행상황</td> <td>마감여부</td></tr>
+  <tr class="table-info"><td>1</td> <td>AA다이캐스팅 원격지도</td> <td>주조</td> <td>25.02.01 ~ 25.06.30</td> <td>AA다이캐스팅</td> <td>김나물</td> <td>033-254-5454</td> <td>계약완료</td> <td>공고마감</td></tr>
+</tr>
+ </table><br>
+  
+ <h3 style = "text-align:center">현재 공고의 진행상황은 계약 완료 입니다.</h3>
+	<div style="width: 100%; text-align: right; margin-top: 10px;">
+  <a class="btn btn-primary" href="/engineer/engineer">돌아가기</a>
+</div>
       </div>
 
     </section><!-- /Starter Section Section -->
 
   </main>
 
-  <footer id="footer" class="footer light-background">
-	<div class="container footer-top">
+<footer id="footer" class="footer light-background">
+   <div class="container footer-top">
       <div class="row gy-4">
-      	
-      	<div class="col-lg-2 col-6 footer-links">
+         
+         <div class="col-lg-2 col-6 footer-links">
           <p></p>
           <p></p>
           <p></p>
           <p></p>
           <p></p>
         </div>
-      	
+         
         <div class="col-lg-2 col-6 footer-links">
           <a href="/d2z/informationHistory"><h4>D/C 역사관</h4></a>
           <p></p>
@@ -211,7 +171,7 @@
           <p></p>
           <p></p>
         </div>
-	
+   
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
           <h4>Contact Us</h4>
           <p>Across the E-Mart</p>

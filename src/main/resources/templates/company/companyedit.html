@@ -83,57 +83,57 @@
 			  
 			  <div class="mb-3">
 			    <label for="tel" class="form-label">업 체 명</label>
-			    <input type="text" class="form-control" id="address" name="companyName" style="width: 500px;">
+			    <input type="text" class="form-control" id="address" th:value="${companyUserDTO.companyName}" name="companyName" style="width: 500px;">
 			  </div>
 
 			  <div class="mb-3">
 			    <label for="comPerson" class="form-label">사업자 등록 번호</label>
-			    <input type="text" class="form-control" id="comPerson" name="companyNo">
+			    <input type="text" class="form-control" id="comPerson" th:value="${companyUserDTO.companyNo}" name="companyNo">
 			  </div>
 			  
 			  <div class="mb-3">
 			    <label for="tel" class="form-label">업체 주소</label>
-			    <input type="text" class="form-control" id="address" name="companyAdd" style="width: 500px;">
+			    <input type="text" class="form-control" id="address" th:value="${companyUserDTO.companyAdd}" name="companyAdd" style="width: 500px;">
 			  </div>
 			  
 			  <div class="mb-3">
 			    <label for="businessNum" class="form-label">업체 연락처</label>
-			    <input type="text" class="form-control" id="tel" name="companyTel">
+			    <input type="text" class="form-control" id="tel" th:value="${companyUserDTO.companyTel}" name="companyTel">
 			  </div>
 			  
 			  <div class="mb-3">
 			    <label for="conTel" class="form-label">업체 웹사이트</label>
-			    <input type="text" class="form-control" id="comTel" name="companySiteAdd">
+			    <input type="text" class="form-control" id="comTel" name="companySiteAdd" th:value="${companyUserDTO.companySiteAdd}">
 			  </div>
 
 			  <div class="mb-3">
 			    <label for="comPerson" class="form-label">업체 정보</label>
-			    <textarea class="form-control" id="comPerson" name="companyInfo"></textarea>
+			    <textarea class="form-control" id="comPerson" name="companyInfo" th:text="${companyUserDTO.companyInfo}"></textarea>
 			  </div>
 			  
 			  <div class="mb-3">
 			    <label for="comPerson" class="form-label">업체 비고</label>
-			    <textarea class="form-control" id="comPerson" name="companyNote"></textarea>
+			    <textarea class="form-control" id="comPerson" name="companyNote" th:text="${companyUserDTO.companyNote}"></textarea>
 			  </div>
 			  
 			  <div class="mb-3">
 			    <label for="comPerson" class="form-label">담당자 성명</label>
-			    <input type="text" class="form-control" id="comPerson" name="companyUserName">
+			    <input type="text" class="form-control" id="comPerson" name="companyUserName" th:value="${companyUserDTO.companyUserName}">
 			  </div>
 			  
 			  <div class="mb-3">
 			    <label for="comPerson" class="form-label">담당자 연락처</label>
-			    <input type="text" class="form-control" id="comPerson" name="companyUserTel">
+			    <input type="text" class="form-control" id="comPerson" name="companyUserTel" th:value="${companyUserDTO.companyUserTel}">
 			  </div>			  
 			  
 			  <div class="mb-3">
 			    <label for="comPerson" class="form-label">담당자 팩스 번호</label>
-			    <input type="text" class="form-control" id="comPerson" name="companyUserFax">
+			    <input type="text" class="form-control" id="comPerson" name="companyUserFax" th:value="${companyUserDTO.companyUserFax}">
 			  </div>
 			  
 			  <div class="mb-3">
 			    <label for="comPerson" class="form-label">담당자 이메일 주소</label>
-			    <input type="text" class="form-control" id="comPerson" name="companyUserEmail">
+			    <input type="text" class="form-control" id="comPerson" name="companyUserEmail" th:value="${companyUserDTO.companyUserEmail}">
 			  </div>
 
 			  <input type="submit" class="btn btn-primary" value="회원 정보 수정">

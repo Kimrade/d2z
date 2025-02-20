@@ -1,5 +1,6 @@
 package org.d2z.controller;
 
+import org.d2z.dto.CareerCalDTO;
 import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.LoginUserDTO;
 import org.d2z.dto.PageRequestDTO;
@@ -89,15 +90,18 @@ public class CompanyUserController {
 
 			if(cus.companyUserInfoModify(loginUserDTO, companyUserDTO)) {
 				ra.addFlashAttribute("userModifyAlert", "정상적으로 수정되었습니다.");
+				return "redirect:/company/main";
 			}else {
 				ra.addFlashAttribute("userModifyAlert", "수정 실패하였습니다. 다시 확인하여 주시기 바랍니다.");
+				return "redirect:/company/companyedit";
 			}
 			
 		}else {
 			ra.addFlashAttribute("userModifyAlert", "비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+			return "redirect:/company/companyedit";
 		}
 		
-		return "redirect:/company/main";
+		
 	}
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
@@ -120,9 +124,13 @@ public class CompanyUserController {
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
 	@GetMapping("/findEngineer")
-	public void findEngineerGet(@AuthenticationPrincipal UserDetails userDetails,Model model, PageRequestDTO pageRequestDTO, @RequestParam("fromNo") int fromNo, @RequestParam("toNo") int toNo) {
+	public void findEngineerGet(@AuthenticationPrincipal UserDetails userDetails,Model model, PageRequestDTO pageRequestDTO, CareerCalDTO careerDTO) {
 		
 		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
+		model.addAttribute("calDTO", careerDTO);
+		
+		int fromNo = careerDTO.getFromNo();
+		int toNo = careerDTO.getToNo();
 		
 		if(toNo != 0 && toNo >= fromNo) {
 			model.addAttribute("pageResponseDTO", eus.engineerUserSearchByKeywordAndCareer(pageRequestDTO, fromNo, toNo));
