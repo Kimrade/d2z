@@ -3,6 +3,7 @@ package org.d2z.repository.search;
 import java.util.List;
 
 import org.d2z.domain.PublicAnnouncement;
+import org.d2z.domain.QCompanyUser;
 import org.d2z.domain.QPublicAnnouncement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,15 +24,29 @@ public class PublicAnnouncementSearchImpl extends QuerydslRepositorySupport impl
 		
 		QPublicAnnouncement publicAnnouncement = QPublicAnnouncement.publicAnnouncement;
 		
-		JPQLQuery<PublicAnnouncement> query = from(publicAnnouncement);
+		QCompanyUser companyUser = QCompanyUser.companyUser;
+		
+		JPQLQuery<PublicAnnouncement> query = from(publicAnnouncement).leftJoin(publicAnnouncement.companyUser, companyUser);
 		
 		BooleanBuilder bb = new BooleanBuilder();
 		
 		if((types != null && types.length > 0) && keyword != null) {
 			for(String type : types) {
 				switch(type) {
-					case "":
-						
+					case "n":
+						bb.or(publicAnnouncement.announcementName.contains(keyword));
+					break;
+					case "j":
+						bb.or(publicAnnouncement.serviceJob.contains(keyword));
+					break;
+					case "a":
+						bb.or(publicAnnouncement.serviceAdd.contains(keyword));
+					break;
+					case "d":
+						bb.or(publicAnnouncement.serviceDiv.contains(keyword));
+					break;
+					case "p":
+						bb.or(publicAnnouncement.servicePeriod.contains(keyword));
 					break;
 				}
 			}

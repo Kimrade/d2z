@@ -78,12 +78,27 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="d2z/main" class="logo d-flex align-items-center me-auto">
+      <a href="/company/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
       </a>
-     
+      
+    <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="/company/announce">공고 등록</a></li>
+          <li><a href="/company/searchAnn">공고 조회</a></li>
+          <li><a href="/company/companyinfo">사업체 조회</a></li>
+          <li><a href="/company/findEngineer">엔지니어 조회</a></li>
+            <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="/company/companyedit">내정보 수정</a></li>
+                <li><a href="/company/message">쪽지함 확인</a></li>
+              </ul>
+           <li><a>[[${companyUserDTO.companyUserName}]]님 환영합니다</a></li>
+   		 </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </div>
     
@@ -105,65 +120,107 @@
     <section id="starter-section" class="starter-section section" >
 
       <div class="container" data-aos="fade-up">
-<table>
-<tr> <td>No</td> <td>공고명</td> <td>기간</td> <td>과제명</td> <td>매칭여부</td> <td>엔지니어</td></tr>
-  <tr class="table-info"><td>1</td> <td>AA다이캐스팅 원격지도 숙련 기술자 모집</td> <td>25.02.01 ~ 25.06.30</td> <td>AA다이캐스팅 지도방문</td><td>매칭완료</td> <td>김감자</td></tr>
-</tr>
- </table><br>
-  
- <h3 style = "text-align:center">현재 공고의 진행상황은 계약 완료 입니다.</h3>
-	<div style="width: 100%; text-align: right; margin-top: 10px;">
-  <a class="btn btn-primary" href="/company/company">돌아가기</a>
-</div>
+		<table>
+			<tr>
+				<td>
+					No
+				</td>
+				<td>
+					공고명
+				</td>
+				<td>
+					기간
+				</td>
+				<td>
+					과제명
+				</td>
+				<td>
+					매칭여부
+				</td>
+				<td>
+					엔지니어
+				</td>
+			</tr>
+	  		<tr class="table-info">
+	  			<td>
+	  				1
+	  			</td>
+	  			<td>
+	  				AA다이캐스팅 원격지도 숙련 기술자 모집
+	  			</td>
+	  			<td>
+	  				25.02.01 ~ 25.06.30
+	  			</td>
+	  			<td>
+	  				AA다이캐스팅 지도방문
+	  			</td>
+	  			<td>
+	  				매칭완료
+	  			</td>
+	  			<td>
+	  				김감자
+	  			</td>
+	  		</tr>
+	 	</table>
+	 	<br>
+		<h3 style = "text-align:center">현재 공고의 진행상황은 계약 완료 입니다.</h3>
+		<div style="width: 100%; text-align: right; margin-top: 10px;">
+		  <a class="btn btn-primary" href="/company/company">돌아가기</a>
+		</div>
       </div>
 
     </section><!-- /Starter Section Section -->
 
   </main>
 
-  <footer id="footer" class="footer light-background" >
-
-    <div class="container footer-top">
+  <footer id="footer" class="footer light-background">
+	<div class="container footer-top">
       <div class="row gy-4">
-        <div class="col-lg-5 col-md-12 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">D2Z</span>
-          </a>
-          <p>대한민국 다이캐스팅 산업의 도우미 다장입니다.</p>
+      	
+      	<div class="col-lg-2 col-6 footer-links">
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
         </div>
-
+      	
         <div class="col-lg-2 col-6 footer-links">
-          <h4>다이캐스팅 역사관</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
-          </ul>
+          <a href="/d2z/informationHistory"><h4>D/C 역사관</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
         </div>
-
+    
         <div class="col-lg-2 col-6 footer-links">
-          <h4>다이캐스팅 소개</h4>
-          <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
-          </ul>
+          <a href="/d2z/informationMarket"><h4>D/C 원자재</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
         </div>
-
+    
+        <div class="col-lg-2 col-6 footer-links">
+          <a href="/d2z/informationManufacturer"><h4>D/C 제조사</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+	
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-          <h4>다이캐스팅 어쩌구~</h4>
-          <p>A108 Adam Street</p>
-          <p>New York, NY 535022</p>
-          <p>United States</p>
-          <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+          <h4>Contact Us</h4>
+          <p>Across the E-Mart</p>
+          <p>ChunCheon-si, Kangwon-do</p>
+          <p>Republic of Korea</p>
+          <p class="mt-4"><strong>Phone:</strong> <span>+82 10-1234-5678</span></p>
           <p><strong>Email:</strong> <span>info@example.com</span></p>
         </div>
-
-      </div>
+    </div>
     </div>
 
     <div class="container copyright text-center mt-4">
@@ -173,7 +230,7 @@
         <!-- You can delete the links only if you've purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>ThemeWagon
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>D2Z
       </div>
     </div>
 

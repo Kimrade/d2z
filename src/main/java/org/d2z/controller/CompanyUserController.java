@@ -2,8 +2,11 @@ package org.d2z.controller;
 
 import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.LoginUserDTO;
+import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PublicAnnouncementDTO;
 import org.d2z.service.CompanyUserService;
+import org.d2z.service.ContractService;
+import org.d2z.service.EngineerUserService;
 import org.d2z.service.PublicAnnouncementService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,6 +30,8 @@ public class CompanyUserController {
 	
 	private final CompanyUserService cus;
 	private final PublicAnnouncementService pas;
+	private final EngineerUserService eus;
+	private final ContractService cs;
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
 	@GetMapping("/main")
@@ -34,6 +39,8 @@ public class CompanyUserController {
 		log.info("companyMain get 진입 - 회사 유저 메인 진입");
 		
 		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
+		
+		model.addAttribute("contractList", cs.searchOneByCompanyUser(cus.companyUserInfo(userDetails.getUsername()).getCompanyUserNo()));
 		
 		return "/company/company";
 	}
@@ -95,26 +102,42 @@ public class CompanyUserController {
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
 	@GetMapping("/companyinfo")
-	public void companyinfoGet(@AuthenticationPrincipal UserDetails userDetails,Model model) {
+	public void companyinfoGet(@AuthenticationPrincipal UserDetails userDetails,Model model, PageRequestDTO pageRequestDTO) {
+		
 		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
+		
+		model.addAttribute("pageResponseDTO", cus.companyUserSearchByKeyword(pageRequestDTO));
+		
+		
 	}
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
 	@GetMapping("/companyProgress")
 	public void companyProgressGet(@AuthenticationPrincipal UserDetails userDetails,Model model) {
+		
 		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
 	}
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
 	@GetMapping("/findEngineer")
-	public void findEngineerGet(@AuthenticationPrincipal UserDetails userDetails,Model model) {
+	public void findEngineerGet(@AuthenticationPrincipal UserDetails userDetails,Model model, PageRequestDTO pageRequestDTO, @RequestParam("fromNo") int fromNo, @RequestParam("toNo") int toNo) {
+		
 		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
+		
+		if(toNo != 0 && toNo >= fromNo) {
+			model.addAttribute("pageResponseDTO", eus.engineerUserSearchByKeywordAndCareer(pageRequestDTO, fromNo, toNo));
+		}else {
+			model.addAttribute("pageResponseDTO", eus.engineerUserSearchByKeyword(pageRequestDTO));
+		}
+		
 	}
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
 	@GetMapping("/searchAnn")
-	public void searchAnnGet(@AuthenticationPrincipal UserDetails userDetails,Model model) {
+	public void searchAnnGet(@AuthenticationPrincipal UserDetails userDetails,Model model,  PageRequestDTO pageRequestDTO) {
 		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
+		
+		model.addAttribute("pageResponseDTO", pas.publicAnnouncementSearchByKeyword(pageRequestDTO));
 	}
 	
 	

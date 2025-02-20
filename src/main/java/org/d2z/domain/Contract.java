@@ -41,6 +41,9 @@ public class Contract {
 	@ColumnDefault("0")
 	private int processingTask;
 	
+	// 사업 명세 처리 내용
+	private String contractDescription;
+	
 	// 사업 명세가 처음 생성된 날짜
 	@Column(updatable = false)
 	@CreatedDate

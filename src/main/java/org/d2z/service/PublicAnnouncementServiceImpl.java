@@ -105,7 +105,26 @@ public class PublicAnnouncementServiceImpl implements PublicAnnouncementService 
 	public PublicAnnouncementDTO publicAnnouncementReadOne(int announcementNo) {
 		
 		if(par.findById(announcementNo).isPresent()) {
-			return modelMapper.map(par.findById(announcementNo).orElseThrow(), PublicAnnouncementDTO.class);
+			
+			PublicAnnouncement publicAnnouncement = par.findById(announcementNo).orElseThrow();
+			
+			PublicAnnouncementDTO publicAnnouncementDTO = PublicAnnouncementDTO.builder()
+															.announcementName(publicAnnouncement.getAnnouncementName())
+															.announcementDescription(publicAnnouncement.getAnnouncementDescription())
+															.announcementNo(announcementNo)
+															.companyName(publicAnnouncement.getCompanyUser().getCompanyName())
+															.companyUserNo(publicAnnouncement.getCompanyUser().getCompanyUserNo())
+															.createdDate(publicAnnouncement.getCreatedDate())
+															.deadlineDate(publicAnnouncement.getDeadlineDate())
+															.serviceAdd(publicAnnouncement.getServiceAdd())
+															.serviceCost(publicAnnouncement.getServiceCost())
+															.serviceDiv(publicAnnouncement.getServiceDiv())
+															.serviceJob(publicAnnouncement.getServiceJob())
+															.servicePeriod(publicAnnouncement.getServicePeriod())
+															.ServicePersonnel(publicAnnouncement.getServicePersonnel())
+															.serviceTotalCost(publicAnnouncement.getServiceTotalCost()).build();
+			
+			return publicAnnouncementDTO;
 		}
 		
 		return null;

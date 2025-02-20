@@ -34,14 +34,17 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		if((types != null && types.length > 0) && keyword != null) {
 			for(String type : types) {
 				switch(type) {
-					case "":
-						
+					case "n":
+						bb.or(engineerUser.engineerUserName.contains(keyword));
+					break;
+					case "j":
+						bb.or(engineerUser.engineerUserJob.contains(keyword));
 					break;
 				}
 			}
 		}
 		
-		bb.or(engineerUser.isDeleted.eq(0));
+		bb.and(engineerUser.isDeleted.eq(0));
 		
 		bb.and(engineerUser.isApproved.eq(1));
 		
@@ -77,7 +80,7 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 			}
 		}
 		
-		bb.or(engineerUser.isDeleted.eq(0));
+		bb.and(engineerUser.isDeleted.eq(0));
 		
 		bb.and(engineerUser.isApproved.eq(-1));
 		
@@ -113,7 +116,7 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 			}
 		}
 		
-		bb.or(engineerUser.isDeleted.eq(0));
+		bb.and(engineerUser.isDeleted.eq(0));
 		
 		bb.and(engineerUser.isApproved.eq(0));
 		
@@ -219,6 +222,50 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		int count = (int)query.fetchCount();
 		
 		return count;
+	}
+
+	@Override
+	public Page<EngineerUser> EngineerUserSearchByKeywordAndCareer(String[] types, String keyword, Pageable pageable,double fromNo, double toNo) {
+		
+		QEngineerUser engineerUser = QEngineerUser.engineerUser;
+		
+		QLogin login = QLogin.login;
+		
+		JPQLQuery<EngineerUser> query = from(engineerUser).leftJoin(engineerUser.login, login);
+		
+		BooleanBuilder bb = new BooleanBuilder();
+		
+		if((types != null && types.length > 0) && keyword != null) {
+			for(String type : types) {
+				switch(type) {
+					case "n":
+						bb.or(engineerUser.engineerUserName.contains(keyword));
+					break;
+					case "j":
+						bb.or(engineerUser.engineerUserJob.contains(keyword));
+					break;
+				}
+			}
+		}
+		
+		if(fromNo >= 0 && toNo >= fromNo) {
+			bb.and(engineerUser.engineerUserCareer.between(fromNo, toNo));
+		}
+		
+		bb.and(engineerUser.isDeleted.eq(0));
+		
+		bb.and(engineerUser.isApproved.eq(1));
+		
+		query.where(bb);
+		
+		this.getQuerydsl().applyPagination(pageable, query);
+		
+		List<EngineerUser> list = query.fetch();
+		Long count = query.fetchCount();
+		
+		Page<EngineerUser> result = new PageImpl<>(list, pageable, count);
+		
+		return result;
 	}
 
 	

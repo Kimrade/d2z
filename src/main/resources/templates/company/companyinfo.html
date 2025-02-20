@@ -78,7 +78,7 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/d2z/main" class="logo d-flex align-items-center me-auto">
+      <a href="/company/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
@@ -88,6 +88,7 @@
         <ul>
           <li><a href="/company/announce">공고 등록</a></li>
           <li><a href="/company/searchAnn">공고 조회</a></li>
+          <li><a href="/company/companyinfo">사업체 조회</a></li>
           <li><a href="/company/findEngineer">엔지니어 조회</a></li>
             <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
@@ -106,11 +107,25 @@
     <!-- Page Title -->
     <div class="page-title accent-background">
       <div class="container">
-        <h1>전체 회원 조회</h1><br>
-        <div>이곳에 검색창이 들어갈거에요</div><br>
-		<input type = "text"> <button type="button" class="btn btn-success">검색하기</button>
-        <nav class="breadcrumbs">
-        </nav>
+        <h1>사업체 조회</h1><br>
+        <section>
+			<form action="/company/companyinfo" method="get">
+			<select name="type">
+					<option value="">선택</option>
+					<option value="n">업체명</option>
+					<option value="a">주소지</option>
+					<option value="i">비고</option>
+					<option value="na">업체명과 주소지</option>
+					<option value="ai">주소지와 비고</option>
+					<option value="ni">업체명과 비고</option>
+					<option value="nai">업체명과 주소지, 비고</option>
+				</select>
+				<br>
+				<br>
+				<input type="text" class="text" name="keyword" placeholder="Keyword"/>
+				<button type="submit" class="btn btn-success">검색하기</button>
+			</form>
+		</section>
       </div>
     </div><!-- End Page Title -->
 
@@ -121,7 +136,7 @@
 		<table>
 			<tr>
 				<td>
-					사업체명
+					순번
 				</td>
 				<td>
 					사업자 번호
@@ -139,27 +154,37 @@
 					이메일주소
 				</td>
 			</tr>
-		  	<tr class="table-info">
-		  		<td>
-		  			aadnc
-		  		</td>
-		  		<td>
-		  			221-54-88821
-		  		</td>
-		  		<td>
-		  			AA다이캐스팅
-		  		</td>
-		  		<td>
-		  			김감자
-		  		</td>
-		  		<td>
-		  			033-254-5454
-		  		</td>
-		  		<td>
-		  			aadnc@aadnc.co.kr
-		  		</td>
+		  	<tr class="table-info" th:each="dtolist:${pageResponseDTO.dtolist}">
+		  		<td th:text="${dtolist.companyUserNo}"></td>
+		  		<td th:text="${dtolist.companyNo}"></td>
+		  		<td th:text="${dtolist.companyName}"></td>
+		  		<td th:text="${dtolist.companyUserName}"></td>
+		  		<td th:text="${dtolist.companyUserTel}"></td>
+		  		<td th:text="${dtolist.companyUserEmail}"></td>
 		  	</tr>
 		</table>
+		<div>
+		  <ul class="pagination">
+		    <li class="page-item disabled" th:if="${pageResponseDTO.prev}">
+		    	<a class="page-link" th:href="@{/company/companyinfo(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Prev" class="button prev">Prev</a>
+		    </li>
+		    
+		    <li class="page-item" th:each="num:${#numbers.sequence(pageResponseDTO.start,pageResponseDTO.end)}">
+		    	<a class="page-link" th:href="@{/company/companyinfo(page=${num},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}">
+		    		<th:block th:if="${num==pageResponseDTO.page}">
+						<span th:text="${num}"></span>
+					</th:block>
+					<th:block th:unless="${num==pageResponseDTO.page}">
+						<span th:text="${num}"></span>
+					</th:block>
+		    	</a>
+		    </li>
+		    
+		    <li class="page-item" th:if="${pageResponseDTO.next}">
+		      <a class="page-link" th:href="@{/company/companyinfo(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Next" class="button next">Next</a>
+		    </li>
+		  </ul>
+		 </div>
       </div>
 
     </section><!-- /Starter Section Section -->

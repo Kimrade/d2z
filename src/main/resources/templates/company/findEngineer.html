@@ -57,7 +57,7 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/d2z/main" class="logo d-flex align-items-center me-auto">
+      <a href="/company/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
@@ -65,19 +65,17 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="/d2z/main">Home<br></a></li>
-          <li><a href="/announce">공고 등록</a></li>
-          <li><a href="/searchAnn">공고 조회</a></li>
-          <li><a href="/findEngineer">엔지니어 조회</a></li>
-           <ul>
+          <li><a href="/company/announce">공고 등록</a></li>
+          <li><a href="/company/searchAnn">공고 조회</a></li>
+          <li><a href="/company/companyinfo">사업체 조회</a></li>
+          <li><a href="/company/findEngineer">엔지니어 조회</a></li>
             <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-               <li><a>AA다이캐스팅님 환영합니다</a></li>
-                <li><a href="/companyedit">내정보 수정</a></li>
-                <li><a href="/message">쪽지함 확인</a></li>
+                <li><a href="/company/companyedit">내정보 수정</a></li>
+                <li><a href="/company/message">쪽지함 확인</a></li>
               </ul>
-          </ul>
-          
+           <li><a>[[${companyUserDTO.companyUserName}]]님 환영합니다</a></li>
+   		 </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
     </div>
@@ -89,13 +87,21 @@
     <div class="page-title accent-background">
       <div class="container">
         <h1>엔지니어 조회</h1><br>
-        <div>이곳에 검색창이 들어갈거에요</div><br>
-        모집분야 &nbsp;<input type="checkbox" value="금형">금형 <input type="checkbox" value="사출">사출<br>
- 		선호 근무방식 &nbsp;<input type="checkbox" value="현장">현장 <input type="checkbox" value="현장">원격<br>
- 		기타등등조건 &nbsp;<input type="checkbox" value="기타">기타등등 <input type="checkbox" value="기타">기타등등<br>
-		<input type = "text"> <button type="button" class="btn btn-success">검색하기</button>
-        <nav class="breadcrumbs">
-        </nav>
+        <section>
+			<form action="/company/findEngineer" method="get">
+				<select name="type">
+					<option value="">선택</option>
+					<option value="n">이름</option>
+					<option value="j">분야</option>
+					<option value="nj">이름과 분야</option>
+				</select>
+				<br>	
+				경력 - <input type="number" value=0 name="fromNo"> 년 ~ <input type="number" value=0 name="toNo"> 년
+				<br>
+				<input type="text" class="text" name="keyword" placeholder="Keyword"/>
+				<button type="submit" class="btn btn-success">검색하기</button>
+			</form>
+		</section>
       </div>
     </div><!-- End Page Title -->
 
@@ -104,59 +110,117 @@
 
       <div class="container" data-aos="fade-up">
          <table style="margin: 0 auto;">
-         	<tr><td>이름</td> <td>주소</td> <td>전화번호</td> <td>주 분야</td>  <td>경력</td> <td>특이사항</td> </tr>
-  			<tr class="table-info"><td>홍길동</td> <td>강원도 춘천시</td> <td>010-1225-5588</td> <td>금형</td> <td>23년 4개월</td> <td>원격지도 선호</td></tr>
-  			<tr class="table-info"><td>감자</td> <td>강원도 원주시</td> <td>010-9955-5511</td> <td>사출</td> <td>18년 9개월</td> <td>현장 근무 선호</td></tr>
-        </table>
+         	<tr>
+         		<td>
+         			순 번
+         		</td>
+         		<td>
+         			이 름
+         		</td>
+         		<td>
+         			주 소
+         		</td>
+         		<td>
+         			연락처
+         		</td>
+         		<td>
+         			분 야
+         		</td>
+         		<td>
+         			경 력
+         		</td>
+         		<td>
+         			특이 사항
+         		</td>
+         	</tr>	
+  			<tr class="table-info" th:each="dtolist:${pageResponseDTO.dtolist}">
+		  		<td th:text="${dtolist.engineerUserNo}"></td>
+		  		<td th:text="${dtolist.engineerUserName}"></td>
+		  		<td th:text="${dtolist.engineerUserAdd}"></td>
+		  		<td th:text="${dtolist.engineerUserTel}"></td>
+		  		<td th:text="${dtolist.engineerUserJob}"></td>
+		  		<td th:text="${dtolist.engineerUserCareer}"></td>
+		  		<td th:text="${dtolist.engineerUserNote}"></td>
+		  	</tr>
+  			</table>
+  			
+  		<div>
+		  <ul class="pagination">
+		    <li class="page-item disabled" th:if="${pageResponseDTO.prev}">
+		    	<a class="page-link" th:href="@{/company/findEngineer(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Prev" class="button prev">Prev</a>
+		    </li>
+		    
+		    <li class="page-item" th:each="num:${#numbers.sequence(pageResponseDTO.start,pageResponseDTO.end)}">
+		    	<a class="page-link" th:href="@{/company/findEngineer(page=${num},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}">
+		    		<th:block th:if="${num==pageResponseDTO.page}">
+						<span th:text="${num}"></span>
+					</th:block>
+					<th:block th:unless="${num==pageResponseDTO.page}">
+						<span th:text="${num}"></span>
+					</th:block>
+		    	</a>
+		    </li>
+		    
+		    <li class="page-item" th:if="${pageResponseDTO.next}">
+		      <a class="page-link" th:href="@{/company/findEngineer(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Next" class="button next">Next</a>
+		    </li>
+		  </ul>
+		 </div>
+  			
       </div>
 
     </section><!-- /Starter Section Section -->
 
   </main>
 
-  <footer id="footer" class="footer light-background" >
-
-    <div class="container footer-top">
+  <footer id="footer" class="footer light-background">
+	<div class="container footer-top">
       <div class="row gy-4">
-        <div class="col-lg-5 col-md-12 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">D2Z</span>
-          </a>
-          <p>대한민국 다이캐스팅 산업의 도우미 다장입니다.</p>
+      	
+      	<div class="col-lg-2 col-6 footer-links">
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
         </div>
-
+      	
         <div class="col-lg-2 col-6 footer-links">
-          <h4>다이캐스팅 역사관</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
-          </ul>
+          <a href="/d2z/informationHistory"><h4>D/C 역사관</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
         </div>
-
+    
         <div class="col-lg-2 col-6 footer-links">
-          <h4>다이캐스팅 소개</h4>
-          <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
-          </ul>
+          <a href="/d2z/informationMarket"><h4>D/C 원자재</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
         </div>
-
+    
+        <div class="col-lg-2 col-6 footer-links">
+          <a href="/d2z/informationManufacturer"><h4>D/C 제조사</h4></a>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+	
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-          <h4>다이캐스팅 어쩌구~</h4>
-          <p>A108 Adam Street</p>
-          <p>New York, NY 535022</p>
-          <p>United States</p>
-          <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+          <h4>Contact Us</h4>
+          <p>Across the E-Mart</p>
+          <p>ChunCheon-si, Kangwon-do</p>
+          <p>Republic of Korea</p>
+          <p class="mt-4"><strong>Phone:</strong> <span>+82 10-1234-5678</span></p>
           <p><strong>Email:</strong> <span>info@example.com</span></p>
         </div>
-
-      </div>
+    </div>
     </div>
 
     <div class="container copyright text-center mt-4">
@@ -166,7 +230,7 @@
         <!-- You can delete the links only if you've purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>ThemeWagon
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href=“https://themewagon.com>D2Z
       </div>
     </div>
 

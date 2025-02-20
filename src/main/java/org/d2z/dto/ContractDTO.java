@@ -25,6 +25,10 @@ public class ContractDTO {
 	
 	private int engineerUserNo;
 	
+	private String engineerUserName;
+	
 	private int companyUserNo;
+	
+	private String companyName;
 		
 }

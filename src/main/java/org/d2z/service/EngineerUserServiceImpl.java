@@ -213,4 +213,17 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 		
 	}
 
+	@Override
+	public PageResponseDTO<EngineerUserDTO> engineerUserSearchByKeywordAndCareer(PageRequestDTO pageRequestDTO,
+			double fromNo, double toNo) {
+		
+		Page<EngineerUser> list = eur.EngineerUserSearchByKeywordAndCareer(pageRequestDTO.getTypes(), pageRequestDTO.getKeyword(), pageRequestDTO.getPageable(""), fromNo, toNo);
+		
+		List<EngineerUserDTO> dtolist = list.getContent().stream().map(x -> modelMapper.map(x, EngineerUserDTO.class)).collect(Collectors.toList());
+		
+		PageResponseDTO<EngineerUserDTO> result = PageResponseDTO.<EngineerUserDTO>f1().dtolist(dtolist).pageRequestDTO(pageRequestDTO).total((int)list.getTotalElements()).build();
+		
+		return result;
+	}
+
 }

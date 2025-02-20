@@ -65,7 +65,7 @@ public class PublicAnnouncementServiceTests {
 //	
 //	@Test
 //	public void readOneTest() {
-//		log.info("확인용 : "+pas.publicAnnouncementReadOne(4));
+//		log.info("확인용 : "+pas.publicAnnouncementReadOne(1));
 //	}
 //	
 //	@Test

@@ -9,6 +9,9 @@ public interface EngineerUserSearch {
 	// 엔지니어 사용자 조회 - 페이지 처리 및 검색 조건(승인된 사람만)
 	public Page<EngineerUser> EngineerUserSearchByKeyword(String[] types, String keyword, Pageable pageable);
 	
+	// 엔지니어 사용자 조회 - 페이지 처리 및 검색 조건 + 경력 추가
+	public Page<EngineerUser> EngineerUserSearchByKeywordAndCareer(String[] types, String keyword, Pageable pageable, double fromNo, double toNo);
+	
 	// 엔지니어 사용자 조회 - 승인되지 않은 사람
 	public Page<EngineerUser> EngineerUserDisapprovedSearchByKeyword(String[] types, String keyword, Pageable pageable);
 	

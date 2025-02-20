@@ -51,4 +51,6 @@ public class PublicAnnouncementDTO {
 	
 	// 조인 - 사업주의 정보
 	private int companyUserNo;
+	
+	private String companyName;
 }

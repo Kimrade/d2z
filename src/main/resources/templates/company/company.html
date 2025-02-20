@@ -70,6 +70,7 @@
         <ul>
           <li><a href="/company/announce">공고 등록</a></li>
           <li><a href="/company/searchAnn">공고 조회</a></li>
+          <li><a href="/company/companyinfo">사업체 조회</a></li>
           <li><a href="/company/findEngineer">엔지니어 조회</a></li>
             <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
@@ -107,10 +108,45 @@
               <h2>현재 사업 진행 현황</h2>
               <p>
                 <table>
-                  <tr><td>no</td> <td>공고명</td> <td>기간</td> <td>과제명</td> <td>매칭여부</td> <td>엔지니어</td> </tr>
-                  <tr class="table-info"><td>1</td> <td><a href="/company/companyProgress">AA다이캐스팅 지도방문</a></td> <td>25.02.01 ~ 25.06.30</td> <td>AA다이캐스팅 지도방문</td><td>O</td> <td>김감자</td></tr>
-                  <tr class="table-info"><td>2</td> <td><a>AA다이캐스팅 현장방문</a></td> <td>25.02.01 ~ 25.06.30</td> <td>AA다이캐스팅 현장방문</td><td>X</td> <td>지원자없음</td></tr>
-                </table>
+                  <tr>
+                  	<td>
+                  		순번
+                  	</td>
+                  	<td>
+                  		계약명
+                  	</td>
+                  	<td>
+                  		계약내용
+                  	</td>
+                  	<td>
+                  		처리과정
+                  	</td>
+                  	<td>
+                  		엔지니어
+                  	</td>
+                  </tr>
+                  <tr class="table-info" th:each="dto:${contractList}">
+                  	<td th:text="${dto.contractNo}">
+                  		1
+                  	</td>
+                  	<td>
+                  		<a th:href="@{/company/companyProgress(contractNo=${dto.contractNo})}">[[${dto.contractName}]]</a>
+                  	</td>
+                  	<td th:text="${dto.contractDescription}">
+                  		asdasdqweqwe
+                  	</td>
+                  	<td>
+                  		<th:block th:if="${dto.processingTask==1}"><span>계약성립</span></th:block>
+                  		<th:block th:if="${dto.processingTask==2}"><span>협의, 설계</span></th:block>
+                  		<th:block th:if="${dto.processingTask==3}"><span>작  업</span></th:block>
+                  		<th:block th:if="${dto.processingTask==4}"><span>보고, 테스트</span></th:block>
+                  		<th:block th:if="${dto.processingTask==5}"><span>계약완료</span></th:block>
+                  	</td>
+                  	<td th:text="${dto.engineerUserName}">
+                  		김감자
+                  	</td>
+                  </tr>
+                 </table>
             </div>
           </div>
 

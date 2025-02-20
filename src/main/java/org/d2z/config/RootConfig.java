@@ -144,6 +144,7 @@ public class RootConfig {
         modelMapper.typeMap(PublicAnnouncement.class, PublicAnnouncementDTO.class)
 	        .addMappings(mapper -> {
 	            mapper.map(src -> src.getCompanyUser().getCompanyUserNo(), PublicAnnouncementDTO::setCompanyUserNo);
+	            mapper.map(src -> src.getCompanyUser().getCompanyName(), PublicAnnouncementDTO::setCompanyName);
 	    });
         
         

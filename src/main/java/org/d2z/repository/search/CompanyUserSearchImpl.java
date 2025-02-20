@@ -34,13 +34,19 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 		if((types != null && types.length > 0) && keyword != null) {
 			for(String type : types) {
 				switch(type) {
-					case "":
-						
+					case "n":
+						bb.or(companyUser.companyName.contains(keyword));
+					break;
+					case "a":
+						bb.or(companyUser.companyAdd.contains(keyword));
+					break;
+					case "i":
+						bb.or(companyUser.companyNote.contains(keyword));
 					break;
 				}
 			}
 		}
-		bb.or(companyUser.isDeleted.eq(0));
+		bb.and(companyUser.isDeleted.eq(0));
 		
 		bb.and(companyUser.isApproved.eq(1));
 		
@@ -76,7 +82,7 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 				}
 			}
 		}
-		bb.or(companyUser.isDeleted.eq(0));
+		bb.and(companyUser.isDeleted.eq(0));
 		
 		bb.and(companyUser.isApproved.eq(-1));
 		
@@ -112,7 +118,7 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 				}
 			}
 		}
-		bb.or(companyUser.isDeleted.eq(0));
+		bb.and(companyUser.isDeleted.eq(0));
 		
 		bb.and(companyUser.isApproved.eq(0));
 		
