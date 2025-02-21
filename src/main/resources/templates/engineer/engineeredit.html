@@ -70,18 +70,18 @@
        <h2>회원 정보 수정</h2>
 		<form action="/engineer/engineeredit" method="post" id="f1">
 			<div class="mb-3">
-			    <label for="password" class="form-label">비밀번호</label>
+			    <label for="password" class="form-label">수정 비밀번호</label>
 			    <input type="password" class="form-control" id="password" name="pw">
 			  </div>
 			  
 			  <div class="mb-3">
-			    <label for="password" class="form-label">비밀번호 확인</label>
+			    <label for="password" class="form-label">수정 비밀번호 확인</label>
 			    <input type="password" class="form-control" id="password" name="pwConfirm">
 			  </div>
 			  
 			  <div class="mb-3">
 			    <label for="password" class="form-label">엔지니어 성명</label>
-			    <input type="password" class="form-control" id="password" th:value="${engineerUserDTO.engineerUserName}" name="engineerUserName">
+			    <input type="text" class="form-control" id="password" th:value="${engineerUserDTO.engineerUserName}" name="engineerUserName">
 			  </div>
 			  
 			  <div class="mb-3">
@@ -96,12 +96,22 @@
 			
 			  <div class="mb-3">
 			    <label for="tel" class="form-label">연락처</label>
-			    <input type="tel" class="form-control" id="tel" th:value="${engineerUserDTO.engineerUserTel}" name="engineerUserTel">
+			    <input type="text" class="form-control" id="tel" th:value="${engineerUserDTO.engineerUserTel}" name="engineerUserTel">
 			  </div>
 			
 			  <div class="mb-3">
 			    <label for="carrer" class="form-label">경 력</label>
 			    <input type="text" class="form-control" id="career" th:value="${engineerUserDTO.engineerUserCareer}" name="engineerUserCareer">
+			  </div>
+			  
+			  <div class="mb-3">
+			    <label for="carrer" class="form-label">주요 경력 업체</label>
+			    <input type="text" class="form-control" id="majorCompany" th:value="${engineerUserDTO.engineerUserMajorCompany}" name="engineerUserMajorCompany">
+			  </div>
+			  
+			  <div class="mb-3">
+			    <label for="carrer" class="form-label">전 직 급</label>
+			    <input type="text" class="form-control" id="position" th:value="${engineerUserDTO.engineerUserPosition}" name="engineerUserPosition">
 			  </div>
 			
 			  <div class="mb-3">
@@ -126,12 +136,12 @@
 			  
 			  <div class="mb-3">
 			  	<label for="etc" class="form-label" style="width: 500px;">비고</label>
-			  	<input type="text" class="form-control" id="etc" th:value="${engineerUserDTO.engineerUserNote}" name="engineerUserNote">
+			  	<textarea class="form-control" id="etc" th:value="${engineerUserDTO.engineerUserNote}" name="engineerUserNote"></textarea>
 			  </div>
 			  
 			  <div class="mb-3">
 			  	<label for="etc" class="form-label" style="width: 500px;">소개</label>
-			  	<textarea class="form-control" id="etc" name="engineerUserInfo" th:text="engineerUserInfo">개인 소개, 정보 글등을 적어주시기 바랍니다.</textarea>
+			  	<textarea class="form-control" id="etc" name="engineerUserInfo" th:text="${engineerUserDTO.engineerUserInfo}">개인 소개, 정보 글등을 적어주시기 바랍니다.</textarea>
 			  </div>
 			  
 			  <input type="submit" class="btn btn-primary" value="정보수정">

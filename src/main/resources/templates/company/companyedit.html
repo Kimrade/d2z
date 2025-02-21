@@ -72,12 +72,12 @@
 	      	<h2>회원 정보 수정</h2>
 	      	<form action="/company/companyedit" method="post">
 			  <div class="mb-3">
-			    <label for="password" class="form-label">비밀번호</label>
+			    <label for="password" class="form-label">수정 비밀번호</label>
 			    <input type="password" class="form-control" id="password" name="pw">
 			  </div>
 			  
 			  <div class="mb-3">
-			    <label for="password" class="form-label">비밀번호 확인</label>
+			    <label for="password" class="form-label">수정 비밀번호 확인</label>
 			    <input type="password" class="form-control" id="password" name="pwConfirm">
 			  </div>
 			  
@@ -108,12 +108,12 @@
 
 			  <div class="mb-3">
 			    <label for="comPerson" class="form-label">업체 정보</label>
-			    <textarea class="form-control" id="comPerson" name="companyInfo" th:text="${companyUserDTO.companyInfo}"></textarea>
+			    <textarea class="form-control" id="comPerson" name="companyInfo">[[${companyUserDTO.companyInfo}]]</textarea>
 			  </div>
 			  
 			  <div class="mb-3">
 			    <label for="comPerson" class="form-label">업체 비고</label>
-			    <textarea class="form-control" id="comPerson" name="companyNote" th:text="${companyUserDTO.companyNote}"></textarea>
+			    <textarea class="form-control" id="comPerson" name="companyNote">[[${companyUserDTO.companyNote}]]</textarea>
 			  </div>
 			  
 			  <div class="mb-3">

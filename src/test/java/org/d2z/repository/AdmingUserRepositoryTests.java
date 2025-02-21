@@ -1,9 +1,12 @@
 package org.d2z.repository;
 
 import org.d2z.domain.AdminUser;
+import org.d2z.domain.Login;
+import org.d2z.domain.MemberRole;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -13,6 +16,26 @@ public class AdmingUserRepositoryTests {
 	
 	@Autowired
 	private AdminUserRepository aur;
+	
+	@Autowired
+	private LoginRepository lr;
+	
+	@Autowired
+	private PasswordEncoder pe;
+	
+//	@Test
+//	public void adminSave() {
+//		
+//		Login login = Login.builder().id("admin1").pw(pe.encode("1234")).build();
+//		
+//		login.addRole(MemberRole.AdminUser);
+//		
+//		lr.save(login);
+//		
+//		AdminUser adminUser = AdminUser.builder().adminUserName("관리자1").adminUserTel("010-1111-1113").login(login).build();
+//		
+//		aur.save(adminUser);
+//	}
 	
 //	@Test
 //	public void insertTest() {

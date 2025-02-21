@@ -64,11 +64,11 @@ public class CompanyUser {
 	private String companyUserTel;
 	
 	// 사업주 비고
-	@Column(nullable = true)
+	@Column(nullable = true , length = 2000)
 	private String companyNote;
 	
 	// 사업주 프로필 내용
-	@Column(nullable = true)
+	@Column(nullable = true , length = 2000)
 	private String companyInfo;
 	
 	// 아이디 삭제 유무

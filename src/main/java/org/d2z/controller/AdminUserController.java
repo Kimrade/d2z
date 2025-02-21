@@ -144,4 +144,12 @@ public class AdminUserController {
 	}
 	
 	
+	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_AdminUser')")
+	@GetMapping("/stilOnGoing")
+	public void stilOnGoingGet() {
+		
+	}
+	
+	
 }

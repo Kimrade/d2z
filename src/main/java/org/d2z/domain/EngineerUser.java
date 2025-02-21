@@ -42,11 +42,11 @@ public class EngineerUser {
 	private double engineerUserCareer;
 	
 	// 엔지니어 사용자 주요 회사
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String engineerUserMajorCompany;
 	
 	// 엔지니어 사용자 직급
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String engineerUserPosition;
 	
 	// 엔지니어 사용자 직업군
@@ -58,11 +58,11 @@ public class EngineerUser {
 	private String engineerUserEmail;
 	
 	// 엔지니어 비고
-	@Column(nullable = true)
+	@Column(nullable = true , length = 2000)
 	private String engineerUserNote;
 	
 	// 엔지니어 프로필 소개 내용
-	@Column(nullable = true,length = 2000)
+	@Column(nullable = true , length = 2000)
 	private String engineerUserInfo;
 	
 	@Column(nullable = false)
