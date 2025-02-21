@@ -24,6 +24,26 @@ public class AdmingUserRepositoryTests {
 	private PasswordEncoder pe;
 	
 //	@Test
+//	public void adminManySave() {
+//		for(int i=0; i<5; i++) {
+//			Login login = Login.builder().id("adminUser"+i).pw(pe.encode("1234")).build();
+//			
+//			login.addRole(MemberRole.AdminUser);
+//			
+//			lr.save(login);
+//			
+//			AdminUser adminUser = AdminUser.builder().adminUserName("관리자"+i).adminUserTel("010-1111-123"+i).login(login).build();
+//			
+//			aur.save(adminUser);
+//		}
+//	}
+	
+	
+	
+	
+	
+	
+//	@Test
 //	public void adminSave() {
 //		
 //		Login login = Login.builder().id("admin1").pw(pe.encode("1234")).build();

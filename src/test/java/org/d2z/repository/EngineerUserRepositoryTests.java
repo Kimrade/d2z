@@ -28,6 +28,36 @@ public class EngineerUserRepositoryTests {
 	@Autowired
 	private PasswordEncoder pe;
 	
+	
+//	@Test
+//	public void insertManyEngineerTest() {
+//		
+//		for(int i=0;i<50;i++) {
+//			Login login = Login.builder().id("engineerUser"+i).pw(pe.encode("1234")).build();
+//			
+//			login.addRole(MemberRole.EngineerUser);
+//			
+//			lr.save(login);
+//			
+//			EngineerUser engineerUser = EngineerUser.builder().engineerUserAdd("강원도 춘천시 개인주택"+i)
+//															.engineerUserBirth("199001"+i)
+//															.engineerUserCareer(i)
+//															.engineerUserEmail("engas"+i+"@naver.com")
+//															.engineerUserInfo("이것은 엔지니어 유저의 "+i+"번째 개인 소개 내용이다.")
+//															.engineerUserJob("주조"+i)
+//															.engineerUserMajorCompany("어느 주요 근무 회사"+i)
+//															.engineerUserName("엔지니어"+i)
+//															.engineerUserNote("이것은 엔지니어 유저의 "+i+"번째 비고, 기타 내용이다.")
+//															.engineerUserPosition("전직장 직급"+i)
+//															.engineerUserTel("010-1212-13"+i)
+//															.login(login).build();
+//			
+//			eur.save(engineerUser);
+//		}
+//		
+//		
+//	}
+//	
 //	@Test
 //	public void findByEmail() {
 //		log.info("확인용 : "+eur.findByEngineerUserEmail("a@naver.com").orElseThrow().getLogin().getId());

@@ -12,10 +12,10 @@ public interface CompanyUserSearch {
 	public Page<CompanyUser> companyUserSearchByKeyword(String[] types, String keyword, Pageable pageable);
 	
 	// 사업주 사용자 조회 - 승인되지 않은 사람
-	public Page<CompanyUser> companyUserDisapprovecSearchByKeyword(String[] types, String keyword, Pageable pageable);
+	public Page<CompanyUser> companyUserDisapprovecSearchByKeyword(String keyword, Pageable pageable);
 	
 	// 사업주 사용자 조회 - 보류상태로 되어 있는 사람
-	public Page<CompanyUser> companyUserPendingSearchByKeyword(String[] types, String keyword, Pageable pageable);
+	public Page<CompanyUser> companyUserPendingSearchByKeyword(String keyword, Pageable pageable);
 	
 	// 사업주 사용자 조회 - 탈퇴 처리되어있는 사람
 	public List<CompanyUser> companyUserDeletedList();

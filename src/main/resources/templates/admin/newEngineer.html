@@ -68,22 +68,26 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/d2z/main" class="logo d-flex align-items-center me-auto">
+      <a href="/admin/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
       </a>
 
-        <nav id="navmenu" class="navmenu">
+      <nav id="navmenu" class="navmenu">
         <ul>
           <li class="dropdown"><a href="#"><span>회원관리</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
           <ul>
-          	<li><a href="/newcompany">신규 회원 승인 (사업체)</a></li>
-          	<li><a href="/newengineer">신규 회원 승인 (엔지니어)</a></li>
-          	<li><a href="/memberdelete">탈퇴 신청 확인</a></li>
-            <li><a href="#">기타등등</a></li>
+          	<li><a href="/admin/newCompany">신규 회원 승인(사업주)</a></li>
+          	<li><a href="/admin/newEngineer">신규 회원 승인(엔지니어)</a></li>
+          	<li><a href="/admin/findCompany">회원 정보 조회(사업주)</a></li>
+          	<li><a href="/admin/findEngineer">회원 정보 조회(엔지니어)</a></li>
+          	<li><a href="/admin/pendingCompany">미승인 회원 조회(사업주)</a></li>
+          	<li><a href="/admin/pendingEngineer">미승인 회원 조회(엔지니어)</a></li>
+          	<li><a href="/admin/memberdelete">탈퇴 신청 확인</a></li>
            </ul>
-          <li><a>관리자 A님 환영합니다.</a></li>
+          <li><a>[[${adminUserDTO.adminUserName}]]님 환영합니다.</a></li>
+          </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
     </div>
@@ -94,76 +98,77 @@
     <!-- Page Title -->
     <div class="page-title accent-background">
       <div class="container">
+      <form action="/admin/newEngineer" method="get">
         <h1>신규 가입 엔지니어</h1><br>
- 		검색조건예시 &nbsp;<input type="checkbox" value="a">A조건 <input type="checkbox" value="b">B조건<br>
-		<input type = "text"> <button type="button" class="btn btn-success">검색하기</button>
+		<input type = "text" name="keyword" placeholder="ex> 업체명"><button type="submit" class="btn btn-success">검색하기</button>
+      </form>
       </div>
     </div><!-- End Page Title -->
 
     <!-- Starter Section Section -->
     <section id="starter-section" class="starter-section section" >
-
-     <div class="container" data-aos="fade-up">
-  <div id="engineer">
-  <h5 style="text-align: center">신규 사업체</h5>
-  <div style="text-align: center;">
-	  <table style="margin: 0 auto;">
-	    <tr>
-	      <td>이름</td>
-	      <td>생년월일</td>
-	      <td>주소</td>
-	      <td>전화번호</td>
-	      <td>지도분야</td>
-	      <td>경력</td>
-	      <td>이메일주소</td>
-	      <td>승인</td>
-	      <td>보류</td>
-	    </tr>
-	    <tr class="table-info">
-	      <td>김나물</td>
-	      <td>19500501</td>
-	      <td>강원도 강릉시</td>
-	      <td>011-456-7891</td>
-	      <td>주조</td>
-	      <td>33년 1개월</td>
-	      <td>abcccd@abv.co.kr</td>
-	      <td><input type="checkbox" name="memberin"></td>
-	      <td><input type="checkbox" name="memberno"></td>
-	    </tr>
-	    <tr class="table-info">
-	   	  <td>김국밥</td>
-	      <td>19600501</td>
-	      <td>캐나다 구미시</td>
-	      <td>010-9944-4455</td>
-	      <td>후처리</td>
-	      <td>20년</td>
-	      <td>asfbkld@abv.co.kr</td>
-	      <td><input type="checkbox" name="memberin"></td>
-	      <td><input type="checkbox" name="memberno"></td>
-	    </tr>
-	        <tr class="table-info">
-	      <td>김비빔</td>
-	      <td>19550501</td>
-	      <td>강원도 춘천시</td>
-	      <td>010-4156-7891</td>
-	      <td>주조</td>
-	      <td>28년 9개월</td>
-	      <td>quixcn@abv.co.kr</td>
-	      <td><input type="checkbox" name="memberin"></td>
-	      <td><input type="checkbox" name="memberno"></td>
-	    </tr>
-	  </table>
-	  </div>
-	</div>
-<br>
-	  </div>
-
-<br>
-<div id="buttonContainer" data-aos="fade-up" style="text-align: center">
-  <button type="button" class="btn btn-primary">처리하기</button>
-
-</div>
-
+		<form action="/admin/newEngineer" method="post">
+	     <div class="container" data-aos="fade-up">
+		  <div id="engineer">
+		  <h5 style="text-align: center">신규 엔지니어</h5>
+		  <div style="text-align: center;">
+			  <table style="margin: 0 auto;">
+			    <tr>
+			      <td>이름</td>
+			      <td>생년월일</td>
+			      <td>주소</td>
+			      <td>전화번호</td>
+			      <td>지도분야</td>
+			      <td>경력</td>
+			      <td>이메일주소</td>
+			      <td>승인</td>
+			      <td>미승인</td>
+			    </tr>
+			    <tr class="table-info" th:each="engineerList:${pageResponseDTO.dtolist}">
+			      <td th:text="${engineerList.engineerUserName}">김나물</td>
+			      <td th:text="${engineerList.engineerUserBirth}">19500501</td>
+			      <td th:text="${engineerList.engineerUserAdd}">강원도 강릉시</td>
+			      <td th:text="${engineerList.engineerUserTel}">011-456-7891</td>
+			      <td th:text="${engineerList.engineerUserJob}">주조</td>
+			      <td th:text="${engineerList.engineerUserCareer}">[[${engineerList.engineerUserCareer}]] 년</td>
+			      <td th:text="${engineerList.engineerUserEmail}">abcccd@abv.co.kr</td>
+			      <td><input type="checkbox" name="engineerApprove" th:value="${engineerList.id}"></td>
+			      <td><input type="checkbox" name="engineerPending" th:value="${engineerList.id}"></td>
+			    </tr>
+			  </table>
+			  </div>
+			</div>
+			<br>
+			</div>
+			
+			<div>
+		  <ul class="pagination">
+		    <li class="page-item disabled" th:if="${pageResponseDTO.prev}">
+		    	<a class="page-link" th:href="@{/admin/newEngineer(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Prev" class="button prev">Prev</a>
+		    </li>
+		    
+		    <li class="page-item" th:each="num:${#numbers.sequence(pageResponseDTO.start,pageResponseDTO.end)}">
+		    	<a class="page-link" th:href="@{/admin/newEngineer(page=${num},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}">
+		    		<th:block th:if="${num==pageResponseDTO.page}">
+						<span th:text="${num}"></span>
+					</th:block>
+					<th:block th:unless="${num==pageResponseDTO.page}">
+						<span th:text="${num}"></span>
+					</th:block>
+		    	</a>
+		    </li>
+		    
+		    <li class="page-item" th:if="${pageResponseDTO.next}">
+		      <a class="page-link" th:href="@{/admin/newEngineer(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Next" class="button next">Next</a>
+		    </li>
+		  </ul>
+		 </div>
+			
+			<br>
+			<div id="buttonContainer" data-aos="fade-up" style="text-align: center">
+			  <button type="submit" class="btn btn-primary">처리하기</button>
+			</div>
+		</form>
     </section><!-- /Starter Section Section -->
 
   </main>

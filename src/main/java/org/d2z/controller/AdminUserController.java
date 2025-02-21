@@ -60,14 +60,19 @@ public class AdminUserController {
 		int result1 = 0;
 		int result2 = 0;
 		
+		log.info("확인용 : "+engineerUserIds);
+		log.info("확인용 : "+companyUserIds);
+		
 		if(engineerUserIds != null) {
-			aus.deleteAllEngineerUserById(engineerUserIds);
-			result1 = 1;
+			if(aus.deleteAllEngineerUserById(engineerUserIds)) {
+				result1 = 1;
+			}
 		}
 		
 		if(companyUserIds != null) {
-			aus.deleteAllCompanyUserById(companyUserIds);
-			result2 = 1;
+			if(aus.deleteAllCompanyUserById(companyUserIds)) {
+				result2 = 1;	
+			}
 		}
 		
 		if(result1 == 1 && result2 == 1) {
@@ -88,7 +93,8 @@ public class AdminUserController {
 	@GetMapping("/findEngineer")
 	public void findEngineerGet(@AuthenticationPrincipal UserDetails userDetails,Model model, PageRequestDTO pageRequestDTO, CareerCalDTO careerDTO) {
 		
-		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
+		model.addAttribute("adminUserDTO", aus.findByAdminId(userDetails.getUsername()));
+		
 		model.addAttribute("calDTO", careerDTO);
 		
 		int fromNo = careerDTO.getFromNo();
@@ -99,7 +105,6 @@ public class AdminUserController {
 		}else {
 			model.addAttribute("pageResponseDTO", eus.engineerUserSearchByKeyword(pageRequestDTO));
 		}
-		
 	}
 	
 	
@@ -107,7 +112,7 @@ public class AdminUserController {
 	@GetMapping("/findCompany")
 	public void findCompanyGet(@AuthenticationPrincipal UserDetails userDetails, Model model, PageRequestDTO pageRequestDTO) {
 		
-		model.addAttribute("engineerUserDTO", eus.engineerUserInfo(userDetails.getUsername()));
+		model.addAttribute("adminUserDTO", aus.findByAdminId(userDetails.getUsername()));
 		
 		model.addAttribute("pageResponseDTO", cus.companyUserSearchByKeyword(pageRequestDTO));
 	}
@@ -116,38 +121,140 @@ public class AdminUserController {
 	@GetMapping("/pendingEngineer")
 	public void pendingEngineerGet(@AuthenticationPrincipal UserDetails userDetails,Model model, PageRequestDTO pageRequestDTO) {
 		
-		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
+		model.addAttribute("adminUserDTO", aus.findByAdminId(userDetails.getUsername()));
 
-		model.addAttribute("pageResponseDTO", aus.searchPendingEngineerUserByKeyword(pageRequestDTO));
+		model.addAttribute("pageResponseDTO", aus.searchDisApprovedEngineerUserByKeyword(pageRequestDTO));
+		
+		
+	}
+	
+	@PostMapping("/pendingEngineer")
+	public String pendingEngineerPost(@RequestParam(value = "check", required = false) List<String> engineerUserIds, RedirectAttributes ra) {
+		
+		if(engineerUserIds != null) {
+			for(String id : engineerUserIds) {
+				
+				aus.approveUser(id);
+				
+			}
+			ra.addFlashAttribute("pendingAlert", "엔지니어 승인을 하였습니다.");
+		}
+		
+		return "redirect:/admin/main";
 	}
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_AdminUser')")
 	@GetMapping("/pendingCompany")
 	public void pendingCompanyGet(@AuthenticationPrincipal UserDetails userDetails, Model model, PageRequestDTO pageRequestDTO) {
 		
-		model.addAttribute("engineerUserDTO", eus.engineerUserInfo(userDetails.getUsername()));
+		model.addAttribute("adminUserDTO", aus.findByAdminId(userDetails.getUsername()));
 		
-		model.addAttribute("pageResponseDTO", aus.searchPendingCompanyUserByKeyword(pageRequestDTO));
+		model.addAttribute("pageResponseDTO", aus.searchDisApprovedCompanyUserByKeyword(pageRequestDTO));
+	}
+	
+	@PostMapping("/pendingCompany")
+	public String pendingCompanyPost(RedirectAttributes ra, @RequestParam(value = "check", required = false) List<String> companyUserIds) {
+		
+		if(companyUserIds != null) {
+			for(String id : companyUserIds) {
+				aus.approveUser(id);
+			}
+			ra.addFlashAttribute("pendingAlert", "사업주 승인을 하였습니다.");
+		}
+		
+		return "redirect:/admin/main";
 	}
 	
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_AdminUser')")
 	@GetMapping("/newCompany")
-	public void newCompanyGet() {
+	public void newCompanyGet(@AuthenticationPrincipal UserDetails userDetails,Model model, PageRequestDTO pageRequestDTO) {
+		
+		model.addAttribute("adminUserDTO", aus.findByAdminId(userDetails.getUsername()));
+		
+		model.addAttribute("pageResponseDTO", aus.searchPendingCompanyUserByKeyword(pageRequestDTO));
+	}
+	
+	@PostMapping("/newCompany")
+	public String newCompanyPost(@RequestParam(value = "companyApprove", required = false) List<String> companyUserApprovingIds, @RequestParam(value = "companyPending", required = false) List<String> companyUserPendingIds, RedirectAttributes ra) {
+		
+		boolean b1 = false;
+		boolean b2 = false;
+		
+		log.info("확인용 0 : "+companyUserApprovingIds);
+		
+		if(companyUserApprovingIds != null) {
+			log.info("확인용 1 : "+companyUserApprovingIds);
+			for(String id : companyUserApprovingIds) {
+				log.info("확인용 2 : "+id);
+				aus.approveUser(id);
+			}
+			b1 = true;
+		}
+		
+		if(companyUserPendingIds != null) {
+			for(String id : companyUserPendingIds) {
+				aus.disApprovedUser(id);
+			}
+			b2 = true;
+		}
+		
+		if(b1 || b2) {
+			ra.addFlashAttribute("newAlert", "처리가 완료되었습니다.");
+		}
+		
+		return "redirect:/admin/main";
 		
 	}
 	
+	
+	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_AdminUser')")
 	@GetMapping("/newEngineer")
-	public void newEngineerGet() {
+	public void newEngineerGet(@AuthenticationPrincipal UserDetails userDetails,Model model, PageRequestDTO pageRequestDTO) {
 		
+		model.addAttribute("adminUserDTO", aus.findByAdminId(userDetails.getUsername()));
+		
+		model.addAttribute("pageResponseDTO", aus.searchPendingEngineerUserByKeyword(pageRequestDTO));
 	}
+	
+	@PostMapping("/newEngineer")
+	public String newEngineerPost(@RequestParam(value = "engineerApprove", required = false) List<String> engineerUserApprovingIds, @RequestParam(value = "engineerPending", required = false) List<String> engineerUserPendingIds, RedirectAttributes ra) {
+		
+		boolean b1 = false;
+		boolean b2 = false;
+		
+		if(engineerUserApprovingIds != null) {
+			for(String id : engineerUserApprovingIds) {
+				aus.approveUser(id);
+			}
+			b1 = true;
+		}
+		
+		if(engineerUserPendingIds != null) {
+			for(String id : engineerUserPendingIds) {
+				aus.disApprovedUser(id);
+			}
+			b2 = true;
+		}
+		
+		if(b1 || b2) {
+			ra.addFlashAttribute("newAlert", "처리가 완료되었습니다.");
+		}
+		
+		return "redirect:/admin/main";
+	}
+	
+	
 	
 	
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_AdminUser')")
 	@GetMapping("/stilOnGoing")
-	public void stilOnGoingGet() {
+	public void stilOnGoingGet(@AuthenticationPrincipal UserDetails userDetails,Model model) {
+		
+		model.addAttribute("adminUserDTO", aus.findByAdminId(userDetails.getUsername()));
+		
 		
 	}
 	

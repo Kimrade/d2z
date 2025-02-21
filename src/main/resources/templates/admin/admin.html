@@ -55,8 +55,8 @@
           	<li><a href="/admin/newEngineer">신규 회원 승인(엔지니어)</a></li>
           	<li><a href="/admin/findCompany">회원 정보 조회(사업주)</a></li>
           	<li><a href="/admin/findEngineer">회원 정보 조회(엔지니어)</a></li>
-          	<li><a href="/admin/pendingCompany">보류 회원 조회(사업주)</a></li>
-          	<li><a href="/admin/pendingEngineer">보류 회원 조회(엔지니어)</a></li>
+          	<li><a href="/admin/pendingCompany">미승인 회원 조회(사업주)</a></li>
+          	<li><a href="/admin/pendingEngineer">미승인 회원 조회(엔지니어)</a></li>
           	<li><a href="/admin/memberdelete">탈퇴 신청 확인</a></li>
            </ul>
           <li><a>[[${adminUserDTO.adminUserName}]]님 환영합니다.</a></li>
@@ -102,23 +102,23 @@
           <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="200">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-gem"></i></div>
-              <h4 class="title"><a href="/admin/pendingCompany">보류 회원 목록(사업체)</a></h4>
-              <p class="description">보류 처리된 사업체 목록입니다.</p>
+              <h4 class="title"><a href="/admin/pendingCompany">미승인 회원 목록(사업체)</a></h4>
+              <p class="description">미승인 처리된 사업체 목록입니다.</p>
             </div>
           </div>
           
           <div class="col-md-12 col-lg-3" data-aos="zoom-out" data-aos-delay="100">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-easel"></i></div>
-              <h4 class="title"><a href="/admin/pendingEngineer">보류 회원 목록(엔지니어)</a></h4>
-              <p class="description">보류 처리된 엔지니어 목록입니다.</p>
+              <h4 class="title"><a href="/admin/pendingEngineer">미승인 회원 목록(엔지니어)</a></h4>
+              <p class="description">미승인 처리된 엔지니어 목록입니다.</p>
             </div>
           </div><!--End Icon Box -->
           
           <div class="col-md-12 col-lg-3" data-aos="zoom-out" data-aos-delay="100">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-easel"></i></div>
-              <h4 class="title"><a href="/admin/pendingEngineer">회원 목록(사업체)</a></h4>
+              <h4 class="title"><a href="/admin/findCompany">회원 목록(사업체)</a></h4>
               <p class="description">승인된 사업체 회원 목록입니다.</p>
             </div>
           </div><!--End Icon Box -->
@@ -126,7 +126,7 @@
           <div class="col-md-12 col-lg-3" data-aos="zoom-out" data-aos-delay="100">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-easel"></i></div>
-              <h4 class="title"><a href="/admin/pendingEngineer">회원 목록(엔지니어)</a></h4>
+              <h4 class="title"><a href="/admin/findEngineer">회원 목록(엔지니어)</a></h4>
               <p class="description">승인된 엔지니어 회원 목록입니다.</p>
             </div>
           </div><!--End Icon Box -->
@@ -221,6 +221,25 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
+  
+  <script th:inline="javascript">
+  	let deleteAlert = [[${deleteAlert}]]
+  	let pendingAlert = [[${pendingAlert}]]
+  	let newAlert = [[${newAlert}]]
+  	
+  	
+  	if(deleteAlert){
+  		alert(deleteAlert);
+  	}
+  	if(pendingAlert){
+  		alert(pendingAlert);
+  	}
+  	
+  	if(newAlert){
+  		alert(newAlert);
+  	}
+  
+  </script>
 
   <!-- Vendor JS Files -->
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -1,11 +1,14 @@
 package org.d2z.repository;
 
 import org.d2z.domain.CompanyUser;
+import org.d2z.domain.Login;
+import org.d2z.domain.MemberRole;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -15,6 +18,41 @@ public class CompanyUserRepositoryTests {
 	
 	@Autowired
 	private CompanyUserRepository cur;
+	
+	@Autowired
+	private LoginRepository lr;
+	
+	@Autowired
+	private PasswordEncoder pe;
+	
+//	@Test
+//	public void insertManyCompanyUser() {
+//		
+//		for(int i=0 ; i< 25 ; i++) {
+//			Login login = Login.builder().id("companyUser"+i).pw(pe.encode("1234")).build();
+//			
+//			login.addRole(MemberRole.CompanyUser);
+//			
+//			lr.save(login);
+//			
+//			CompanyUser companyUser = CompanyUser.builder().companyName("회사"+i)
+//														.companyNo("111-22-112"+i)
+//														.companyAdd("강원도 춘천시 어딘가"+i)
+//														.companyInfo("이것은 "+i+"번째 회사의 소개 내용입니다.")
+//														.companyNote("이것은 "+i+"번째 회사의 기타, 비고 내용입니다.")
+//														.companySiteAdd("www.abc"+i+".com")
+//														.companyTel("033-111-124"+i)
+//														.companyUserEmail("abc"+i+"@naver.com")
+//														.companyUserFax("033-123-220"+i)
+//														.companyUserName("회사 담당자"+i)
+//														.companyUserTel("033-123-224"+i)
+//														.login(login).build();
+//			
+//			cur.save(companyUser);
+//			
+//		}
+//		
+//	}
 	
 //	@Test
 //	public void insertTest() {

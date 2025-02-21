@@ -15,10 +15,10 @@ public interface EngineerUserSearch {
 	public Page<EngineerUser> EngineerUserSearchByKeywordAndCareer(String[] types, String keyword, Pageable pageable, double fromNo, double toNo);
 	
 	// 엔지니어 사용자 조회 - 승인되지 않은 사람
-	public Page<EngineerUser> EngineerUserDisapprovedSearchByKeyword(String[] types, String keyword, Pageable pageable);
+	public Page<EngineerUser> EngineerUserDisapprovedSearchByKeyword(String keyword, Pageable pageable);
 	
 	// 엔지니어 사용자 조회 - 보류상태로 되어 있는 사람
-	public Page<EngineerUser> EngineerUserPendingSearchByKeyword(String[] types, String keyword, Pageable pageable);
+	public Page<EngineerUser> EngineerUserPendingSearchByKeyword(String keyword, Pageable pageable);
 	
 	
 	// 엔지니어 매칭을 위한 조회 서비스

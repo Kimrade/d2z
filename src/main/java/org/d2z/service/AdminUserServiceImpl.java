@@ -217,7 +217,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	@Override
 	public PageResponseDTO<CompanyUserDTO> searchDisApprovedCompanyUserByKeyword(PageRequestDTO pageRequestDTO) {
 		
-		Page<CompanyUser> list = cur.companyUserDisapprovecSearchByKeyword(pageRequestDTO.getTypes(), pageRequestDTO.getKeyword(), pageRequestDTO.getPageable("companyUserNo"));
+		Page<CompanyUser> list = cur.companyUserDisapprovecSearchByKeyword(pageRequestDTO.getKeyword(), pageRequestDTO.getPageable("companyUserNo"));
 		
 		List<CompanyUserDTO> dtolist = list.getContent().stream().map(x -> modelMapper.map(x, CompanyUserDTO.class)).collect(Collectors.toList());
 		
@@ -229,7 +229,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	@Override
 	public PageResponseDTO<CompanyUserDTO> searchPendingCompanyUserByKeyword(PageRequestDTO pageRequestDTO) {
 		
-		Page<CompanyUser> list = cur.companyUserPendingSearchByKeyword(pageRequestDTO.getTypes(), pageRequestDTO.getKeyword(), pageRequestDTO.getPageable("companyUserNo"));
+		Page<CompanyUser> list = cur.companyUserPendingSearchByKeyword(pageRequestDTO.getKeyword(), pageRequestDTO.getPageable("companyUserNo"));
 		
 		List<CompanyUserDTO> dtolist = list.getContent().stream().map(x -> modelMapper.map(x, CompanyUserDTO.class)).collect(Collectors.toList());
 		
@@ -241,7 +241,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	@Override
 	public PageResponseDTO<EngineerUserDTO> searchDisApprovedEngineerUserByKeyword(PageRequestDTO pageRequestDTO) {
 		
-		Page<EngineerUser> list = eur.EngineerUserDisapprovedSearchByKeyword(pageRequestDTO.getTypes(), pageRequestDTO.getKeyword(), pageRequestDTO.getPageable("engineerUserNo"));
+		Page<EngineerUser> list = eur.EngineerUserDisapprovedSearchByKeyword(pageRequestDTO.getKeyword(), pageRequestDTO.getPageable("engineerUserNo"));
 		
 		List<EngineerUserDTO> dtolist = list.getContent().stream().map(x -> modelMapper.map(x, EngineerUserDTO.class)).collect(Collectors.toList());
 		
@@ -253,7 +253,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	@Override
 	public PageResponseDTO<EngineerUserDTO> searchPendingEngineerUserByKeyword(PageRequestDTO pageRequestDTO) {
 		
-		Page<EngineerUser> list = eur.EngineerUserPendingSearchByKeyword(pageRequestDTO.getTypes(), pageRequestDTO.getKeyword(), pageRequestDTO.getPageable("engineerUserNo"));
+		Page<EngineerUser> list = eur.EngineerUserPendingSearchByKeyword(pageRequestDTO.getKeyword(), pageRequestDTO.getPageable("engineerUserNo"));
 		
 		List<EngineerUserDTO> dtolist = list.getContent().stream().map(x -> modelMapper.map(x, EngineerUserDTO.class)).collect(Collectors.toList());
 		
@@ -279,17 +279,44 @@ public class AdminUserServiceImpl implements AdminUserService{
 		
 		return cur.companyUserDeletedList().stream().map(x -> modelMapper.map(x, CompanyUserDTO.class)).collect(Collectors.toList());
 	}
-
+	
+	@Transactional
 	@Override
-	public void deleteAllCompanyUserById(List<Integer> companyUserNo) {
+	public boolean deleteAllCompanyUserById(List<Integer> companyUserIds) {
 		
-		cur.deleteAllById(companyUserNo);		
+		boolean result = false;
+		
+		if(!cur.findAllById(companyUserIds).isEmpty()) {
+			
+			List<CompanyUser> list = cur.findAllById(companyUserIds);
+			lr.deleteAll(list.stream().map(CompanyUser::getLogin).collect(Collectors.toList()));
+			
+			result = true;
+		}
+		
+		return result;
 	}
-
+	
+	@Transactional
 	@Override
-	public void deleteAllEngineerUserById(List<Integer> engineerUserNo) {
+	public boolean deleteAllEngineerUserById(List<Integer> engineerUserIds) {
 		
-		eur.deleteAllById(engineerUserNo);
+		boolean result = false;
+		
+		if(eur.findAllById(engineerUserIds).isEmpty()) {
+			
+		}else {
+			
+			List<EngineerUser> list = eur.findAllById(engineerUserIds);
+			
+			List<Login> loginList = list.stream().map(EngineerUser::getLogin).collect(Collectors.toList());
+			
+			lr.deleteAll(loginList);
+			
+			result = true;
+		}
+		
+		return result;
 	}
 	
 	

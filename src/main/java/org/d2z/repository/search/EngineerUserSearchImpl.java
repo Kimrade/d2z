@@ -61,7 +61,7 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 	}
 
 	@Override
-	public Page<EngineerUser> EngineerUserDisapprovedSearchByKeyword(String[] types, String keyword, Pageable pageable) {
+	public Page<EngineerUser> EngineerUserDisapprovedSearchByKeyword(String keyword, Pageable pageable) {
 		QEngineerUser engineerUser = QEngineerUser.engineerUser;
 		
 		QLogin login = QLogin.login;
@@ -70,17 +70,8 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		
 		BooleanBuilder bb = new BooleanBuilder();
 		
-		if((types != null && types.length > 0) && keyword != null) {
-			for(String type : types) {
-				switch(type) {
-				case "n":
-					bb.or(engineerUser.engineerUserName.contains(keyword));
-				break;
-				case "j":
-					bb.or(engineerUser.engineerUserJob.contains(keyword));
-				break;
-				}
-			}
+		if(keyword != null) {
+			bb.and(engineerUser.engineerUserName.contains(keyword));
 		}
 		
 		bb.and(engineerUser.isDeleted.eq(0));
@@ -100,7 +91,7 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 	}
 
 	@Override
-	public Page<EngineerUser> EngineerUserPendingSearchByKeyword(String[] types, String keyword, Pageable pageable) {
+	public Page<EngineerUser> EngineerUserPendingSearchByKeyword(String keyword, Pageable pageable) {
 		QEngineerUser engineerUser = QEngineerUser.engineerUser;
 		
 		QLogin login = QLogin.login;
@@ -109,17 +100,8 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		
 		BooleanBuilder bb = new BooleanBuilder();
 		
-		if((types != null && types.length > 0) && keyword != null) {
-			for(String type : types) {
-				switch(type) {
-					case "n":
-						bb.or(engineerUser.engineerUserName.contains(keyword));
-					break;
-					case "j":
-						bb.or(engineerUser.engineerUserJob.contains(keyword));
-					break;
-				}
-			}
+		if(keyword != null) {
+			bb.and(engineerUser.engineerUserName.contains(keyword));
 		}
 		
 		bb.and(engineerUser.isDeleted.eq(0));

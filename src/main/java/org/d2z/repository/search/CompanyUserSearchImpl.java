@@ -64,7 +64,7 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 	}
 
 	@Override
-	public Page<CompanyUser> companyUserDisapprovecSearchByKeyword(String[] types, String keyword, Pageable pageable) {
+	public Page<CompanyUser> companyUserDisapprovecSearchByKeyword(String keyword, Pageable pageable) {
 		QCompanyUser companyUser = QCompanyUser.companyUser;
 		
 		QLogin login = QLogin.login;
@@ -73,21 +73,10 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 		
 		BooleanBuilder bb = new BooleanBuilder();
 		
-		if((types != null && types.length > 0) && keyword != null) {
-			for(String type : types) {
-				switch(type) {
-					case "n":
-						bb.or(companyUser.companyName.contains(keyword));
-					break;
-					case "a":
-						bb.or(companyUser.companyAdd.contains(keyword));
-					break;
-					case "i":
-						bb.or(companyUser.companyNote.contains(keyword));
-					break;
-				}
-			}
+		if(keyword != null) {
+			bb.and(companyUser.companyName.contains(keyword));
 		}
+		
 		bb.and(companyUser.isDeleted.eq(0));
 		
 		bb.and(companyUser.isApproved.eq(-1));
@@ -106,7 +95,7 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 	}
 
 	@Override
-	public Page<CompanyUser> companyUserPendingSearchByKeyword(String[] types, String keyword, Pageable pageable) {
+	public Page<CompanyUser> companyUserPendingSearchByKeyword(String keyword, Pageable pageable) {
 		QCompanyUser companyUser = QCompanyUser.companyUser;
 		
 		QLogin login = QLogin.login;
@@ -115,21 +104,10 @@ public class CompanyUserSearchImpl extends QuerydslRepositorySupport implements 
 		
 		BooleanBuilder bb = new BooleanBuilder();
 		
-		if((types != null && types.length > 0) && keyword != null) {
-			for(String type : types) {
-				switch(type) {
-					case "n":
-						bb.or(companyUser.companyName.contains(keyword));
-					break;
-					case "a":
-						bb.or(companyUser.companyAdd.contains(keyword));
-					break;
-					case "i":
-						bb.or(companyUser.companyNote.contains(keyword));
-					break;
-				}
-			}
+		if(keyword != null) {
+			bb.and(companyUser.companyName.contains(keyword));
 		}
+		
 		bb.and(companyUser.isDeleted.eq(0));
 		
 		bb.and(companyUser.isApproved.eq(0));

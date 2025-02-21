@@ -54,9 +54,9 @@ public interface AdminUserService {
 	public AdminUserDTO findByAdminId(String id);
 	
 	// 대량의 사업체 사용자 탈퇴 처리
-	public void deleteAllCompanyUserById(List<Integer> companyUserNo);
+	public boolean deleteAllCompanyUserById(List<Integer> companyUserNo);
 	
 	// 대량의 엔지니어 사용자 탈퇴 처리
-	public void deleteAllEngineerUserById(List<Integer> engineerUserNo);
+	public boolean deleteAllEngineerUserById(List<Integer> engineerUserNo);
 	
 }
