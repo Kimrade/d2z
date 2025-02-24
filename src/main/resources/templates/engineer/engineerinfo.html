@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>D2Z - 엔지니어조회</title>
+  <title>D2Z - 엔지니어 회원 조회</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -134,7 +134,7 @@
          	</tr>	
   			<tr class="table-info" th:each="dtolist:${pageResponseDTO.dtolist}">
 		  		<td th:text="${dtolist.engineerUserNo}"></td>
-		  		<td th:text="${dtolist.engineerUserName}"></td>
+		  		<td><a th:href="@{/engineer/anotherEngineerUserInfo(engineerUserNo=${dtolist.engineerUserNo})}">[[${dtolist.engineerUserName}]]</a></td>
 		  		<td th:text="${dtolist.engineerUserAdd}"></td>
 		  		<td th:text="${dtolist.engineerUserTel}"></td>
 		  		<td th:text="${dtolist.engineerUserJob}"></td>

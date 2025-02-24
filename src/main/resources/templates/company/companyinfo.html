@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>D2Z - 전체회원조회</title>
+  <title>D2Z - 사업체 회원 조회</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -157,7 +157,7 @@
 		  	<tr class="table-info" th:each="dtolist:${pageResponseDTO.dtolist}">
 		  		<td th:text="${dtolist.companyUserNo}"></td>
 		  		<td th:text="${dtolist.companyNo}"></td>
-		  		<td th:text="${dtolist.companyName}"></td>
+		  		<td><a th:href="@{/company/anotherCompanyUserInfo(companyUserNo=${dtolist.companyUserNo})}">[[${dtolist.companyName}]]</a></td>
 		  		<td th:text="${dtolist.companyUserName}"></td>
 		  		<td th:text="${dtolist.companyUserTel}"></td>
 		  		<td th:text="${dtolist.companyUserEmail}"></td>

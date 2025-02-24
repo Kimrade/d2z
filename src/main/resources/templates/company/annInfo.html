@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="kr">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>D2Z - 엔지니어조회</title>
+  <title>D2Z - 공고 조회</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="/img/favicon.png" rel="icon">
-  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -25,34 +24,23 @@
 
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
-<style>
-	table, tr, td {
-	  border-collapse: collapse;
-	  margin: 20px;
-	  padding: 10px;
-	}
-	
-	th, td {
-	  border: 1px solid white;
-	  text-align: center;
-	}
-	
-	tr:first-child td {
-	  background-color: #2487CE;
-	  color: white;
-	  font-weight: bold;
-	}  
-	
-  
-      .checkbox-group {
-      text-align: left;  /* 왼쪽 정렬 */
-      margin-left: 10px; /* 여백을 줘서 깔끔하게 정렬 */
+
+  <!-- =======================================================
+  * Template Name: OnePage
+  * Template URL: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3                                                                                                                                                                                                                            
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+  <style>
+    .login-form {
+      margin-top: 50px; 
     }
-    </style>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  </style>
 </head>
 
-<body class="starter-page-page">
+<body class="index-page">
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
@@ -62,7 +50,6 @@
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
       </a>
-
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="/company/announce">공고 등록</a></li>
@@ -81,98 +68,70 @@
     </div>
   </header>
 
-  <main class="main">
-
-    <!-- Page Title -->
-    <div class="page-title accent-background">
-      <div class="container">
-        <h1>엔지니어 조회</h1><br>
-        <section>
-			<form action="/company/findEngineer" method="get">
-				<select name="type">
-					<option value="">선택</option>
-					<option value="n">이름</option>
-					<option value="j">분야</option>
-					<option value="nj">이름과 분야</option>
-				</select>
-				<br>	
-				경력 - <input type="number" th:value="${calDTO.toNo}" name="fromNo"> 년 ~ <input type="number" th:value="${calDTO.toNo}" name="toNo"> 년
-				<br>
-				<input type="text" class="text" name="keyword" placeholder="Keyword"/>
-				<button type="submit" class="btn btn-success">검색하기</button>
-			</form>
-		</section>
-      </div>
-    </div><!-- End Page Title -->
-
-    <!-- Starter Section Section -->
-    <section id="starter-section" class="starter-section section" >
-
-      <div class="container" data-aos="fade-up">
-         <table style="margin: 0 auto;">
-         	<tr>
-         		<td>
-         			순 번
-         		</td>
-         		<td>
-         			이 름
-         		</td>
-         		<td>
-         			주 소
-         		</td>
-         		<td>
-         			연락처
-         		</td>
-         		<td>
-         			분 야
-         		</td>
-         		<td>
-         			경 력
-         		</td>
-         		<td>
-         			특이 사항
-         		</td>
-         	</tr>	
-  			<tr class="table-info" th:each="dtolist:${pageResponseDTO.dtolist}">
-		  		<td th:text="${dtolist.engineerUserNo}"></td>
-		  		<td><a th:href="@{/company/anotherEngineerUserInfo(engineerUserNo=${dtolist.engineerUserNo})}">[[${dtolist.engineerUserName}]]</a></td>
-		  		<td th:text="${dtolist.engineerUserAdd}"></td>
-		  		<td th:text="${dtolist.engineerUserTel}"></td>
-		  		<td th:text="${dtolist.engineerUserJob}"></td>
-		  		<td th:text="${dtolist.engineerUserCareer}"></td>
-		  		<td th:text="${dtolist.engineerUserNote}"></td>
-		  	</tr>
-  			</table>
-  			
-  		<div>
-		  <ul class="pagination">
-		    <li class="page-item disabled" th:if="${pageResponseDTO.prev}">
-		    	<a class="page-link" th:href="@{/company/findEngineer(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Prev" class="button prev">Prev</a>
-		    </li>
-		    
-		    <li class="page-item" th:each="num:${#numbers.sequence(pageResponseDTO.start,pageResponseDTO.end)}">
-		    	<a class="page-link" th:href="@{/company/findEngineer(page=${num},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}">
-		    		<th:block th:if="${num==pageResponseDTO.page}">
-						<span th:text="${num}"></span>
-					</th:block>
-					<th:block th:unless="${num==pageResponseDTO.page}">
-						<span th:text="${num}"></span>
-					</th:block>
-		    	</a>
-		    </li>
-		    
-		    <li class="page-item" th:if="${pageResponseDTO.next}">
-		      <a class="page-link" th:href="@{/company/findEngineer(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Next" class="button next">Next</a>
-		    </li>
-		  </ul>
-		 </div>
-  			
-      </div>
-
-    </section><!-- /Starter Section Section -->
-
+ 
+	<main class="main" style="min-height: 80vh;">
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
+      <div class="login-form p-5 shadow-lg rounded">
+        <h1 class="text-left mb-3">공고 조회</h1>
+        <br>
+        <br>
+        <div id = "engineer">
+          <div class="mb-3"> 
+            <label for="announcename" class="form-label">공 고 명</label>
+            <input type="text" class="form-control" id="announcename" name="announcementName" th:value="${publicAnnouncementDTO.announcementName}" readonly>
+          </div>
+          <div class="mb-3"> 
+            <label for="announcename" class="form-label">공고 내용</label>
+            <input type="text" class="form-control" id="announcename" name="announcementDescription" th:value="${publicAnnouncementDTO.announcementDescription}" readonly>
+          </div>
+          <div class="mb-3">
+            <label for="announcecost" class="form-label">모집 인원</label>
+            <input type="number" class="form-control" id="announcecost" name="servicePersonnel" th:value="${publicAnnouncementDTO.servicePersonnel}" readonly>
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">근무지 주소</label>
+            <input type="text" class="form-control" id="address" name="serviceAdd" th:value="${publicAnnouncementDTO.serviceAdd}" style="width: 500px;" readonly>
+          </div>
+          <div class="mb-3">
+            <label for="tel" class="form-label">서비스 구분</label>
+            <input type="text" class="form-control" id="tel" th:value="${publicAnnouncementDTO.serviceDiv}" name="serviceDiv" readonly>
+          </div>
+          <div class="mb-3">
+            <label for="guide" class="form-label">근무 분야</label>
+            <input type="text" class="form-control" name="serviceJob" id="career" th:value="${publicAnnouncementDTO.serviceJob}" readonly>
+          </div>
+           <div class="mb-3">
+            <label for="carrer" class="form-label">근무 기간</label>
+            <input type="text" class="form-control" id="career" th:value="${publicAnnouncementDTO.servicePeriod}" name="servicePeriod" readonly>
+          </div>
+           <div class="mb-3">
+            <label for="carrer" class="form-label">공고 비용</label>
+            <input type="number" class="form-control" name="serviceCost" th:value="${publicAnnouncementDTO.serviceCost}" id="career" readonly>
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">총 공고 비용</label>
+            <input type="number" class="form-control" id="address" th:value="${publicAnnouncementDTO.serviceTotalCost}" name="serviceTotalCost" readonly>
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">공고 마감 기한</label>
+            <input type="text" class="form-control" id="address" th:value="${publicAnnouncementDTO.deadlineDate}" readonly>
+          </div>
+          
+          <table id="proposalTable">
+          </table>
+          
+          <th:block th:if="${#authentication.principal.id == companyUserDTO.id}">
+				<a href="/company/main"><input type="button" class="btn btn-primary" value="돌아가기"></a>
+			</th:block>
+			<th:block th:unless="${#authentication.principal.id == companyUserDTO.id}">
+				<a href="/engineer/main"><input type="button" class="btn btn-primary" value="돌아가기"></a>
+			</th:block>
+        </div>
+    </div>
+    </div>
+  
   </main>
-
+   
   <footer id="footer" class="footer light-background">
 	<div class="container footer-top">
       <div class="row gy-4">
@@ -241,6 +200,37 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  
+  <!-- ajax 처리 -->
+<script>
+  list();
+	
+	// 게시글 상세보기 들어오면 리플을 화면에 추가
+	function list(){
+		$.ajax({
+			url:"/proposal/list/[[${publicAnnouncementDTO.announcementNo}]]",
+			type:"get",
+			dataType:"json",
+			success:function(data){
+				normal = "<tr><th>제 안 자</th><th>제안 시간</th></tr>";
+				html="";
+				for(let i=0;i<data.length;i++){
+					html += "<tr><th>"
+					html += data[i].engineerUserName;
+					html += "</th>";
+					html += "<th>("+data[i].sendProposalDate+")</th></tr>";
+				}
+				document.querySelector("#proposalTable").innerHTML = normal+html;
+			},
+			error:function(){
+				console.log("리플요청 실패");
+			}
+		})
+	}
+  
+</script>
 
   <!-- Vendor JS Files -->
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

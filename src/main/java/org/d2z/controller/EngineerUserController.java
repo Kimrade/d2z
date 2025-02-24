@@ -109,7 +109,7 @@ public class EngineerUserController {
 		model.addAttribute("pageResponseDTO", cus.companyUserSearchByKeyword(pageRequestDTO));
 	}
 	
-	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_EngineerUser')")
 	@GetMapping("/searchAnn")
 	public void searchAnnGet(@AuthenticationPrincipal UserDetails userDetails,Model model, PageRequestDTO pageRequestDTO) {
 		
@@ -119,6 +119,7 @@ public class EngineerUserController {
 		
 	}
 	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_EngineerUser')")
 	@GetMapping("/engineerProgress")
 	public void engineerProgressGet(@AuthenticationPrincipal UserDetails userDetails,Model model) {
 		
@@ -126,9 +127,32 @@ public class EngineerUserController {
 		
 	}
 	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_EngineerUser')")
+	@GetMapping("/anotherEngineerUserInfo")
+	public void anotherEngineerUserInfoGet(@AuthenticationPrincipal UserDetails userDetails,Model model, int engineerUserNo) {
+		
+		model.addAttribute("engineerUserDTO", eus.engineerUserInfo(userDetails.getUsername()));
+		
+		model.addAttribute("anotherEngineerUserDTO", eus.getEngineerUserInfoByNo(engineerUserNo));
+	}
+	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_EngineerUser')")
+	@GetMapping("/anotherCompanyUserInfo")
+	public void anotherCompanyUserInfoGet(@AuthenticationPrincipal UserDetails userDetails,Model model, int companyUserNo) {
+		
+		model.addAttribute("engineerUserDTO", eus.engineerUserInfo(userDetails.getUsername()));
+		
+		model.addAttribute("anotherCompanyUserDTO", cus.getCompanyUserInfoByNo(companyUserNo));
+	}
 	
 	
-	
+	@GetMapping("/annInfo")
+	public void annInfoGet(@AuthenticationPrincipal UserDetails userDetails, RedirectAttributes ra, Model model, int announcementNo) {
+		
+		model.addAttribute("engineerUserDTO", eus.engineerUserInfo(userDetails.getUsername()));
+		
+		model.addAttribute("publicAnnouncementDTO", pas.publicAnnouncementReadOne(announcementNo));
+	}
 	
 	
 }

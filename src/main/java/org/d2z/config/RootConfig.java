@@ -95,6 +95,7 @@ public class RootConfig {
 		        .addMappings(mapper -> {
 		            mapper.map(src -> src.getEngineerUser().getEngineerUserNo(), ProposalDTO::setEngineerUserNo);
 		            mapper.map(src -> src.getPublicAnnouncement().getAnnouncementNo(), ProposalDTO::setAnnouncementNo);
+		            mapper.map(src -> src.getEngineerUser().getEngineerUserName(), ProposalDTO::setEngineerUserName);
         });
         
         modelMapper.typeMap(ContractDTO.class, Contract.class)

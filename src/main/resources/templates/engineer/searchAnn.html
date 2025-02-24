@@ -134,7 +134,7 @@
         	</tr>
     		<tr class="table-info" th:each="dtolist:${pageResponseDTO.dtolist}">
 		  		<td th:text="${dtolist.announcementNo}"></td>
-		  		<td th:text="${dtolist.announcementName}"></td>
+		  		<td><a th:href="@{/engineer/annInfo(announcementNo=${dtolist.announcementNo})}">[[${dtolist.announcementName}]]</a></td>
 		  		<td th:text="${dtolist.serviceJob}"></td>
 		  		<td th:text="${dtolist.servicePersonnel}"></td>
 		  		<td th:text="${dtolist.serviceAdd}"></td>

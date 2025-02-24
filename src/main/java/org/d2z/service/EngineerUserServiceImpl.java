@@ -226,4 +226,17 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 		return result;
 	}
 
+	@Override
+	public EngineerUserDTO getEngineerUserInfoByNo(int engineerUserNo) {
+		
+		if(eur.findById(engineerUserNo).isPresent()) {
+			
+			EngineerUser engineerUser = eur.findById(engineerUserNo).orElseThrow();
+			
+			return modelMapper.map(engineerUser, EngineerUserDTO.class);
+		}else {
+			return null;
+		}
+	}
+
 }

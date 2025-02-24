@@ -60,10 +60,14 @@ public class CompanyUserController {
 		
 		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
 		
-		if(pas.publicAnnouncementInsert(publicAnnouncementDTO, cus.companyUserInfo(userDetails.getUsername()))) {
-			ra.addFlashAttribute("announceInsert", "공고를 성공적으로 등록하였습니다.");
+		if(cus.companyUserInfo(userDetails.getUsername()).getIsApproved() != 1){
+			ra.addFlashAttribute("announceInsert", "회원 승인을 받지 못한 상태입니다. 관리자와 상의하여 주시기 바랍니다.");
 		}else {
-			ra.addFlashAttribute("announceInsert", "공고 등록에 실패하였습니다. 다시 시도해 주세요");
+			if(pas.publicAnnouncementInsert(publicAnnouncementDTO, cus.companyUserInfo(userDetails.getUsername()))) {
+				ra.addFlashAttribute("announceInsert", "공고를 성공적으로 등록하였습니다.");
+			}else {
+				ra.addFlashAttribute("announceInsert", "공고 등록에 실패하였습니다. 다시 시도해 주세요");
+			}
 		}
 		
 		return "redirect:/company/main";
@@ -155,6 +159,40 @@ public class CompanyUserController {
 		return "redirect:/d2z/main";
 	}
 	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
+	@GetMapping("/comapnyUserInfo")
+	public void companyUserInfo(@AuthenticationPrincipal UserDetails userDetails, RedirectAttributes ra, Model model) {
+		
+		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
+		
+	}
 	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
+	@GetMapping("/anotherCompanyUserInfo")
+	public void anotherCompanyUserInfoGet(@AuthenticationPrincipal UserDetails userDetails, RedirectAttributes ra, Model model, int companyUserNo) {
+	
+		model.addAttribute("companyUserDTO", cus.getCompanyUserInfoByNo(companyUserNo));
+		
+		model.addAttribute("anotherCompanyUserDTO", cus.getCompanyUserInfoByNo(companyUserNo));
+		
+	}
+	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
+	@GetMapping("/anotherEngineerUserInfo")
+	public void anotherEngineerUserInfoGet(@AuthenticationPrincipal UserDetails userDetails, RedirectAttributes ra, Model model, int engineerUserNo) {
+		
+		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
+		
+		model.addAttribute("anotherEngineerUserDTO", eus.getEngineerUserInfoByNo(engineerUserNo));
+	}
+	
+	
+	@GetMapping("/annInfo")
+	public void annInfoGet(@AuthenticationPrincipal UserDetails userDetails, RedirectAttributes ra, Model model, int announcementNo) {
+		
+		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
+		
+		model.addAttribute("publicAnnouncementDTO", pas.publicAnnouncementReadOne(announcementNo));
+	}
 
 }

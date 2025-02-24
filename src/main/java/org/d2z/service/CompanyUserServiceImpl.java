@@ -217,4 +217,17 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 		
 	}
 
+	@Override
+	public CompanyUserDTO getCompanyUserInfoByNo(int companyUserNo) {
+		
+		if(cur.findById(companyUserNo).isPresent()) {
+			CompanyUser companyUser = cur.findById(companyUserNo).orElseThrow();
+			
+			return modelMapper.map(companyUser, CompanyUserDTO.class);
+			
+		}else {
+			return null;
+		}
+	}
+
 }

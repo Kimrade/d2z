@@ -19,6 +19,8 @@ public class ProposalDTO {
 	
 	private int engineerUserNo;
 	
+	private String engineerUserName;
+	
 	private int announcementNo;
 	
 	

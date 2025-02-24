@@ -33,4 +33,7 @@ public interface CompanyUserService {
 	
 	// 등록된 담당자 연락처로 id 찾기
 	public String findCompanyUserByTelNo(String companyUserTel);
+	
+	// 사업자 정보 조회 - 고유 번호
+	public CompanyUserDTO getCompanyUserInfoByNo(int companyUserNo);
 }

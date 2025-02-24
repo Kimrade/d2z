@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>D2Z - 사업체 회원 조회</title>
+  <title>D2Z - 엔지니어 조회</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -25,52 +25,14 @@
 
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
-<style>
-	table, tr, td {
-	  border-collapse: collapse;
-	  margin: 20px;
-	  padding: 10px;
-	  margin-left:auto;
-	  margin-right:auto;
-	}
-	
-	th, td {
-	  border: 1px solid white;
-	  text-align: center;
-	}
-	
-	tr:first-child td {
-	  background-color: #2487CE;
-	  color: white;
-	  font-weight: bold;
-	}  
-	.portfolio-details {
-  display: flex;
-  flex-direction: column;  
-  justify-content: center; 
-  align-items: center;    
-  height: 100vh;           
-  text-align: center;      
-}
-
-.portfolio-description {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.portfolio-description h2 {
-  margin-bottom: 20px; 
-}
-
-.portfolio-description table {
-  margin: 0 auto; 
-  width: 80%; 
-}
+	<style>
+		main.main {
+		  padding: 40px; 
+		}
+		footer#footer {
+		  padding: 40px 0; 
+		}
     </style>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="starter-page-page">
@@ -83,125 +45,109 @@
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
       </a>
-
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="/engineer/searchAnn">공고 조회</a></li>
-          <li><a href="/engineer/findCompany">사업체 조회</a></li>
-          <li><a href="/engineer/engineerinfo">엔지니어 조회</a></li>
+          <li><a href="/company/searchAnn">공고 조회</a></li>
+          <li><a href="/company/companyInfo">사업체 조회</a></li>
+          <li><a href="/company/findEngineer">엔지니어 조회</a></li>
             <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-                <li><a href="/engineer/engineeredit">내정보 수정</a></li>
-                <li><a href="/engineer/message">쪽지함 확인</a></li>
+                <li><a href="/company/companyedit">내정보 수정</a></li>
+                <li><a href="/company/message">쪽지함 확인</a></li>
               </ul>
-           <li><a>[[${engineerUserDTO.engineerUserName}]]님 환영합니다</a></li>
+           <li><a>[[${companyUserDTO.companyUserName}]]님 환영합니다</a></li>
    		 </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
     </div>
   </header>
 
-  <main class="main">
-
+  <main class="main" style="min-height: 80vh;">
+<section>
     <!-- Page Title -->
-    <div class="page-title accent-background">
-      <div class="container">
-        <h1>사업체 조회</h1><br>
-        <section>
-			<form action="/engineer/findCompany" method="get">
-			<select name="type">
-					<option value="">선택</option>
-					<option value="n">업체명</option>
-					<option value="a">주소지</option>
-					<option value="i">비고</option>
-					<option value="na">업체명과 주소지</option>
-					<option value="ai">주소지와 비고</option>
-					<option value="ni">업체명과 비고</option>
-					<option value="nai">업체명과 주소지, 비고</option>
-				</select>
-				<br>
-				<br>
-				<input type="text" class="text" name="keyword" placeholder="Keyword"/>
-				<button type="submit" class="btn btn-success">검색하기</button>
-			</form>
-		</section>
-      </div>
-    </div><!-- End Page Title -->
-
-    <!-- Starter Section Section -->
-    <section id="starter-section" class="starter-section section" >
-
-      <div class="container" data-aos="fade-up">
-		<table>
-			<tr>
-				<td>
-					순번
-				</td>
-				<td>
-					사업자 번호
-				</td>
-				<td>
-					업체명
-				</td>
-				<td>
-					담당자
-				</td>
-				<td>
-					담당자 전화번호
-				</td>
-				<td>
-					이메일주소
-				</td>
-			</tr>
-		  	<tr class="table-info" th:each="dtolist:${pageResponseDTO.dtolist}">
-		  		<td th:text="${dtolist.companyUserNo}"></td>
-		  		<td th:text="${dtolist.companyNo}"></td>
-		  		<td><a th:href="@{/engineer/anotherCompanyUserInfo(companyUserNo=${dtolist.companyUserNo})}">[[${dtolist.companyName}]]</a></td>
-		  		<td th:text="${dtolist.companyUserName}"></td>
-		  		<td th:text="${dtolist.companyUserTel}"></td>
-		  		<td th:text="${dtolist.companyUserEmail}"></td>
-		  	</tr>
-		</table>
-		<div>
-		  <ul class="pagination">
-		    <li class="page-item disabled" th:if="${pageResponseDTO.prev}">
-		    	<a class="page-link" th:href="@{/engineer/findCompany(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Prev" class="button prev">Prev</a>
-		    </li>
-		    
-		    <li class="page-item" th:each="num:${#numbers.sequence(pageResponseDTO.start,pageResponseDTO.end)}">
-		    	<a class="page-link" th:href="@{/engineer/findCompany(page=${num},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}">
-		    		<th:block th:if="${num==pageResponseDTO.page}">
-						<span th:text="${num}"></span>
-					</th:block>
-					<th:block th:unless="${num==pageResponseDTO.page}">
-						<span th:text="${num}"></span>
-					</th:block>
-		    	</a>
-		    </li>
-		    
-		    <li class="page-item" th:if="${pageResponseDTO.next}">
-		      <a class="page-link" th:href="@{/engineer/findCompany(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Next" class="button next">Next</a>
-		    </li>
-		  </ul>
-		 </div>
-      </div>
-
+     <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
+      <div class="login-form p-5 shadow-lg rounded">
+       <h2>엔지니어 조회</h2>
+			  
+			  <div class="mb-3">
+			    <label for="password" class="form-label">엔지니어 성명</label>
+			    <input type="text" class="form-control" id="password" th:value="${anotherEngineerUserDTO.engineerUserName}" name="engineerUserName" readonly>
+			  </div>
+			  
+			  <div class="mb-3">
+			    <label for="birthday" class="form-label">생년월일</label>
+			    <input type="text" class="form-control" id="birthday" th:value="${anotherEngineerUserDTO.engineerUserBirth}" name="engineerUserBirth" readonly>
+			  </div>
+			
+			  <div class="mb-3">
+			    <label for="address" class="form-label">주 소</label>
+			    <input type="text" class="form-control" id="address" th:value="${anotherEngineerUserDTO.engineerUserAdd}" name="engineerUserAdd" readonly>
+			  </div>
+			
+			  <div class="mb-3">
+			    <label for="tel" class="form-label">연락처</label>
+			    <input type="text" class="form-control" id="tel" th:value="${anotherEngineerUserDTO.engineerUserTel}" name="engineerUserTel" readonly>
+			  </div>
+			
+			  <div class="mb-3">
+			    <label for="carrer" class="form-label">경 력</label>
+			    <input type="text" class="form-control" id="career" th:value="${anotherEngineerUserDTO.engineerUserCareer}" name="engineerUserCareer" readonly>
+			  </div>
+			  
+			  <div class="mb-3">
+			    <label for="carrer" class="form-label">주요 경력 업체</label>
+			    <input type="text" class="form-control" id="majorCompany" th:value="${anotherEngineerUserDTO.engineerUserMajorCompany}" name="engineerUserMajorCompany" readonly>
+			  </div>
+			  
+			  <div class="mb-3">
+			    <label for="carrer" class="form-label">전 직 급</label>
+			    <input type="text" class="form-control" id="position" th:value="${anotherEngineerUserDTO.engineerUserPosition}" name="engineerUserPosition" readonly>
+			  </div>
+			
+			  <div class="mb-3">
+			    <label for="guide" class="form-label">주분야</label>
+			    <input type="text" class="form-control" id="guide" th:value="${anotherEngineerUserDTO.engineerUserJob}" name="engineerUserJob" readonly>
+			  </div>
+			
+			  <div class="mb-3">
+			    <label for="email" class="form-label">이메일주소</label>
+			    <input type="text" class="form-control" id="email" th:value="${anotherEngineerUserDTO.engineerUserEmail}" name="engineerUserEmail" readonly>
+			  </div>
+			  
+			  <div class="mb-3">
+			  	<label for="etc" class="form-label" style="width: 500px;">비고</label>
+			  	<textarea class="form-control" id="etc" th:text="${anotherEngineerUserDTO.engineerUserNote}" name="engineerUserNote" readonly></textarea>
+			  </div>
+			  
+			  <div class="mb-3">
+			  	<label for="etc" class="form-label" style="width: 500px;">소개</label>
+			  	<textarea class="form-control" id="etc" name="engineerUserInfo" th:text="${anotherEngineerUserDTO.engineerUserInfo}" readonly>개인 소개, 정보 글등을 적어주시기 바랍니다.</textarea>
+			  </div>
+			  
+			  <th:block th:if="${#authentication.principal.id == companyUserDTO.id}">
+				<a href="/company/main"><input type="button" class="btn btn-primary" value="돌아가기"></a>
+			</th:block>
+			<th:block th:unless="${#authentication.principal.id == companyUserDTO.id}">
+				<a href="/engineer/main"><input type="button" class="btn btn-primary" value="돌아가기"></a>
+			</th:block>
+			</div>
+		</div>
     </section><!-- /Starter Section Section -->
 
   </main>
 
-  <footer id="footer" class="footer light-background">
-	<div class="container footer-top">
+ <footer id="footer" class="footer light-background">
+   <div class="container footer-top">
       <div class="row gy-4">
-      	
-      	<div class="col-lg-2 col-6 footer-links">
+         
+         <div class="col-lg-2 col-6 footer-links">
           <p></p>
           <p></p>
           <p></p>
           <p></p>
           <p></p>
         </div>
-      	
+         
         <div class="col-lg-2 col-6 footer-links">
           <a href="/d2z/informationHistory"><h4>D/C 역사관</h4></a>
           <p></p>
@@ -228,7 +174,7 @@
           <p></p>
           <p></p>
         </div>
-	
+   
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
           <h4>Contact Us</h4>
           <p>Across the E-Mart</p>
@@ -258,7 +204,24 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
+  
+  <script th:inline="javascript">
+		 
+		document.querySelector("#btnRemove").addEventListener("click", function(e){
+			e.preventDefault();
+			e.stopPropagation();
 
+			if (confirm("확인 버튼을 누르면 탈퇴신청이 완료됩니다. 정말 탈퇴신청을 하시겠습니까?")) {
+				document.querySelector("#f1").action = "/engineer/delete";
+				document.querySelector("#f1").method = "post";
+				document.querySelector("#f1").submit();
+	        }else{
+	        	alert("탈퇴신청이 취소되었습니다.");
+	        }
+		});
+  </script>
+	
+	
   <!-- Vendor JS Files -->
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/vendor/php-email-form/validate.js"></script>
