@@ -6,6 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -24,7 +25,7 @@ import lombok.ToString;
 @EntityListeners(AuditingEntityListener.class)
 @Builder(toBuilder = true)
 @Getter
-@ToString
+@ToString(exclude = "companyUser")
 @NoArgsConstructor
 @AllArgsConstructor
 public class PublicAnnouncement {
@@ -80,7 +81,7 @@ public class PublicAnnouncement {
 	private LocalDateTime deadlineDate;
 	
 	// 조인 - 사업주의 정보를 가져와야하기에
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
 	private CompanyUser companyUser;
 	
 }

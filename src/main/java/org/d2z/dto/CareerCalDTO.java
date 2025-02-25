@@ -11,9 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CareerCalDTO {
 	
-	@Builder.Default
-	private int fromNo = 0;
+	private double fromNo;
 	
-	@Builder.Default
-	private int toNo = 0;
+	private double toNo;
 }

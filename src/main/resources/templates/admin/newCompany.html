@@ -262,8 +262,8 @@
 const rows = document.querySelectorAll('table tr');
 
 rows.forEach(function(row) {
-  const memberInCheckbox = row.querySelector('input[name="memberin"]');
-  const memberNoCheckbox = row.querySelector('input[name="memberno"]');
+  const memberInCheckbox = row.querySelector('input[name="companyApprove"]');
+  const memberNoCheckbox = row.querySelector('input[name="companyPending"]');
 
   if (memberInCheckbox && memberNoCheckbox) {
 

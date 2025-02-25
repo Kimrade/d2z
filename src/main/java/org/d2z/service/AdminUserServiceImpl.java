@@ -157,6 +157,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 
 	@Override
+	@Transactional
 	public boolean insertAdminUser(LoginUserDTO loginUserDTO, AdminUserDTO adminUserDTO) {
 		
 		boolean result = false;

@@ -444,9 +444,13 @@
 	
 	<script th:inline="javascript">
 		let deleteAlert = [[${deleteAlert}]]
+		let memberConfirmAlert = [[${memberConfirmAlert}]]
 		
 		if(deleteAlert){
 			alert(deleteAlert);
+		}
+		if(memberConfirmAlert){
+			alert(memberConfirmAlert);
 		}
 	</script>
 	

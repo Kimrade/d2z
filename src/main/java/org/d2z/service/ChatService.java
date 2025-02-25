@@ -8,7 +8,7 @@ import org.d2z.dto.ChatRoomDTO;
 public interface ChatService {
 	
 	// 채팅방 생성
-	public boolean makeChatRoom(String engineerUserId, String companyUserId);
+	public Long makeChatRoom(String engineerUserId, String companyUserId);
 	
 	// 채팅방 조회
 	public ChatRoomDTO readOneChatRoom(Long roomNo);

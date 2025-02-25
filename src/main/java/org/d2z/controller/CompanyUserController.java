@@ -1,16 +1,25 @@
 package org.d2z.controller;
 
+import java.security.Principal;
+import java.util.List;
+
+import org.d2z.domain.ChatMessage;
 import org.d2z.dto.CareerCalDTO;
+import org.d2z.dto.ChatMessageDTO;
+import org.d2z.dto.ChatRoomDTO;
 import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.LoginUserDTO;
 import org.d2z.dto.MatchingRequestDTO;
 import org.d2z.dto.PageRequestDTO;
+import org.d2z.dto.ProposalDTO;
 import org.d2z.dto.PublicAnnouncementDTO;
+import org.d2z.service.ChatService;
 import org.d2z.service.CompanyUserService;
 import org.d2z.service.ContractService;
 import org.d2z.service.EngineerUserService;
 import org.d2z.service.MatchingService;
 import org.d2z.service.PublicAnnouncementService;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,6 +44,7 @@ public class CompanyUserController {
 	private final PublicAnnouncementService pas;
 	private final EngineerUserService eus;
 	private final ContractService cs;
+	private final ChatService chatS;
 	
 	private final MatchingService ms;
 	
@@ -165,8 +175,8 @@ public class CompanyUserController {
 		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
 		model.addAttribute("calDTO", careerDTO);
 		
-		int fromNo = careerDTO.getFromNo();
-		int toNo = careerDTO.getToNo();
+		double fromNo = careerDTO.getFromNo();
+		double toNo = careerDTO.getToNo();
 		
 		if(toNo != 0 && toNo >= fromNo) {
 			model.addAttribute("pageResponseDTO", eus.engineerUserSearchByKeywordAndCareer(pageRequestDTO, fromNo, toNo));
@@ -192,7 +202,7 @@ public class CompanyUserController {
 	}
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
-	@GetMapping("/comapnyUserInfo")
+	@GetMapping("/companyUserInfo")
 	public void companyUserInfo(@AuthenticationPrincipal UserDetails userDetails, RedirectAttributes ra, Model model) {
 		
 		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
@@ -234,5 +244,45 @@ public class CompanyUserController {
 		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
 		
 	}
+	
+	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
+	@PostMapping("/chatMatching")
+	public String matchingChatGet(@AuthenticationPrincipal UserDetails userDetails, Model model, int engineerUserNo, String engineerUserId, PublicAnnouncementDTO publicAnnouncementDTO, ProposalDTO proposalDTO) {
+		
+	    // 로그인한 사용자 정보 가져오기
+	    CompanyUserDTO companyUser = cus.companyUserInfo(userDetails.getUsername());
+
+	    // 채팅방이 이미 있는지 확인
+	    ChatRoomDTO existingRoom = chatS.findByEngineerUserIdAndCompanyUserId(engineerUserId, companyUser.getId());
+
+	    if (existingRoom != null) {
+	        // 기존 채팅방이 있으면 해당 채팅방으로 리다이렉트
+	        return "redirect:/chat/room/" + existingRoom.getRoomNo();
+	    }
+
+	    // 새로운 채팅방 생성
+	    Long newRoomNo = chatS.makeChatRoom(engineerUserId, companyUser.getId());
+
+	    // 생성된 채팅방으로 이동
+	    return "redirect:/chat/room/" + newRoomNo;
+	}
+	
+	
+	@GetMapping("/room")
+	public String chatRoomGet(@RequestParam Long roomNo, Model model, Principal principal, @AuthenticationPrincipal UserDetails userDetails) {
+        String username = principal.getName(); // 현재 로그인된 유저 정보 가져오기
+        
+        List<ChatMessageDTO> messages = chatS.listChatRecords(roomNo);
+
+        model.addAttribute("roomNo", roomNo);
+        model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
+        model.addAttribute("messages", messages);
+
+        return "room"; // chatRoom.html로 이동
+    }
+	
+	
+	
 
 }

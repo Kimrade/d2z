@@ -34,6 +34,7 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 	
 	
 	@Override
+	@Transactional
 	public boolean companyUserInfoInsert(LoginUserDTO loginUserDTO, CompanyUserDTO companyUserDTO) {
 		
 		boolean result = false;
@@ -169,6 +170,8 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 					.companyUserTel(companyUser.getCompanyUserTel())
 					.isDeleted(companyUser.getIsDeleted())
 					.isApproved(companyUser.getIsApproved())
+					.companyInfo(companyUser.getCompanyInfo())
+					.companyNote(companyUser.getCompanyNote())
 					.id(id)
 					.pw(login.getPw())
 					.userNo(login.getUserNo())

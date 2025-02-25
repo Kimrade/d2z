@@ -1,5 +1,6 @@
 package org.d2z.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ import lombok.ToString;
 @Entity
 @Builder(toBuilder = true)
 @Getter
-@ToString
+@ToString(exclude = "login")
 @NoArgsConstructor
 @AllArgsConstructor
 public class EngineerUser {
@@ -76,7 +77,7 @@ public class EngineerUser {
 	@Builder.Default
 	private int isApproved=0;
 	
-	@OneToOne
+	@OneToOne(orphanRemoval = true)
 	@JoinColumn(name = "login_user_no", nullable = false)
 	private Login login;
 	

@@ -29,6 +29,7 @@ public class PublicAnnouncementServiceImpl implements PublicAnnouncementService 
 	private final ModelMapper modelMapper;
 	
 	@Override
+	@Transactional
 	public boolean publicAnnouncementInsert(PublicAnnouncementDTO publicAnnouncementDTO, CompanyUserDTO companyUserDTO) {
 		
 		boolean result = false;

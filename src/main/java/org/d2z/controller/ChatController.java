@@ -5,11 +5,13 @@ import java.util.List;
 import org.d2z.dto.ChatMessageDTO;
 import org.d2z.dto.ChatRoomDTO;
 import org.d2z.service.ChatService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -37,10 +39,18 @@ public class ChatController {
 		return cs.listChatRecords(roomNo);
 	}
 	
+	 @GetMapping("/messages")
+	    public ResponseEntity<List<ChatMessageDTO>> getMessages(@RequestParam Long roomNo) {
+	        List<ChatMessageDTO> messages = cs.listChatRecords(roomNo);
+	        return ResponseEntity.ok(messages);
+	    }
+	
+	
 	// 채팅방 생성 하기
 	@PostMapping("/room")
-	public void createRoom(@RequestBody ChatRoomDTO chatRoomDTO) {
-		cs.makeChatRoom(chatRoomDTO.getEngineerUserId(), chatRoomDTO.getCompanyUserId());
+	public ResponseEntity<Long> createRoom(@RequestBody ChatRoomDTO chatRoomDTO) {
+		Long roomNo = cs.makeChatRoom(chatRoomDTO.getEngineerUserId(), chatRoomDTO.getCompanyUserId());
+		return ResponseEntity.ok(roomNo);
 	}
 	
 	

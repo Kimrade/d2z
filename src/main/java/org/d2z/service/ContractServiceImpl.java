@@ -23,6 +23,7 @@ public class ContractServiceImpl implements ContractService {
 	
 	
 	@Override
+	@Transactional
 	public void makeContract(ContractDTO contractDTO) {
 		cr.save(modelMapper.map(contractDTO, Contract.class));
 	}
@@ -57,6 +58,7 @@ public class ContractServiceImpl implements ContractService {
 	}
 
 	@Override
+	@Transactional
 	public boolean modifyContract(ContractDTO contractDTO) {
 		
 		boolean result = false;

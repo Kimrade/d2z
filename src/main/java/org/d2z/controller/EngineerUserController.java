@@ -90,11 +90,11 @@ public class EngineerUserController {
 		model.addAttribute("engineerUserDTO", eus.engineerUserInfo(userDetails.getUsername()));
 		model.addAttribute("calDTO", careerDTO);
 		
-		int fromNo = careerDTO.getFromNo();
-		int toNo = careerDTO.getToNo();
+		double fromNo = careerDTO.getFromNo();
+		double toNo = careerDTO.getToNo();
 		
 		if(toNo != 0 && toNo >= fromNo) {
-			model.addAttribute("pageResponseDTO", eus.engineerUserSearchByKeywordAndCareer(pageRequestDTO,fromNo , toNo));
+			model.addAttribute("pageResponseDTO", eus.engineerUserSearchByKeywordAndCareer(pageRequestDTO, fromNo , toNo));
 		}else {
 			model.addAttribute("pageResponseDTO", eus.engineerUserSearchByKeyword(pageRequestDTO));
 		}
@@ -127,7 +127,7 @@ public class EngineerUserController {
 		
 	}
 	
-	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_EngineerUser')")
 	@GetMapping("/engineerUserInfo")
 	public void engineerUserInfoGet(@AuthenticationPrincipal UserDetails userDetails,Model model) {
 		

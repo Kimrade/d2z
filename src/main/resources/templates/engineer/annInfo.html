@@ -226,7 +226,7 @@
 		// ajax api 처리
 		$.ajax({
 			url:"/proposal/send",
-			type:"post",
+			type:"POST",
 			data:JSON.stringify(proposal),
 			contentType:"application/json",
 			success:function(result){
@@ -244,7 +244,7 @@
 	function list(){
 		$.ajax({
 			url:"/proposal/list/[[${publicAnnouncementDTO.announcementNo}]]",
-			type:"get",
+			type:"GET",
 			dataType:"json",
 			success:function(data){
 				normal = "<tr><th>제 안 자</th><th>제안 시간</th></tr>";

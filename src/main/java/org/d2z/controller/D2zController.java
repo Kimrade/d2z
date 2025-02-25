@@ -209,18 +209,5 @@ public class D2zController {
 		}
 	}
 	
-	@PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_CompanyUser' , 'ROLE_EngineerUser')")
-	@GetMapping("/matching")
-	public void matchingChatGet(@AuthenticationPrincipal UserDetails userDetails, Model model, String engineerUserName, PublicAnnouncementDTO publicAnnouncementDTO, ProposalDTO proposalDTO) {
-		
-		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
-		
-		model.addAttribute("publicAnnouncementDTO", publicAnnouncementDTO);
-	}
-	
-	
-	
-	
-	
 	
 }

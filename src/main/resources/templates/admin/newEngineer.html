@@ -272,8 +272,8 @@ document.querySelector('.btn-success').addEventListener('click', function() {
 const rows = document.querySelectorAll('table tr');
 
 rows.forEach(function(row) {
-  const memberInCheckbox = row.querySelector('input[name="memberin"]');
-  const memberNoCheckbox = row.querySelector('input[name="memberno"]');
+  const memberInCheckbox = row.querySelector('input[name="engineerApprove"]');
+  const memberNoCheckbox = row.querySelector('input[name="engineerPending"]');
 
   if (memberInCheckbox && memberNoCheckbox) {
 

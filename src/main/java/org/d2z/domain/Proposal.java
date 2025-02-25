@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -24,7 +25,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = "publicAnnouncement")
 public class Proposal {
 	
 	// 제안서 고유 번호
@@ -38,11 +39,11 @@ public class Proposal {
 	private LocalDateTime sendProposalDate;
 	
 	// 엔지니어 사용자 정보 - 조인용
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private EngineerUser engineerUser;
 	
 	// 공고 게시글 정보 - 조인용
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private PublicAnnouncement publicAnnouncement;
 	
 	

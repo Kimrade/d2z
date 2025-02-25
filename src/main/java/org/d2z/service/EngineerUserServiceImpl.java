@@ -34,6 +34,7 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 	
 	
 	@Override
+	@Transactional
 	public boolean engineerUserInfoInsert(LoginUserDTO loginUserDTO, EngineerUserDTO engineerUserDTO) {
 		
 		boolean result = false;
@@ -217,9 +218,13 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 	public PageResponseDTO<EngineerUserDTO> engineerUserSearchByKeywordAndCareer(PageRequestDTO pageRequestDTO,
 			double fromNo, double toNo) {
 		
-		Page<EngineerUser> list = eur.EngineerUserSearchByKeywordAndCareer(pageRequestDTO.getTypes(), pageRequestDTO.getKeyword(), pageRequestDTO.getPageable(""), fromNo, toNo);
+		Page<EngineerUser> list = eur.EngineerUserSearchByKeywordAndCareer(pageRequestDTO.getTypes(), pageRequestDTO.getKeyword(), pageRequestDTO.getPageable("engineerUserNo"), fromNo, toNo);
+		
+		log.info("확인용 1 : "+list);
 		
 		List<EngineerUserDTO> dtolist = list.getContent().stream().map(x -> modelMapper.map(x, EngineerUserDTO.class)).collect(Collectors.toList());
+		
+		log.info("확인용 2 : "+dtolist);
 		
 		PageResponseDTO<EngineerUserDTO> result = PageResponseDTO.<EngineerUserDTO>f1().dtolist(dtolist).pageRequestDTO(pageRequestDTO).total((int)list.getTotalElements()).build();
 		

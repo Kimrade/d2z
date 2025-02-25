@@ -87,7 +87,6 @@
 
     <!-- Hero Section -->
  <section id="hero" class="hero section">
-	<form action="/d2z/chatMatching" method="get">
       <img src="/img/hero-bg-abstract.jpg" alt="" data-aos="fade-in" class="">
       
       <div class="container">
@@ -133,17 +132,42 @@
 		        <td th:text="${list.engineerUserInfo}">원격 지도 선호</td>
 		    </tr>
 		</table>
-	
+		<input type="hidden" name="engineerUserId" th:value="${list.id}">
+		<input type="hidden" name="engineerUserNo" th:value="${list.engineerUserNo}">
 		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 		<div th:id="'suggestButtonDiv'+${status.count}" style="display:none; text-align: center; margin-top: 20px;">
-		    <button type="submit" class="btn btn-primary" onclick="suggestEngineer()">제안하기</button>
+		    <button type="button" class="btn btn-primary"  onclick="startChat([[${list.engineerUserNo}]], '[[${list.id}]]')">>제안하기</button>
 		</div>
 		</div>
 		
 		</div>
-		</form>
 	</section>
   </main>
+  
+  <script>
+	function startChat(engineerUserNo, engineerUserId) {
+	    fetch('/chat/room', {
+	        method: 'POST',
+	        headers: {
+	            'Content-Type': 'application/json'
+	        },
+	        body: JSON.stringify({
+	            engineerUserId: engineerUserId,
+	            companyUserId: [[${companyUserDTO.id}]] // 서버에서 유저 ID 가져오는 로직 필요
+	        })
+	    })
+	    .then(response => response.json())
+	    .then(roomNo => {
+	        if (roomNo) {
+	            window.location.href = '/chat/room/' + roomNo;
+	        } else {
+	            alert("채팅방 생성 실패");
+	        }
+	    })
+	    .catch(error => console.error('Error:', error));
+	}
+	</script>
+  
 
   <footer id="footer" class="footer light-background">
    <div class="container footer-top">

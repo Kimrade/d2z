@@ -97,8 +97,8 @@ public class AdminUserController {
 		
 		model.addAttribute("calDTO", careerDTO);
 		
-		int fromNo = careerDTO.getFromNo();
-		int toNo = careerDTO.getToNo();
+		double fromNo = careerDTO.getFromNo();
+		double toNo = careerDTO.getToNo();
 		
 		if(toNo != 0 && toNo >= fromNo) {
 			model.addAttribute("pageResponseDTO", eus.engineerUserSearchByKeywordAndCareer(pageRequestDTO, fromNo, toNo));
@@ -203,7 +203,7 @@ public class AdminUserController {
 			ra.addFlashAttribute("newAlert", "처리가 완료되었습니다.");
 		}
 		
-		return "redirect:/admin/main";
+		return "redirect:/admin/newCompany";
 		
 	}
 	
@@ -242,7 +242,7 @@ public class AdminUserController {
 			ra.addFlashAttribute("newAlert", "처리가 완료되었습니다.");
 		}
 		
-		return "redirect:/admin/main";
+		return "redirect:/admin/newEngineer";
 	}
 	
 	

@@ -2,6 +2,7 @@ package org.d2z.domain;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ import lombok.ToString;
 @Entity
 @Builder(toBuilder = true)
 @Getter
-@ToString
+@ToString(exclude = "login")
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompanyUser {
@@ -79,7 +80,7 @@ public class CompanyUser {
 	@ColumnDefault("0")
 	private int isApproved;
 	
-	@OneToOne
+	@OneToOne(orphanRemoval = true)
 	@JoinColumn(name = "login_user_no", nullable = false)
 	private Login login;
 }

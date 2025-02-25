@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -52,12 +53,12 @@ public class PostMessage {
 	@CreatedDate
 	private LocalDateTime createdTime;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "sender_id")
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
 	private PostMessageUser sender;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "receiver_id")
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
 	private PostMessageUser receiver;

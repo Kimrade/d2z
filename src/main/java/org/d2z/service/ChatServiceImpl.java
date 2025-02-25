@@ -27,16 +27,18 @@ public class ChatServiceImpl implements ChatService{
 	
 	
 	@Override
-	public boolean makeChatRoom(String engineerUserId, String companyUserId) {
+	@Transactional
+	public Long makeChatRoom(String engineerUserId, String companyUserId) {
 		
-		boolean result = false;
+		Long roomNo = -1L;
 		
 		if(crr.findByEngineerUserIdAndCompanyUserId(engineerUserId, companyUserId).isEmpty()) {
-			crr.save(ChatRoom.builder().engineerUserId(engineerUserId).companyUserId(companyUserId).build());
-			result=true;
+			ChatRoom chatRoom = crr.save(ChatRoom.builder().engineerUserId(engineerUserId).companyUserId(companyUserId).build());
+		
+			roomNo = chatRoom.getRoomNo();
 		}
 		
-		return result;
+		return roomNo;
 	}
 	
 	@Override
