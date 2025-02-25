@@ -129,12 +129,7 @@
 			  	<textarea class="form-control" id="etc" name="engineerUserInfo" th:text="${anotherEngineerUserDTO.engineerUserInfo}" readonly>개인 소개, 정보 글등을 적어주시기 바랍니다.</textarea>
 			  </div>
 			  
-			  <th:block th:if="${#authentication.principal.id == engineerUserDTO.id}">
 				<a href="/engineer/main"><input type="button" class="btn btn-primary" value="돌아가기"></a>
-			</th:block>
-			<th:block th:unless="${#authentication.principal.id == engineerUserDTO.id}">
-				<a href="/company/main"><input type="button" class="btn btn-primary" value="돌아가기"></a>
-			</th:block>
 			</div>
 		</div>
     </section><!-- /Starter Section Section -->

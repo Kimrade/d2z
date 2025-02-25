@@ -81,7 +81,7 @@ public class PublicAnnouncement {
 	private LocalDateTime deadlineDate;
 	
 	// 조인 - 사업주의 정보를 가져와야하기에
-	@ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.MERGE)
 	private CompanyUser companyUser;
 	
 }

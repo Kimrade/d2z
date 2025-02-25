@@ -39,7 +39,7 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/company/main" class="logo d-flex align-items-center me-auto">
+      <a href="/engineer/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
@@ -129,12 +129,7 @@
 			    <input type="text" class="form-control" id="comPerson" name="companyUserEmail" th:value="${anotherCompanyUserDTO.companyUserEmail}" readonly>
 			  </div>
 			
-			<th:block th:if="${#authentication.principal.id == engineerUserDTO.id}">
 				<a href="/engineer/main"><input type="button" class="btn btn-primary" value="돌아가기"></a>
-			</th:block>
-			<th:block th:unless="${#authentication.principal.id == engineerUserDTO.id}">
-				<a href="/company/main"><input type="button" class="btn btn-primary" value="돌아가기"></a>
-			</th:block>
 			</div>
 		</div>
     </section><!-- /Starter Section Section -->

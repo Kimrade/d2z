@@ -7,7 +7,7 @@ import org.d2z.dto.ProposalDTO;
 public interface ProposalService {
 	
 	// 제안서 작성
-	public void sendProposal(ProposalDTO proposalDTO);	
+	public boolean sendProposal(ProposalDTO proposalDTO);	
 	
 	// 제안서 삭제
 	public boolean deleteProposal(int proposalNo);

@@ -24,8 +24,18 @@ public class ProposalServiceImpl implements ProposalService {
 	
 	@Override
 	@Transactional
-	public void sendProposal(ProposalDTO proposalDTO) {
-		pr.save(modelMapper.map(proposalDTO , Proposal.class));
+	public boolean sendProposal(ProposalDTO proposalDTO) {
+		
+		boolean result = false;
+		
+		if(pr.findByEngineerUser_EngineerUserNoAndPublicAnnouncement_AnnouncementNo(proposalDTO.getEngineerUserNo(), proposalDTO.getAnnouncementNo()).isPresent()) {
+			
+		}else {
+			pr.save(modelMapper.map(proposalDTO , Proposal.class));
+			result = true;
+		}
+		
+		return result;
 	}
 
 

@@ -226,9 +226,12 @@
 		// ajax api 처리
 		$.ajax({
 			url:"/proposal/send",
-			type:"POST",
+			type:"post",
 			data:JSON.stringify(proposal),
 			contentType:"application/json",
+			beforeSend: function(xhr) {
+		        xhr.setRequestHeader("X-CSRF-TOKEN", $("meta[name='_csrf']").attr("content"));
+		    },
 			success:function(result){
 				
 				console.log("성공");
@@ -244,7 +247,7 @@
 	function list(){
 		$.ajax({
 			url:"/proposal/list/[[${publicAnnouncementDTO.announcementNo}]]",
-			type:"GET",
+			type:"get",
 			dataType:"json",
 			success:function(data){
 				normal = "<tr><th>제 안 자</th><th>제안 시간</th></tr>";
