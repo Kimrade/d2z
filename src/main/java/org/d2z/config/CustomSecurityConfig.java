@@ -33,10 +33,17 @@ public class CustomSecurityConfig {
 		
 		log.info("-------------------------------configure--------------------------------");
 		
+		http.authorizeHttpRequests(x -> x.requestMatchers("/company/**").hasRole("CompanyUser")
+										.requestMatchers("/admin/**").hasRole("AdminUser")
+										.requestMatchers("/engineer/**").hasRole("EngineerUser")
+										.anyRequest().permitAll());
+		
 		// 로그인이 필요한 경우 loginPage() 내부의 경로 이동함 => 커스텀 로그인 페이지
 		http.formLogin(x -> x.loginPage("/d2z/login").failureForwardUrl("/d2z/loginError").successHandler(successHander));
 		
-		http.csrf(x -> x.disable());
+		http.logout(x -> x.logoutUrl("/d2z/logout").logoutSuccessUrl("/d2z/login?logout").invalidateHttpSession(true).deleteCookies("JSESSIONID").permitAll());
+		
+//		http.csrf(x -> x.disable());
 		
 		http.rememberMe(x -> x
 				.key("d2zSecretAndUnique")

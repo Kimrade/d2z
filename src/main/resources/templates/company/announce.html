@@ -58,8 +58,13 @@
           <li><a href="/company/findEngineer">엔지니어 조회</a></li>
             <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
+   	            <li><a href="/company/companyUserInfo">내 정보 조회</a></li>
                 <li><a href="/company/companyedit">내정보 수정</a></li>
-                <li><a href="/company/message">쪽지함 확인</a></li>
+                <li><a href="/company/message">쪽지함 확인</a></li>         
+               	<form th:action="@{/d2z/logout}" method="post" id="logoutForm">
+				    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				    <li><a href="#" onclick="document.getElementById('logoutForm').submit(); return false;">로그아웃</a></li>
+				</form>
               </ul>
            <li><a>[[${companyUserDTO.companyUserName}]]님 환영합니다</a></li>
    		 </ul>
@@ -74,6 +79,7 @@
       <div class="login-form p-5 shadow-lg rounded">
         <h1 class="text-left mb-3">공고 작성</h1>
         <form action="/company/announce" method="post" id="signup">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <br>
         <br>
         <div id = "engineer">
@@ -88,6 +94,10 @@
           <div class="mb-3">
             <label for="announcecost" class="form-label">모집 인원</label>
             <input type="number" class="form-control" id="announcecost" value=0 name="servicePersonnel">
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">모집 최소 경력</label>
+            <input type="number" step="0.1" class="form-control" id="address" name="yearOfCareer">
           </div>
           <div class="mb-3">
             <label for="address" class="form-label">근무지 주소</label>
@@ -118,10 +128,10 @@
             <input type="datetime-local" class="form-control" id="address" name="deadlineDate">
           </div>
           엔지니어 추천을 받으시겠습니까? <br> <br>
-          <input type="radio" id="recommand" name="rec" value="rec" checked>추천받기
-          <input type="radio" id="recommand" name="rec" value="rec">추천받지 않기 <br><br>
+          <input type="radio" id="recommand" name="rec" value="추천" checked>추천받기
+          <input type="radio" id="recommand" name="rec" value="추천안함">추천받지 않기 <br><br>
           <input type="submit" class="btn btn-primary" value="공고 등록">
-          <a class="btn btn-primary" href="/company/company">돌아가기</a>
+          <a class="btn btn-primary" href="/company/main">돌아가기</a>
         </div>
         </form>
     </div>

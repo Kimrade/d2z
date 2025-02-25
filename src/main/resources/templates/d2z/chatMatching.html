@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="kr">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>D2Z - 사업체 회원 조회</title>
+  <title>D2Z - 실시간 채팅 서비스</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -25,52 +26,94 @@
 
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
-<style>
-	table, tr, td {
-	  border-collapse: collapse;
-	  margin: 20px;
-	  padding: 10px;
-	  margin-left:auto;
-	  margin-right:auto;
-	}
-	
-	th, td {
-	  border: 1px solid white;
-	  text-align: center;
-	}
-	
-	tr:first-child td {
-	  background-color: #2487CE;
-	  color: white;
-	  font-weight: bold;
-	}  
-	.portfolio-details {
-  display: flex;
-  flex-direction: column;  
-  justify-content: center; 
-  align-items: center;    
-  height: 100vh;           
-  text-align: center;      
-}
+	<style>
+	    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
 
-.portfolio-description {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+    .chat-container {
+      max-width: 400px;
+      margin: 50px auto;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
 
-.portfolio-description h2 {
-  margin-bottom: 20px; 
-}
+    .chatheader {
+      background-color: #2487CE;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
 
-.portfolio-description table {
-  margin: 0 auto; 
-  width: 80%; 
-}
-    </style>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    .message-container {
+      padding: 20px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .message {
+      display: flex;
+      margin-bottom: 15px;
+    }
+
+    .message.sent {
+      justify-content: flex-end;
+    }
+
+    .message.received {
+      justify-content: flex-start;
+    }
+
+    .message .bubble {
+      max-width: 70%;
+      padding: 10px;
+      border-radius: 15px;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .sent .bubble {
+      background-color: #2487CE; /* 보낸 메시지 색상 */
+      color: white;
+    }
+
+    .received .bubble {
+      background-color: #e5e5ea;
+      color: black;
+    }
+
+    .input-container {
+      display: flex;
+      padding: 15px;
+      background-color: #f0f0f5;
+      border-top: 1px solid #ddd;
+    }
+
+    .input-container input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      font-size: 16px;
+    }
+
+    .input-container button {
+      margin-left: 10px;
+      background-color: #2487CE; /* 버튼 색상 변경 */
+      color: white;
+      padding: 10px;
+      border-radius: 50%;
+      border: none;
+      font-size: 18px;
+    }
+	</style>
 </head>
 
 <body class="starter-page-page">
@@ -78,7 +121,7 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/engineer/main" class="logo d-flex align-items-center me-auto">
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
@@ -86,21 +129,9 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="/engineer/searchAnn">공고 조회</a></li>
-          <li><a href="/engineer/findCompany">사업체 조회</a></li>
-          <li><a href="/engineer/engineerinfo">엔지니어 조회</a></li>
-            <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-  	            <li><a href="/engineer/engineerUserInfo">내 정보 조회</a></li>
-                <li><a href="/engineer/engineeredit">내정보 수정</a></li>
-                <li><a href="/engineer/message">쪽지함 확인</a></li>
-                <form th:action="@{/d2z/logout}" method="post" id="logoutForm">
-				    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-				    <li><a href="#" onclick="document.getElementById('logoutForm').submit(); return false;">로그아웃</a></li>
-				</form>
-              </ul>
-           <li><a>[[${engineerUserDTO.engineerUserName}]]님 환영합니다</a></li>
-   		 </ul>
+          <li><a href="/d2z/main">Home<br></a></li>
+          <li><a href="company/company">사업체</a></li>
+          <li><a href="engineer/engineer">엔지니어</a></li>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
     </div>
@@ -111,102 +142,51 @@
     <!-- Page Title -->
     <div class="page-title accent-background">
       <div class="container">
-        <h1>사업체 조회</h1><br>
-        <section>
-			<form action="/engineer/findCompany" method="get">
-			<select name="type">
-					<option value="">선택</option>
-					<option value="n">업체명</option>
-					<option value="a">주소지</option>
-					<option value="i">비고</option>
-					<option value="na">업체명과 주소지</option>
-					<option value="ai">주소지와 비고</option>
-					<option value="ni">업체명과 비고</option>
-					<option value="nai">업체명과 주소지, 비고</option>
-				</select>
-				<br>
-				<br>
-				<input type="text" class="text" name="keyword" placeholder="Keyword"/>
-				<button type="submit" class="btn btn-success">검색하기</button>
-			</form>
-		</section>
+        <h1>실시간 채팅 구현중</h1>
       </div>
     </div><!-- End Page Title -->
 
     <!-- Starter Section Section -->
-    <section id="starter-section" class="starter-section section" >
+    <section id="starter-section" class="starter-section section">
 
       <div class="container" data-aos="fade-up">
-		<table>
-			<tr>
-				<td>
-					순번
-				</td>
-				<td>
-					사업자 번호
-				</td>
-				<td>
-					업체명
-				</td>
-				<td>
-					담당자
-				</td>
-				<td>
-					담당자 전화번호
-				</td>
-				<td>
-					이메일주소
-				</td>
-			</tr>
-		  	<tr class="table-info" th:each="dtolist:${pageResponseDTO.dtolist}">
-		  		<td th:text="${dtolist.companyUserNo}"></td>
-		  		<td th:text="${dtolist.companyNo}"></td>
-		  		<td><a th:href="@{/engineer/anotherCompanyUserInfo(companyUserNo=${dtolist.companyUserNo})}">[[${dtolist.companyName}]]</a></td>
-		  		<td th:text="${dtolist.companyUserName}"></td>
-		  		<td th:text="${dtolist.companyUserTel}"></td>
-		  		<td th:text="${dtolist.companyUserEmail}"></td>
-		  	</tr>
-		</table>
-		<div>
-		  <ul class="pagination">
-		    <li class="page-item disabled" th:if="${pageResponseDTO.prev}">
-		    	<a class="page-link" th:href="@{/engineer/findCompany(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Prev" class="button prev">Prev</a>
-		    </li>
-		    
-		    <li class="page-item" th:each="num:${#numbers.sequence(pageResponseDTO.start,pageResponseDTO.end)}">
-		    	<a class="page-link" th:href="@{/engineer/findCompany(page=${num},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}">
-		    		<th:block th:if="${num==pageResponseDTO.page}">
-						<span th:text="${num}"></span>
-					</th:block>
-					<th:block th:unless="${num==pageResponseDTO.page}">
-						<span th:text="${num}"></span>
-					</th:block>
-		    	</a>
-		    </li>
-		    
-		    <li class="page-item" th:if="${pageResponseDTO.next}">
-		      <a class="page-link" th:href="@{/engineer/findCompany(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Next" class="button next">Next</a>
-		    </li>
-		  </ul>
-		 </div>
+        <div class="chat-container">
+    <div class="chatheader">AA다이캐스팅</div> <!-- 대화하는 사람 이름 -->
+    <div class="message-container">
+      <div class="message received">
+        <div class="bubble">보내주신 제안서 잘 읽었습니다. 2월 26일 16:00시에 간단한 면접 진행 가능할까요?</div><!-- 받은채팅 -->
+      </div>
+      <div class="message sent">
+        <div class="bubble">가능합니다.</div><!-- 보낸채팅 -->
+      </div>
+      <div class="message received">
+        <div class="bubble">넵. 그럼 26일에 뵙겠습니다.</div>
+      </div>
+    </div>
+    <div class="input-container">
+      <input type="text" placeholder="메시지를 입력하세요..." />
+      <button>⮕</button>
+    </div>
+  </div>
+        
       </div>
 
     </section><!-- /Starter Section Section -->
 
   </main>
 
-  <footer id="footer" class="footer light-background">
-	<div class="container footer-top">
+ <footer id="footer" class="footer light-background">
+   <div class="container footer-top">
       <div class="row gy-4">
-      	
-      	<div class="col-lg-2 col-6 footer-links">
+         
+         <div class="col-lg-2 col-6 footer-links">
           <p></p>
           <p></p>
           <p></p>
           <p></p>
           <p></p>
         </div>
-      	
+         
         <div class="col-lg-2 col-6 footer-links">
           <a href="/d2z/informationHistory"><h4>D/C 역사관</h4></a>
           <p></p>
@@ -233,7 +213,7 @@
           <p></p>
           <p></p>
         </div>
-	
+   
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
           <h4>Contact Us</h4>
           <p>Across the E-Mart</p>

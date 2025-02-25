@@ -127,6 +127,14 @@ public class EngineerUserController {
 		
 	}
 	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
+	@GetMapping("/engineerUserInfo")
+	public void engineerUserInfoGet(@AuthenticationPrincipal UserDetails userDetails,Model model) {
+		
+		model.addAttribute("engineerUserDTO", eus.engineerUserInfo(userDetails.getUsername()));
+		
+	}
+	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_EngineerUser')")
 	@GetMapping("/anotherEngineerUserInfo")
 	public void anotherEngineerUserInfoGet(@AuthenticationPrincipal UserDetails userDetails,Model model, int engineerUserNo) {
@@ -145,7 +153,7 @@ public class EngineerUserController {
 		model.addAttribute("anotherCompanyUserDTO", cus.getCompanyUserInfoByNo(companyUserNo));
 	}
 	
-	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_EngineerUser')")
 	@GetMapping("/annInfo")
 	public void annInfoGet(@AuthenticationPrincipal UserDetails userDetails, RedirectAttributes ra, Model model, int announcementNo) {
 		

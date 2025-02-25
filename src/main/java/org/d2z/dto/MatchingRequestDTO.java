@@ -18,11 +18,15 @@ public class MatchingRequestDTO {
 	private int page = 1;
 	
 	@Builder.Default
-	private int size = 3;
+	private int size = 4;
 	
 	private String type;
 	
-	private String keyword;
+	private String keyword1;
+	
+	private String keyword2;
+	
+	private double yearOfCareer;
 
 	
 	public String[] getTypes() {

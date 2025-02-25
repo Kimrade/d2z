@@ -3,11 +3,15 @@ package org.d2z.controller;
 import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.EngineerUserDTO;
 import org.d2z.dto.LoginUserDTO;
+import org.d2z.dto.ProposalDTO;
+import org.d2z.dto.PublicAnnouncementDTO;
 import org.d2z.repository.LoginRepository;
 import org.d2z.service.CompanyUserService;
 import org.d2z.service.ContractService;
 import org.d2z.service.EngineerUserService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -204,7 +208,16 @@ public class D2zController {
 			return "redirect:/d2z/findPwConfirm";
 		}
 	}
-
+	
+	@PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_CompanyUser' , 'ROLE_EngineerUser')")
+	@GetMapping("/matching")
+	public void matchingChatGet(@AuthenticationPrincipal UserDetails userDetails, Model model, String engineerUserName, PublicAnnouncementDTO publicAnnouncementDTO, ProposalDTO proposalDTO) {
+		
+		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
+		
+		model.addAttribute("publicAnnouncementDTO", publicAnnouncementDTO);
+	}
+	
 	
 	
 	

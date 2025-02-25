@@ -80,6 +80,7 @@
     <!-- Page Title -->
        <h2>비밀 번호 변경</h2>
  <form action="/d2z/findPwConfirm" method="post">
+ <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
  	<input type="text" th:value="${id}" name="id" hidden>
   <div class="mb-3">
     <label for="password" class="form-label">변경할 비밀번호를 입력해주세요</label>

@@ -84,7 +84,7 @@
         <h1 class="sitename">D2Z</h1>
       </a>
       
-    <nav id="navmenu" class="navmenu">
+      <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="/company/announce">공고 등록</a></li>
           <li><a href="/company/searchAnn">공고 조회</a></li>
@@ -92,8 +92,13 @@
           <li><a href="/company/findEngineer">엔지니어 조회</a></li>
             <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
+   	            <li><a href="/company/companyUserInfo">내 정보 조회</a></li>
                 <li><a href="/company/companyedit">내정보 수정</a></li>
-                <li><a href="/company/message">쪽지함 확인</a></li>
+                <li><a href="/company/message">쪽지함 확인</a></li>         
+               	<form th:action="@{/d2z/logout}" method="post" id="logoutForm">
+				    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				    <li><a href="#" onclick="document.getElementById('logoutForm').submit(); return false;">로그아웃</a></li>
+				</form>
               </ul>
            <li><a>[[${companyUserDTO.companyUserName}]]님 환영합니다</a></li>
    		 </ul>

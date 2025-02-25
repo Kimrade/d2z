@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>다장 - 추천페이지</title>
+  <title>D2Z - 추천 페이지</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -54,179 +54,95 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container	-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/main" class="logo d-flex align-items-center me-auto">
+      <a href="/company/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
-      	<ul>
-      		<li><a href="/company/company">Home</a></li>
-          <li><a href="/announce">공고 등록</a></li>
-          <li><a href="/searchAnn">공고 조회</a></li>
-          <li><a href="/findEngineer">엔지니어 조회</a></li>
         <ul>
+          <li><a href="/company/announce">공고 등록</a></li>
+          <li><a href="/company/searchAnn">공고 조회</a></li>
+          <li><a href="/company/companyinfo">사업체 조회</a></li>
+          <li><a href="/company/findEngineer">엔지니어 조회</a></li>
             <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-                <li><a href="/companyedit">내정보 수정</a></li>
-                <li><a href="/message">쪽지함 확인</a></li>
+   	            <li><a href="/company/companyUserInfo">내 정보 조회</a></li>
+                <li><a href="/company/companyedit">내정보 수정</a></li>
+                <li><a href="/company/message">쪽지함 확인</a></li>         
+               	<form th:action="@{/d2z/logout}" method="post" id="logoutForm">
+				    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				    <li><a href="#" onclick="document.getElementById('logoutForm').submit(); return false;">로그아웃</a></li>
+				</form>
               </ul>
-          </ul>
-           
+           <li><a>[[${companyUserDTO.companyUserName}]]님 환영합니다</a></li>
+   		 </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
     </div>
   </header>
-  
 
   <main class="main">
 
     <!-- Hero Section -->
  <section id="hero" class="hero section">
-
+	<form action="/d2z/chatMatching" method="get">
       <img src="/img/hero-bg-abstract.jpg" alt="" data-aos="fade-in" class="">
-
+      
       <div class="container">
-        <div class="row justify-content-center" data-aos="zoom-out">
-          <div class="col-xl-7 col-lg-9 text-center">
-            <h1>추천 엔지니어 입니다.</h1>
-          </div>
-        </div>
-        <div class="text-center" data-aos="zoom-out" data-aos-delay="100">
-        </div>
-
-
-        <div class="row gy-4 mt-5">
-         <!-- 엔지니어 1 -->
-<div class="col-md-12 col-lg-3" data-aos="zoom-out" data-aos-delay="100">
-    <div class="icon-box">
-        <div class="icon"><i class="bi bi-1-circle"></i></div>
-        <h4 class="title"><a href="javascript:void(0);" onclick="toggleTable(1)">추천 엔지니어 1</a></h4>
-        <p class="description">엔지니어가 어쩌구</p>
-    </div>
-</div>
-
-<!-- 엔지니어 2 -->
-<div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="200">
-    <div class="icon-box">
-        <div class="icon"><i class="bi bi-2-circle"></i></div>
-        <h4 class="title"><a href="javascript:void(0);" onclick="toggleTable(2)">추천 엔지니어 2</a></h4>
-        <p class="description">엔지니어가 어쩌구</p>
-    </div>
-</div>
-
-<!-- 엔지니어 3 -->
-<div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="300">
-    <div class="icon-box">
-        <div class="icon"><i class="bi bi-3-circle"></i></div>
-        <h4 class="title"><a href="javascript:void(0);" onclick="toggleTable(3)">추천 엔지니어 3</a></h4>
-        <p class="description">엔지니어 저쩌구</p>
-    </div>
-</div>
-
-<!-- 엔지니어 4 -->
-<div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="400">
-    <div class="icon-box">
-        <div class="icon"><i class="bi bi-4-circle"></i></div>
-        <h4 class="title"><a href="javascript:void(0);" onclick="toggleTable(4)">추천 엔지니어 4</a></h4>
-        <p class="description">엔지니어 어쩌구</p>
-    </div>
-</div>
+	        <div class="row justify-content-center" data-aos="zoom-out">
+	          <div class="col-xl-7 col-lg-9 text-center">
+	            <h1>추천 엔지니어 입니다.</h1>
+	          </div>
+	        </div>
+	        <div class="text-center" data-aos="zoom-out" data-aos-delay="100">
+	        </div>
+	
+		<div>
+	        <div class="row gy-4 mt-5">
+	         <!-- 엔지니어 1 -->
+				<div class="col-md-12 col-lg-3" data-aos="zoom-out" data-aos-delay="100" th:each="list,status:${matchingResponseDTO.dtolist}">
+				    <div class="icon-box">
+				        <div class="icon"><i th:class="'icon bi bi-' + ${status.count} + '-circle'"></i></div>
+				        <h4 class="title"><a href="javascript:void(0);" th:onclick="|toggleTable(${status.count})|">[[${list.engineerUserName}]]</a></h4>
+				        <p class="description">[[${list.engineerUserNote}]]</p>
+				    </div>
+				</div>
+			</div>
+		</div>
+			
 
 <!-- 엔지니어 1 테이블 -->
-		<table id="engineerTable1" style="display:none;">
+	<div th:each="list,status:${matchingResponseDTO.dtolist}">
+		<table th:id="'engineerTable'+${status.count}" style="display:none;">
 		    <tr>
-		        <td>이름</td>
-		        <td>주소</td>
-		        <td>연락처</td>
-		        <td>주 분야</td>
-		        <td>경력</td>
-		        <td>특이사항</td>
+		        <td>성 명</td>
+		        <td>주 소</td>
+		        <td>연 락 처</td>
+		        <td>주 분 야</td>
+		        <td>경 력</td>
+		        <td>특이 사항</td>
 		    </tr>
 		    <tr class="table-info">
-		        <td>김김밥</td>
-		        <td>강원도 원주시</td>
-		        <td>010-1234-5678</td>
-		        <td>금형</td>
-		        <td>23년 10개월</td>
-		        <td>원격 지도 선호</td>
+		        <td th:text="${list.engineerUserName}">김김밥</td>
+		        <td th:text="${list.engineerUserAdd}">강원도 원주시</td>
+		        <td th:text="${list.engineerUserTel}">010-1234-5678</td>
+		        <td th:text="${list.engineerUserJob}">금형</td>
+		        <td th:text="${list.engineerUserCareer}">23년 10개월</td>
+		        <td th:text="${list.engineerUserInfo}">원격 지도 선호</td>
 		    </tr>
 		</table>
-		<div id="suggestButtonDiv1" style="display:none; text-align: center; margin-top: 20px;">
-		    <button class="btn btn-primary" onclick="suggestEngineer()">제안하기</button>
+	
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+		<div th:id="'suggestButtonDiv'+${status.count}" style="display:none; text-align: center; margin-top: 20px;">
+		    <button type="submit" class="btn btn-primary" onclick="suggestEngineer()">제안하기</button>
+		</div>
 		</div>
 		
-		<!-- 엔지니어 2 테이블 -->
-		<table id="engineerTable2" style="display:none;">
-		    <tr>
-		        <td>이름</td>
-		        <td>주소</td>
-		        <td>연락처</td>
-		        <td>주 분야</td>
-		        <td>경력</td>
-		        <td>특이사항</td>
-		    </tr>
-		    <tr class="table-info">
-		        <td>김김밥2</td>
-		        <td>강원도 원주시</td>
-		        <td>010-1234-5678</td>
-		        <td>금형</td>
-		        <td>23년 10개월</td>
-		        <td>원격 지도 선호</td>
-		    </tr>
-		</table>
-		<div id="suggestButtonDiv2" style="display:none; text-align: center; margin-top: 20px;">
-		    <button class="btn btn-primary" onclick="suggestEngineer()">제안하기</button>
 		</div>
-		
-		<!-- 엔지니어 3 테이블 -->
-		<table id="engineerTable3" style="display:none;">
-		    <tr>
-		        <td>이름</td>
-		        <td>주소</td>
-		        <td>연락처</td>
-		        <td>주 분야</td>
-		        <td>경력</td>
-		        <td>특이사항</td>
-		    </tr>
-		    <tr class="table-info">
-		        <td>김김밥3</td>
-		        <td>강원도 원주시</td>
-		        <td>010-1234-5678</td>
-		        <td>금형</td>
-		        <td>23년 10개월</td>
-		        <td>원격 지도 선호</td>
-		    </tr>
-		</table>
-		<div id="suggestButtonDiv3" style="display:none; text-align: center; margin-top: 20px;">
-		    <button class="btn btn-primary" onclick="suggestEngineer()">제안하기</button>
-		</div>
-		
-		<!-- 엔지니어 4 테이블 -->
-		<table id="engineerTable4" style="display:none;">
-		    <tr>
-		        <td>이름</td>
-		        <td>주소</td>
-		        <td>연락처</td>
-		        <td>주 분야</td>
-		        <td>경력</td>
-		        <td>특이사항</td>
-		    </tr>
-		    <tr class="table-info">
-		        <td>김김밥4</td>
-		        <td>강원도 원주시</td>
-		        <td>010-1234-5678</td>
-		        <td>금형</td>
-		        <td>23년 10개월</td>
-		        <td>원격 지도 선호</td>
-		    </tr>
-		</table>
-		<div id="suggestButtonDiv4" style="display:none; text-align: center; margin-top: 20px;">
-		    <button class="btn btn-primary" onclick="suggestEngineer()">제안하기</button>
-		</div><!-- /Hero Section -->
-		  
-   
+		</form>
+	</section>
   </main>
 
   <footer id="footer" class="footer light-background">

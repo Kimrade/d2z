@@ -27,7 +27,7 @@ public class MatchingServiceImpl implements MatchingService {
 	@Override
 	public MatchingResponseDTO<EngineerUserDTO> recommendationEngineerMatching(MatchingRequestDTO matchingRequestDTO) {
 		
-		Page<EngineerUser> list = eur.matchingEngineerUserSystem(matchingRequestDTO.getTypes(), matchingRequestDTO.getKeyword(), matchingRequestDTO.getPageable());
+		Page<EngineerUser> list = eur.matchingEngineerUserSystem(matchingRequestDTO.getTypes(), matchingRequestDTO.getKeyword1(), matchingRequestDTO.getPageable(), matchingRequestDTO.getYearOfCareer(), matchingRequestDTO.getKeyword2());
 		
 		List<EngineerUserDTO> dtolist = list.getContent().stream().map(x -> modelMapper.map(x, EngineerUserDTO.class)).collect(Collectors.toList());
 		
@@ -40,7 +40,7 @@ public class MatchingServiceImpl implements MatchingService {
 	@Override
 	public int recommendationEngineerCount(MatchingRequestDTO matchingRequestDTO) {
 		
-		return eur.matchingTotalEngineer(matchingRequestDTO.getTypes(), matchingRequestDTO.getKeyword(), matchingRequestDTO.getPageable());
+		return eur.matchingTotalEngineer(matchingRequestDTO.getTypes(), matchingRequestDTO.getKeyword1(), matchingRequestDTO.getPageable());
 	}
 
 }

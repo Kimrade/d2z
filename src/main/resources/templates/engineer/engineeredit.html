@@ -52,8 +52,13 @@
           <li><a href="/engineer/engineerinfo">엔지니어 조회</a></li>
             <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
+  	            <li><a href="/engineer/engineerUserInfo">내 정보 조회</a></li>
                 <li><a href="/engineer/engineeredit">내정보 수정</a></li>
                 <li><a href="/engineer/message">쪽지함 확인</a></li>
+                <form th:action="@{/d2z/logout}" method="post" id="logoutForm">
+				    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				    <li><a href="#" onclick="document.getElementById('logoutForm').submit(); return false;">로그아웃</a></li>
+				</form>
               </ul>
            <li><a>[[${engineerUserDTO.engineerUserName}]]님 환영합니다</a></li>
    		 </ul>
@@ -69,39 +74,40 @@
       <div class="login-form p-5 shadow-lg rounded">
        <h2>회원 정보 수정</h2>
 		<form action="/engineer/engineeredit" method="post" id="f1">
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 			<div class="mb-3">
 			    <label for="password" class="form-label">수정 비밀번호</label>
-			    <input type="password" class="form-control" id="password" name="pw">
+			    <input type="password" class="form-control" id="password" name="pw" required>
 			  </div>
 			  
 			  <div class="mb-3">
 			    <label for="password" class="form-label">수정 비밀번호 확인</label>
-			    <input type="password" class="form-control" id="password" name="pwConfirm">
+			    <input type="password" class="form-control" id="password" name="pwConfirm" required>
 			  </div>
 			  
 			  <div class="mb-3">
 			    <label for="password" class="form-label">엔지니어 성명</label>
-			    <input type="text" class="form-control" id="password" th:value="${engineerUserDTO.engineerUserName}" name="engineerUserName">
+			    <input type="text" class="form-control" id="password" th:value="${engineerUserDTO.engineerUserName}" name="engineerUserName" required>
 			  </div>
 			  
 			  <div class="mb-3">
 			    <label for="birthday" class="form-label">생년월일</label>
-			    <input type="text" class="form-control" id="birthday" th:value="${engineerUserDTO.engineerUserBirth}" name="engineerUserBirth">
+			    <input type="text" class="form-control" id="birthday" th:value="${engineerUserDTO.engineerUserBirth}" name="engineerUserBirth" required>
 			  </div>
 			
 			  <div class="mb-3">
 			    <label for="address" class="form-label">주 소</label>
-			    <input type="text" class="form-control" id="address" th:value="${engineerUserDTO.engineerUserAdd}" name="engineerUserAdd">
+			    <input type="text" class="form-control" id="address" th:value="${engineerUserDTO.engineerUserAdd}" name="engineerUserAdd" required>
 			  </div>
 			
 			  <div class="mb-3">
 			    <label for="tel" class="form-label">연락처</label>
-			    <input type="text" class="form-control" id="tel" th:value="${engineerUserDTO.engineerUserTel}" name="engineerUserTel">
+			    <input type="text" class="form-control" id="tel" th:value="${engineerUserDTO.engineerUserTel}" name="engineerUserTel" required>
 			  </div>
 			
 			  <div class="mb-3">
 			    <label for="carrer" class="form-label">경 력</label>
-			    <input type="text" class="form-control" id="career" th:value="${engineerUserDTO.engineerUserCareer}" name="engineerUserCareer">
+			    <input type="text" class="form-control" id="career" th:value="${engineerUserDTO.engineerUserCareer}" name="engineerUserCareer" required>
 			  </div>
 			  
 			  <div class="mb-3">
@@ -131,7 +137,7 @@
 			
 			  <div class="mb-3">
 			    <label for="email" class="form-label">이메일주소</label>
-			    <input type="text" class="form-control" id="email" th:value="${engineerUserDTO.engineerUserEmail}" name="engineerUserEmail">
+			    <input type="text" class="form-control" id="email" th:value="${engineerUserDTO.engineerUserEmail}" name="engineerUserEmail" required>
 			  </div>
 			  
 			  <div class="mb-3">

@@ -3,11 +3,13 @@ package org.d2z.controller;
 import org.d2z.dto.CareerCalDTO;
 import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.LoginUserDTO;
+import org.d2z.dto.MatchingRequestDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PublicAnnouncementDTO;
 import org.d2z.service.CompanyUserService;
 import org.d2z.service.ContractService;
 import org.d2z.service.EngineerUserService;
+import org.d2z.service.MatchingService;
 import org.d2z.service.PublicAnnouncementService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,6 +36,8 @@ public class CompanyUserController {
 	private final EngineerUserService eus;
 	private final ContractService cs;
 	
+	private final MatchingService ms;
+	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
 	@GetMapping("/main")
 	public String companyMainGet(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -55,16 +59,44 @@ public class CompanyUserController {
 		
 	}
 	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
 	@PostMapping("/announce")
-	public String announcePost(@AuthenticationPrincipal UserDetails userDetails, PublicAnnouncementDTO publicAnnouncementDTO, RedirectAttributes ra, Model model) {
+	public String announcePost(@AuthenticationPrincipal UserDetails userDetails, PublicAnnouncementDTO publicAnnouncementDTO, RedirectAttributes ra, Model model, String rec, MatchingRequestDTO matchingRequestDTO) {
 		
 		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
 		
 		if(cus.companyUserInfo(userDetails.getUsername()).getIsApproved() != 1){
 			ra.addFlashAttribute("announceInsert", "회원 승인을 받지 못한 상태입니다. 관리자와 상의하여 주시기 바랍니다.");
+			
 		}else {
 			if(pas.publicAnnouncementInsert(publicAnnouncementDTO, cus.companyUserInfo(userDetails.getUsername()))) {
-				ra.addFlashAttribute("announceInsert", "공고를 성공적으로 등록하였습니다.");
+				if(rec.equals("추천")) {
+					
+					String type = "";
+					
+					if(matchingRequestDTO.getYearOfCareer() != 0) {
+						type = type + "y";
+					}
+					
+					if(publicAnnouncementDTO.getServiceJob() != null) {
+						type = type + "j";
+					}
+					
+					if(publicAnnouncementDTO.getServiceDiv() != null) {
+						type = type + "d";
+					}
+					
+					matchingRequestDTO.setType(type);
+					matchingRequestDTO.setKeyword1(publicAnnouncementDTO.getServiceJob());
+					matchingRequestDTO.setKeyword2(publicAnnouncementDTO.getServiceDiv());
+					
+					model.addAttribute("matchingResponseDTO", ms.recommendationEngineerMatching(matchingRequestDTO));
+					
+					ra.addFlashAttribute("announceInsert", "공고를 성공적으로 등록하였습니다.");
+					return "/company/recommend";
+				}else {	
+					ra.addFlashAttribute("announceInsert", "공고를 성공적으로 등록하였습니다.");
+				}
 			}else {
 				ra.addFlashAttribute("announceInsert", "공고 등록에 실패하였습니다. 다시 시도해 주세요");
 			}
@@ -186,13 +218,21 @@ public class CompanyUserController {
 		model.addAttribute("anotherEngineerUserDTO", eus.getEngineerUserInfoByNo(engineerUserNo));
 	}
 	
-	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
 	@GetMapping("/annInfo")
 	public void annInfoGet(@AuthenticationPrincipal UserDetails userDetails, RedirectAttributes ra, Model model, int announcementNo) {
 		
 		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
 		
 		model.addAttribute("publicAnnouncementDTO", pas.publicAnnouncementReadOne(announcementNo));
+	}
+	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
+	@GetMapping("/recommend")
+	public void recommendGet(@AuthenticationPrincipal UserDetails userDetails, PublicAnnouncementDTO publicAnnouncementDTO, RedirectAttributes ra, Model model, String rec, MatchingRequestDTO matchingRequestDTO) {
+		
+		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
+		
 	}
 
 }

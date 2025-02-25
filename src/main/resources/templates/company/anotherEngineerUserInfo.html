@@ -40,20 +40,26 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="/engineer/main" class="logo d-flex align-items-center me-auto">
+      <a href="/company/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
       </a>
       <nav id="navmenu" class="navmenu">
         <ul>
+          <li><a href="/company/announce">공고 등록</a></li>
           <li><a href="/company/searchAnn">공고 조회</a></li>
-          <li><a href="/company/companyInfo">사업체 조회</a></li>
+          <li><a href="/company/companyinfo">사업체 조회</a></li>
           <li><a href="/company/findEngineer">엔지니어 조회</a></li>
             <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
+   	            <li><a href="/company/companyUserInfo">내 정보 조회</a></li>
                 <li><a href="/company/companyedit">내정보 수정</a></li>
-                <li><a href="/company/message">쪽지함 확인</a></li>
+                <li><a href="/company/message">쪽지함 확인</a></li>         
+               	<form th:action="@{/d2z/logout}" method="post" id="logoutForm">
+				    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				    <li><a href="#" onclick="document.getElementById('logoutForm').submit(); return false;">로그아웃</a></li>
+				</form>
               </ul>
            <li><a>[[${companyUserDTO.companyUserName}]]님 환영합니다</a></li>
    		 </ul>
@@ -204,23 +210,6 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
-  
-  <script th:inline="javascript">
-		 
-		document.querySelector("#btnRemove").addEventListener("click", function(e){
-			e.preventDefault();
-			e.stopPropagation();
-
-			if (confirm("확인 버튼을 누르면 탈퇴신청이 완료됩니다. 정말 탈퇴신청을 하시겠습니까?")) {
-				document.querySelector("#f1").action = "/engineer/delete";
-				document.querySelector("#f1").method = "post";
-				document.querySelector("#f1").submit();
-	        }else{
-	        	alert("탈퇴신청이 취소되었습니다.");
-	        }
-		});
-  </script>
-	
 	
   <!-- Vendor JS Files -->
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

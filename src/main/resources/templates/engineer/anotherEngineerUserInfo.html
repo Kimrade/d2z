@@ -52,8 +52,13 @@
           <li><a href="/engineer/engineerinfo">엔지니어 조회</a></li>
             <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
+  	            <li><a href="/engineer/engineerUserInfo">내 정보 조회</a></li>
                 <li><a href="/engineer/engineeredit">내정보 수정</a></li>
                 <li><a href="/engineer/message">쪽지함 확인</a></li>
+                <form th:action="@{/d2z/logout}" method="post" id="logoutForm">
+				    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				    <li><a href="#" onclick="document.getElementById('logoutForm').submit(); return false;">로그아웃</a></li>
+				</form>
               </ul>
            <li><a>[[${engineerUserDTO.engineerUserName}]]님 환영합니다</a></li>
    		 </ul>
@@ -204,22 +209,6 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
-  
-  <script th:inline="javascript">
-		 
-		document.querySelector("#btnRemove").addEventListener("click", function(e){
-			e.preventDefault();
-			e.stopPropagation();
-
-			if (confirm("확인 버튼을 누르면 탈퇴신청이 완료됩니다. 정말 탈퇴신청을 하시겠습니까?")) {
-				document.querySelector("#f1").action = "/engineer/delete";
-				document.querySelector("#f1").method = "post";
-				document.querySelector("#f1").submit();
-	        }else{
-	        	alert("탈퇴신청이 취소되었습니다.");
-	        }
-		});
-  </script>
 	
 	
   <!-- Vendor JS Files -->

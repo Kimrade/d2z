@@ -95,6 +95,10 @@
           	<li><a href="/admin/pendingCompany">미승인 회원 조회(사업주)</a></li>
           	<li><a href="/admin/pendingEngineer">미승인 회원 조회(엔지니어)</a></li>
           	<li><a href="/admin/memberdelete">탈퇴 신청 확인</a></li>
+          	<form th:action="@{/d2z/logout}" method="post" id="logoutForm">
+			    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+			    <li><a href="#" onclick="document.getElementById('logoutForm').submit(); return false;">로그아웃</a></li>
+			</form>
            </ul>
           <li><a>[[${adminUserDTO.adminUserName}]]님 환영합니다.</a></li>
           </ul>

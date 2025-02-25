@@ -68,6 +68,7 @@
 	        <label class="btn btn-outline-primary" for="engineerRadio">엔지니어 가입</label>
         </div>
         <form action="/d2z/member" method="post" id="signup">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 	        <input type="text" value="엔지니어" name="usertype" id="radio1" hidden>
 	        <br>
 	        <br>

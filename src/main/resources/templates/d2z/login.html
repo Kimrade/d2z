@@ -62,6 +62,7 @@
       <div class="login-form p-4 shadow-lg rounded">
         <h2 class="text-center mb-4">D2Z</h2>
         <form action="/d2z/login" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
           <div class="mb-3">
             <label for="username" class="form-label">아이디</label>
             <input type="text" class="form-control" id="username" name="username" required>
@@ -78,6 +79,7 @@
             <a href="/d2z/findid">&nbsp; 아이디 찾기</a>
             <a href="/d2z/findpw">&nbsp; 패스워드 찾기</a>
           </div>
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
           <button type="submit" class="btn btn-primary w-100 mt-4">D2Z 로그인</button>
         </form>
         <p class="text-center mt-3">계정이 없으신가요? &nbsp; <a href="/d2z/member">회원가입</a></p>

@@ -121,7 +121,7 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 	}
 
 	@Override
-	public Page<EngineerUser> matchingEngineerUserSystem(String[] types, String keyword, Pageable pageable) {
+	public Page<EngineerUser> matchingEngineerUserSystem(String[] types, String keyword1, Pageable pageable, double yearOfCareer, String keyword2) {
 		
 		QEngineerUser engineer = QEngineerUser.engineerUser;
 		
@@ -134,8 +134,14 @@ public class EngineerUserSearchImpl extends QuerydslRepositorySupport implements
 		if(types != null && types.length > 0) {
 			for(String type : types) {
 				switch(type) {
-					case "":
-						
+					case "y":
+						bb.and(engineer.engineerUserCareer.goe(yearOfCareer));
+					break;
+					case "j":
+						bb.and(engineer.engineerUserJob.contains(keyword1));
+					break;
+					case "d":
+						bb.or(engineer.engineerUserInfo.contains(keyword2));
 					break;
 				}
 			}	
