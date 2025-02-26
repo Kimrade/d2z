@@ -245,30 +245,25 @@ public class CompanyUserController {
 		
 	}
 	
-	
-	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
 	@PostMapping("/chatMatching")
-	public String matchingChatGet(@AuthenticationPrincipal UserDetails userDetails, Model model, int engineerUserNo, String engineerUserId, PublicAnnouncementDTO publicAnnouncementDTO, ProposalDTO proposalDTO) {
+	public String matchingChatGet(@AuthenticationPrincipal UserDetails userDetails, Model model,@RequestParam(value = "engineerUserNo", required = false, defaultValue = "0") int engineerUserNo, PublicAnnouncementDTO publicAnnouncementDTO, ProposalDTO proposalDTO) {
 		
 	    // 로그인한 사용자 정보 가져오기
 	    CompanyUserDTO companyUser = cus.companyUserInfo(userDetails.getUsername());
-
-	    // 채팅방이 이미 있는지 확인
-	    ChatRoomDTO existingRoom = chatS.findByEngineerUserIdAndCompanyUserId(engineerUserId, companyUser.getId());
-
-	    if (existingRoom != null) {
+	    
+	    if (chatS.findByEngineerUserIdAndCompanyUserId(eus.getEngineerUserInfoByNo(engineerUserNo).getId(), companyUser.getId()) != null) {
 	        // 기존 채팅방이 있으면 해당 채팅방으로 리다이렉트
-	        return "redirect:/chat/room/" + existingRoom.getRoomNo();
+	        return "redirect:/chat/room?roomNo=" + chatS.findByEngineerUserIdAndCompanyUserId(eus.getEngineerUserInfoByNo(engineerUserNo).getId(), companyUser.getId()).getRoomNo();
 	    }
-
+	    
 	    // 새로운 채팅방 생성
-	    Long newRoomNo = chatS.makeChatRoom(engineerUserId, companyUser.getId());
-
+	    Long newRoomNo = chatS.makeChatRoom(eus.getEngineerUserInfoByNo(engineerUserNo).getId(), companyUser.getId());
+	    
 	    // 생성된 채팅방으로 이동
-	    return "redirect:/chat/room/" + newRoomNo;
+	    return "redirect:/chat/room?roomNo=" + newRoomNo;
 	}
 	
-	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
 	@GetMapping("/room")
 	public String chatRoomGet(@RequestParam Long roomNo, Model model, Principal principal, @AuthenticationPrincipal UserDetails userDetails) {
         String username = principal.getName(); // 현재 로그인된 유저 정보 가져오기

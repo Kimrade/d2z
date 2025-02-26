@@ -20,7 +20,7 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @Log4j2
 @RequiredArgsConstructor
-@RequestMapping("/chat")
+@RequestMapping("/chat/api")
 public class ChatController {
 	
 	private final ChatService cs;
@@ -32,18 +32,23 @@ public class ChatController {
 		return cs.chatOtherAndSaveRecord(chatMessageDTO);
 	}
 	
-	// 채팅 기록 가져오기
-	@GetMapping("/message/{roomNo}")
-	public List<ChatMessageDTO> getRecords(@PathVariable("roomNo") Long roomNo){
-		
-		return cs.listChatRecords(roomNo);
-	}
+//	// 채팅 기록 가져오기
+//	@GetMapping("/message/{roomNo}")
+//	public List<ChatMessageDTO> getRecords(@PathVariable("roomNo") Long roomNo){
+//		
+//		return cs.listChatRecords(roomNo);
+//	}
 	
-	 @GetMapping("/messages")
-	    public ResponseEntity<List<ChatMessageDTO>> getMessages(@RequestParam Long roomNo) {
-	        List<ChatMessageDTO> messages = cs.listChatRecords(roomNo);
-	        return ResponseEntity.ok(messages);
+	@GetMapping("/message")
+	public ResponseEntity<?> getRecords(@RequestParam(value = "roomNo", required = false) Long roomNo) {
+	    if (roomNo == null) {
+	        return ResponseEntity.badRequest().body("roomNo 값이 필요합니다.");
 	    }
+	    
+	    List<ChatMessageDTO> messages = cs.listChatRecords(roomNo);
+	    return ResponseEntity.ok(messages);
+	}
+
 	
 	
 	// 채팅방 생성 하기

@@ -49,18 +49,29 @@ public class ChatServiceImpl implements ChatService{
 	@Override
 	public ChatRoomDTO findByEngineerUserIdAndCompanyUserId(String engineerUserId, String companyUserId) {
 		
-		return modelMapper.map(crr.findByEngineerUserIdAndCompanyUserId(engineerUserId, companyUserId).orElseThrow(), ChatRoomDTO.class);
+		if(crr.findByEngineerUserIdAndCompanyUserId(engineerUserId, companyUserId).isEmpty()) {
+			return null;
+		}else {
+			return modelMapper.map(crr.findByEngineerUserIdAndCompanyUserId(engineerUserId, companyUserId).orElseThrow(), ChatRoomDTO.class);
+		}
 	}
 	
 	@Override
 	@Transactional
 	public ChatMessageDTO chatOtherAndSaveRecord(ChatMessageDTO chatMessageDTO) {
 		
-		ChatMessage chatMessage = cmr.save(modelMapper.map(chatMessageDTO, ChatMessage.class));
+		ChatRoom chatRoom = crr.findById(chatMessageDTO.getRoomNo()).orElseThrow();
 		
-		ChatMessageDTO result = ChatMessageDTO.builder().messageNo(chatMessage.getMessageNo()).roomNo(chatMessage.getChatRoom().getRoomNo())
-														.createdTime(chatMessage.getCreatedTime()).sender(chatMessage.getSender())
-														.messageContent(chatMessage.getMessageContent()).build();
+		ChatMessage chatMessage = ChatMessage.builder().chatRoom(chatRoom).messageContent(chatMessageDTO.getMessageContent()).sender(chatMessageDTO.getSender()).build();
+		
+		cmr.save(chatMessage);
+		
+		ChatMessageDTO result = ChatMessageDTO.builder().messageNo(chatMessage.getMessageNo())
+												.roomNo(chatMessage.getChatRoom().getRoomNo())
+												.createdTime(chatMessage.getCreatedTime())
+												.sender(chatMessage.getSender())
+												.messageContent(chatMessage.getMessageContent())
+												.build();
 		
 		return result;
 	}

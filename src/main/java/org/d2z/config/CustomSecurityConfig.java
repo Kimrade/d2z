@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -29,30 +30,41 @@ public class CustomSecurityConfig {
 	private final CustomAuthenticationSuccessHandler successHander;
 	
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-		
-		log.info("-------------------------------configure--------------------------------");
-		
-		http.authorizeHttpRequests(x -> x.requestMatchers("/company/**").hasRole("CompanyUser")
-										.requestMatchers("/admin/**").hasRole("AdminUser")
-										.requestMatchers("/engineer/**").hasRole("EngineerUser")
-										.anyRequest().permitAll());
-		
-		// 로그인이 필요한 경우 loginPage() 내부의 경로 이동함 => 커스텀 로그인 페이지
-		http.formLogin(x -> x.loginPage("/d2z/login").failureForwardUrl("/d2z/loginError").successHandler(successHander));
-		
-		http.logout(x -> x.logoutUrl("/d2z/logout").logoutSuccessUrl("/d2z/login?logout").invalidateHttpSession(true).deleteCookies("JSESSIONID").permitAll());
-		
-//		http.csrf(x -> x.disable());
-		
-		http.rememberMe(x -> x
-				.key("d2zSecretAndUnique")
-				.tokenRepository(persistentTokenRepository())
-				.userDetailsService(userDetailsService)
-				.tokenValiditySeconds(60*60*24*30));
-		
-		// filter 처리
-		return http.build();
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	    
+	    log.info("-------------------------------configure--------------------------------");
+
+	    http.authorizeHttpRequests(x -> x.requestMatchers("/company/**").hasRole("CompanyUser")
+	                                    .requestMatchers("/admin/**").hasRole("AdminUser")
+	                                    .requestMatchers("/engineer/**").hasRole("EngineerUser")
+	                                    .requestMatchers("/ws/**").permitAll()
+	                                    .requestMatchers("/chat/api/**").permitAll()
+	                                    .anyRequest().permitAll());
+
+	    http.cors().disable();
+
+	    http.formLogin(x -> x.loginPage("/d2z/login")
+	                         .failureForwardUrl("/d2z/loginError")
+	                         .successHandler(successHander));
+
+	    http.logout(x -> x.logoutUrl("/d2z/logout")
+	                      .logoutSuccessUrl("/d2z/login?logout")
+	                      .invalidateHttpSession(true)
+	                      .deleteCookies("JSESSIONID")
+	                      .permitAll());
+
+	    http.rememberMe(x -> x
+	            .key("d2zSecretAndUnique")
+	            .tokenRepository(persistentTokenRepository())
+	            .userDetailsService(userDetailsService)
+	            .tokenValiditySeconds(60 * 60 * 24 * 30));
+
+	    http.addFilterBefore((request, response, chain) -> {
+	        log.info("🔍 [Security] 요청 URL: " + request.getRequestId());
+	        chain.doFilter(request, response);
+	    }, UsernamePasswordAuthenticationFilter.class);
+
+	    return http.build();
 	}
 	
 	private PersistentTokenRepository persistentTokenRepository() {

@@ -77,7 +77,6 @@
 	<main class="main" style="min-height: 80vh;">
     <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
       <div class="login-form p-5 shadow-lg rounded">
-      <form action="/d2z/matching" method="get">
         <h1 class="text-left mb-3">공고 조회</h1>
         <br>
         <br>
@@ -129,14 +128,8 @@
           
           <br>
           <br>
-          <th:block th:if="${#authentication.principal.id == companyUserDTO.id}">
-				<a href="/company/main"><input type="button" class="btn btn-primary" value="돌아가기"></a>
-			</th:block>
-			<th:block th:unless="${#authentication.principal.id == companyUserDTO.id}">
-				<a href="/engineer/main"><input type="button" class="btn btn-primary" value="돌아가기"></a>
-			</th:block>
+			<a href="/company/main"><input type="button" class="btn btn-primary" value="돌아가기"></a>
         </div>
-        </form>
     </div>
     </div>
   
@@ -217,6 +210,9 @@
 <script>
   list();
 	
+  const loginUserId = [[${companyUserDTO.companyUserNo}]];
+  const publicAnnUser = [[${publicAnnouncementDTO.companyUserNo}]];
+  
 	// 게시글 상세보기 들어오면 리플을 화면에 추가
 	function list(){
 		$.ajax({
@@ -227,11 +223,21 @@
 				normal = "<tr><th>제 안 자</th><th>제안 시간</th></tr>";
 				html="";
 				for(let i=0;i<data.length;i++){
-					html += "<tr><th name='engineerUserName'>"
-					html += data[i].engineerUserName;
-					html += "</th>";
-					html += "<th>("+data[i].sendProposalDate+")</th><th><button type='submit' class='btn btn-primary'>매칭</button></th></tr>";
-				}
+					html += "<tr>";
+	                html += "<th>" + data[i].engineerUserName + "</th>";
+	                html += "<th>(" + data[i].sendProposalDate + ")</th>";
+	                
+	                if(loginUserId === publicAnnUser){
+	                	html += "<th>";
+	                	html += "<form action='/company/chatMatching' method='post'>";
+		                html += "<input type='hidden' name='engineerUserNo' value='" + data[i].engineerUserNo + "'>";
+		                html += "<input type='hidden' name='_csrf' value='[[${_csrf.token}]]'>";
+		                html += "<button type='submit' class='btn btn-primary'>매칭</button>";
+		                html += "</form>";
+		                html += "</th>";
+	                }
+	                
+	                html += "</tr>";}
 				document.querySelector("#proposalTable").innerHTML = normal+html;
 			},
 			error:function(){

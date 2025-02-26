@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>D2Z - 실시간 채팅 서비스</title>
+  <title>D2Z - 채팅</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -124,48 +124,64 @@
 <script th:inline="javascript">
     var stompClient = null;
     var roomNo = new URLSearchParams(window.location.search).get("roomNo"); // URL에서 roomId 가져오기
-
+	
+    const loginUserId = [[${loginUserDTO.id}]];
+    
+    if (!roomNo) {
+        console.error("❌ roomNo 값이 없습니다! URL을 확인하세요.");
+    } else {
+        console.log("roomNo: " + roomNo);
+    }
+    
     function connect() {
-        var socket = new SockJS('/ws');
+        let socket = new SockJS('http://localhost/ws');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
-            console.log('Connected: ' + frame);
+            console.log('WebSocket 연결 성공! ' + frame);
             
-            if (roomNo) {
-                stompClient.subscribe('/topic/chat/' + roomNo, function (message) {
-                    showMessage(JSON.parse(message.body));
-                });
+             stompClient.subscribe('/topic/chat/' + roomNo, function (message) {
+                 showMessage(JSON.parse(message.body));
+             });
 
-                // 채팅방 입장 시 기존 메시지 불러오기
-                fetchMessages();
-            }
-        });
-    }
+             // 채팅방 입장 시 기존 메시지 불러오기
+             fetchMessages();
+	         }, function (error) {
+	             console.error('WebSocket 연결 실패:', error);
+	         });
+	    }
 
     connect();
-
-    // 기존 메시지 불러오기
+    
     function fetchMessages() {
-        fetch('/chat/message?roomNo=' + roomNo)
+        if (!roomNo) {
+            console.error("roomNo 값이 없어서 메시지를 가져올 수 없습니다.");
+            return; // 🚨 `roomNo`가 없으면 요청 안 보냄
+        }
+
+        fetch('/chat/api/message?roomNo=' + roomNo)
             .then(response => response.json())
             .then(messages => {
+                if (!Array.isArray(messages)) { 
+                    console.error("messages 데이터가 배열이 아닙니다:", messages);
+                    return;
+                }
                 let chatBox = document.getElementById("chatBox");
                 chatBox.innerHTML = ''; // 기존 메시지 삭제 후 추가
                 messages.forEach(showMessage);
                 scrollToBottom(); // 스크롤을 아래로 이동
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error('메시지 불러오기 오류:', error));
     }
 
     // 메시지 전송
     function sendMessage() {
-        var sender = document.getElementById("sender").value;
-        var content = document.getElementById("content").value;
+        let sender = document.getElementById("sender").value;
+        let content = document.getElementById("content").value;
 
         if (stompClient && roomNo) {
-            var message = {
+            let message = {
                 sender: sender,
-                content: content,
+                messageContent: content,
                 roomNo: roomNo
             };
             stompClient.send("/app/chat/" + roomNo, {}, JSON.stringify(message));
@@ -175,14 +191,15 @@
 
     // 메시지 표시
     function showMessage(message) {
-        var chatBox = document.getElementById("chatBox");
+        let chatBox = document.getElementById("chatBox");
 
-        var div = document.createElement("div");
-        div.classList.add("message", message.sender === "나" ? "sent" : "received");
+        let div = document.createElement("div");
+        div.classList.add("message", message.sender === loginUserId ? "sent" : "received");
 
-        var bubble = document.createElement("div");
+        let bubble = document.createElement("div");
         bubble.classList.add("bubble");
-        bubble.textContent = message.sender + ": " + message.content;
+        let senderName = message.sender == loginUserId ? [[${sender}]] : [[${receiver}]];
+        bubble.textContent = senderName + ": " + message.messageContent;
 
         div.appendChild(bubble);
         chatBox.appendChild(div);
@@ -192,7 +209,7 @@
 
     // 채팅창 스크롤을 항상 아래로 유지
     function scrollToBottom() {
-        var chatBox = document.getElementById("chatBox");
+        let chatBox = document.getElementById("chatBox");
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 </script>
@@ -202,7 +219,7 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
+      <a class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
@@ -210,13 +227,14 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-        <th:block th:if="${#authentication.prinsipal.id == companyUserDTO.id}">
-          <li><a href="company/main">사업체</a></li>
+        <th:block th:if="${loginUserDTO.userDiv.name() == 'CompanyUser'}">
+          <li><a href="/company/main">사업체 메인 페이지</a></li>
         </th:block>
-        <th:block th:if="${#authentication.prinsipal.id == engineerUserDTO.id}">
-          <li><a href="engineer/engineer">엔지니어</a></li>
+        <th:block th:if="${loginUserDTO.userDiv.name() == 'EngineerUser'}">
+          <li><a href="/engineer/main">엔지니어 메인 페이지</a></li>
         </th:block>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </ul>
       </nav>
     </div>
   </header>
@@ -229,18 +247,17 @@
         <h1>D2Z - 채팅방</h1>
       </div>
     </div><!-- End Page Title -->
-
+	
     <!-- Starter Section Section -->
     <section id="starter-section" class="starter-section section">
     
     <div id="chatBox">
         <!-- 기존 메시지 Thymeleaf로 렌더링 -->
-        <div th:each="msg : ${messages}" th:classappend="${msg.sender == companyUserDTO.companyUserName} ? 'sent' : 'received'">
-            <div class="bubble" th:text="${msg.sender} + ': ' + ${msg.content}"></div>
-        </div>
+        <div th:each="msg : ${messages}" th:classappend="${msg.sender == loginUserDTO.id} ? 'sent' : 'received'">
+	    	<div class="bubble" th:text="${msg.sender} + ': ' + ${msg.messageContent}"></div>
+	   	</div>
     </div>
-
-    <input type="hidden" id="sender" th:value="${companyUserDTO.companyUserName}" />
+	<input type="hidden" id="sender" th:value="${loginUserDTO.id}" />
     <input type="text" id="content" placeholder="메시지를 입력하세요..." />
     <button onclick="sendMessage()">⮕</button>
     
