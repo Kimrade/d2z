@@ -47,11 +47,19 @@
 	}  
 	
      .portfolio-description h2 {
-    text-align: center; 
-  }
-.portfolio-description table {
-    margin: 20px auto; 
-  }
+	    text-align: center; 
+	  }
+		.portfolio-description table {
+	    margin: 20px auto; 
+	  }
+	  
+	  
+	  .conversation-table
+	  {
+	    margin: 20px auto; 
+	  }
+	 
+  
   </style>
    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -110,7 +118,7 @@
     <!-- Portfolio Details Section -->
     <section id="portfolio-details" class="portfolio-details section">
       <div class="row justify-content-between gy-4 mt-4">
-        <div class="col-lg-8" data-aos="fade-up" >
+        <div class="col-lg-7" data-aos="fade-up" >
             <div class="portfolio-description">
               <h2>현재 사업 진행 현황</h2>
               <p>
@@ -157,18 +165,21 @@
             </div>
           </div>
 
-        <div class="col-lg-3" data-aos="fade-up" data-aos-delay="100">
-          <div class="portfolio-info">
-            <h3>이곳에 프로젝트 진행도가 나오면 어떨까</h3>
-            <ul>
-              <li><strong>Category</strong> Web design</li>
-              <li><strong>Client</strong> ASU Company</li>
-              <li><strong>Project date</strong> 01 March, 2020</li>
-              <li><strong>Project URL</strong> <a href="#">www.example.com</a></li>
-              <li><a href="#" class="btn-visit align-self-start">Visit Website</a></li>
-            </ul>
-          </div>
-        </div>
+	         <div class="col-lg-5" data-aos="fade-up">
+			    <h3 class="conversation-title" style="text-align: center; font-weight: bold;">대화 보관함</h3> <!-- 클래스 추가 -->
+			    <table class="conversation-table">
+			        <tr>
+			            <td>순번</td>
+			            <td>상대방</td>
+			            <td>최근 수신 시간</td>
+			        </tr>
+			        <tr class="table-info" th:each="list,status:${chatRooms}">
+			            <td th:text="${status.count}">1</td>
+			            <td><a th:href="@{/chat/room(roomNo=${list.roomNo})}">[[${roomUserName[status.index]}]]</a></td>
+			            <td th:text="${#temporals.format(lastMessages[status.index].createdTime, 'yyyy-MM-dd HH:mm')}">02.27 15:38</td>
+			        </tr>
+			    </table>
+			</div>
 
       </div>
 

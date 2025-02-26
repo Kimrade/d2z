@@ -85,7 +85,7 @@
     </div>
   </header>
 
-  <main class="main">
+  <main class="main">s
 
     <!-- Hero Section -->
  <section id="hero" class="hero section">
@@ -106,7 +106,7 @@
 				<div class="col-md-12 col-lg-3" data-aos="zoom-out" data-aos-delay="100" th:each="list,status:${matchingResponseDTO.dtolist}">
 				    <div class="icon-box">
 				        <div class="icon"><i th:class="'icon bi bi-' + ${status.count} + '-circle'"></i></div>
-				        <h4 class="title"><a href="javascript:void(0);" th:onclick="|toggleTable(${status.count})|">[[${list.engineerUserName}]]</a></h4>
+				        <h4 class="title"><a href="javascript:void(0);" th:onclick="toggleTable([[${status.count}]])">[[${list.engineerUserName}]]</a></h4>
 				        <p class="description">[[${list.engineerUserNote}]]</p>
 				    </div>
 				</div>
@@ -115,31 +115,33 @@
 			
 
 <!-- 엔지니어 1 테이블 -->
-	<div th:each="list,status:${matchingResponseDTO.dtolist}">
-    	<table th:id="'engineerTable'+${status.count}" style="display:none;" data-engineer-count="${status.count}">
-		    <tr>
-		        <td>성 명</td>
-		        <td>주 소</td>
-		        <td>연 락 처</td>
-		        <td>주 분 야</td>
-		        <td>경 력</td>
-		        <td>특이 사항</td>
-		    </tr>
-		    <tr class="table-info">
-		        <td th:text="${list.engineerUserName}">김김밥</td>
-		        <td th:text="${list.engineerUserAdd}">강원도 원주시</td>
-		        <td th:text="${list.engineerUserTel}">010-1234-5678</td>
-		        <td th:text="${list.engineerUserJob}">금형</td>
-		        <td th:text="${list.engineerUserCareer}">23년 10개월</td>
-		        <td th:text="${list.engineerUserInfo}">원격 지도 선호</td>
-		    </tr>
-		</table>
-		<input type="hidden" name="engineerUserId" th:value="${list.id}">
-		<input type="hidden" name="engineerUserNo" th:value="${list.engineerUserNo}">
-		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-		<div th:id="'suggestButtonDiv'+${status.count}" style="display:none; text-align: center; margin-top: 20px;">
-		    <button type="button" class="btn btn-primary"  onclick="startChat([[${list.engineerUserNo}]], '[[${list.id}]]')">제안하기</button>
-		</div>
+		<div th:each="list,status:${matchingResponseDTO.dtolist}">
+			<form action='/company/chatMatching' method='post'>
+		    	<table th:id="'engineerTable'+${status.count}" style="display:none;" data-engineer-count="${status.count}">
+				    <tr>
+				        <td>성 명</td>
+				        <td>주 소</td>
+				        <td>연 락 처</td>
+				        <td>주 분 야</td>
+				        <td>경 력</td>
+				        <td>특이 사항</td>
+				        <td>매칭</td>
+				    </tr>
+				    <tr class="table-info">
+				        <td th:text="${list.engineerUserName}">김김밥</td>
+				        <td th:text="${list.engineerUserAdd}">강원도 원주시</td>
+				        <td th:text="${list.engineerUserTel}">010-1234-5678</td>
+				        <td th:text="${list.engineerUserJob}">금형</td>
+				        <td th:text="${list.engineerUserCareer}">23년 10개월</td>
+				        <td th:text="${list.engineerUserInfo}">원격 지도 선호</td>
+				        <td><button type='submit' class='btn btn-primary'>매칭</button></td>
+				    </tr>            
+				</table>
+				<input type="hidden" name="id" th:value="${list.id}">
+				<input type="hidden" name="engineerUserNo" th:value="${list.engineerUserNo}">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				<input type="hidden" id="totalEngineer" th:value="${#lists.size(matchingResponseDTO.dtolist)}">
+			</form>
 		</div>
 		
 		</div>
@@ -151,28 +153,28 @@
   <script>
 	function startChat(engineerUserNo, engineerUserId) {
 	    fetch('/chat/api/room', {
-	        method: 'POST',
-	        headers: {
-	            'Content-Type': 'application/json'
-	        },
-			beforeSend: function(xhr) {
-		        xhr.setRequestHeader("X-CSRF-TOKEN", $("meta[name='_csrf']").attr("content"));
-		    },
-	        body: JSON.stringify({
-	            engineerUserId: engineerUserId,
-	            companyUserId: [[${companyUserDTO.id}]] // 서버에서 유저 ID 가져오는 로직 필요
-	        })
-	    })
-	    .then(response => response.json())
-	    .then(roomNo => {
-	        if (roomNo) {
-	            window.location.href = '/chat/room/' + roomNo;
-	        } else {
-	            alert("채팅방 생성 실패");
-	        }
-	    })
-	    .catch(error => console.error('Error:', error));
-	}
+		        method: 'POST',
+		        headers: {
+		            'Content-Type': 'application/json'
+		        },
+				beforeSend: function(xhr) {
+			        xhr.setRequestHeader("X-CSRF-TOKEN", $("meta[name='_csrf']").attr("content"));
+			    },
+		        body: JSON.stringify({
+		            engineerUserId: engineerUserId,
+		            companyUserId: [[${companyUserDTO.id}]] // 서버에서 유저 ID 가져오는 로직 필요
+		        })
+		    })
+		    .then(response => response.json())
+		    .then(roomNo => {
+		        if (roomNo) {
+		            window.location.href = '/chat/room/' + roomNo;
+		        } else {
+		            alert("채팅방 생성 실패");
+		        }
+		    })
+		    .catch(error => console.error('Error:', error));
+		}
 	</script>
   
 
@@ -256,32 +258,36 @@
 
   <!-- Main JS File -->
   <script src="/js/main.js"></script>
-<script>
-function toggleTable(engineerNumber) {
-    // 모든 테이블 숨기기
-    for (let i = 1; i <= 4; i++) {
-        var table = document.getElementById("engineerTable" + i);
-        var suggestButtonDiv = document.getElementById("suggestButtonDiv" + i);
-        table.style.display = "none";  
-        suggestButtonDiv.style.display = "none"; 
-    }
-    
-    // 선택된 테이블만 보이게 하기
-    var table = document.getElementById("engineerTable" + engineerNumber);
-    var suggestButtonDiv = document.getElementById("suggestButtonDiv" + engineerNumber);
-    table.style.display = "block";  
-    suggestButtonDiv.style.display = "block"; 
-}
+  
+<script th:inline = "javascript">
 
-function suggestEngineer() {
-    var confirmResult = confirm("제안을 보내시겠습니까?");
-    
-    if (confirmResult) {
-        alert("엔지니어에게 제안을 보내셨습니다.");
-    } else {
-        alert("제안이 취소되었습니다.");
-    }
-}
+	const totalEngineer = document.getElementById("totalEngineer").value;
+	
+	function toggleTable(engineerNumber) {
+	    // 모든 테이블 숨기기
+	    for (let i = 1; i <= totalEngineer; i++) {
+	        var table = document.getElementById("engineerTable" + i);
+	        var suggestButtonDiv = document.getElementById("suggestButtonDiv" + i);
+	        if(table) table.style.display = "none";  
+	        if(suggestButtonDiv) suggestButtonDiv.style.display = "none"; 
+	    }
+	    
+	    // 선택된 테이블만 보이게 하기
+	    table = document.getElementById("engineerTable" + engineerNumber);
+	    suggestButtonDiv = document.getElementById("suggestButtonDiv" + engineerNumber);
+	    if(table) table.style.display = "block";  
+	    if(suggestButtonDiv) suggestButtonDiv.style.display = "block"; 
+	}
+	
+	function suggestEngineer() {
+	    var confirmResult = confirm("제안을 보내시겠습니까?");
+	    
+	    if (confirmResult) {
+	        alert("엔지니어에게 제안을 보내셨습니다.");
+	    } else {
+	        alert("제안이 취소되었습니다.");
+	    }
+	}
 </script>
 </body>
 

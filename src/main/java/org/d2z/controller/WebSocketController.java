@@ -18,8 +18,8 @@ public class WebSocketController {
 	
 	private final ChatService cs;
 	
-    @MessageMapping("/chat/{roomNo}")  // 클라이언트에서 "/app/chat/{roomNo}"로 보낸 요청을 처리
-    @SendTo("/topic/chat/{roomNo}")  // 모든 구독자에게 메시지 전송
+    @MessageMapping("/chat/{roomNo}")
+    @SendTo("/topic/chat/{roomNo}")
     public ChatMessageDTO sendMessage(@PathVariable String roomNo, ChatMessageDTO message) {
         System.out.println("메시지 전송됨: " + message);
         

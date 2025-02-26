@@ -9,7 +9,6 @@ import org.d2z.dto.CompanyUserDTO;
 import org.d2z.dto.PageRequestDTO;
 import org.d2z.dto.PageResponseDTO;
 import org.d2z.dto.PublicAnnouncementDTO;
-import org.d2z.repository.CompanyUserRepository;
 import org.d2z.repository.PublicAnnouncementRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -25,7 +24,6 @@ import lombok.extern.log4j.Log4j2;
 public class PublicAnnouncementServiceImpl implements PublicAnnouncementService {
 	
 	private final PublicAnnouncementRepository par;
-	private final CompanyUserRepository cur;
 	private final ModelMapper modelMapper;
 	
 	@Override

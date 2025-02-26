@@ -32,13 +32,7 @@ public class ChatController {
 		return cs.chatOtherAndSaveRecord(chatMessageDTO);
 	}
 	
-//	// 채팅 기록 가져오기
-//	@GetMapping("/message/{roomNo}")
-//	public List<ChatMessageDTO> getRecords(@PathVariable("roomNo") Long roomNo){
-//		
-//		return cs.listChatRecords(roomNo);
-//	}
-	
+	// 채팅방 기록 가져오기
 	@GetMapping("/message")
 	public ResponseEntity<?> getRecords(@RequestParam(value = "roomNo", required = false) Long roomNo) {
 	    if (roomNo == null) {
@@ -48,8 +42,6 @@ public class ChatController {
 	    List<ChatMessageDTO> messages = cs.listChatRecords(roomNo);
 	    return ResponseEntity.ok(messages);
 	}
-
-	
 	
 	// 채팅방 생성 하기
 	@PostMapping("/room")

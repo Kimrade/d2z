@@ -1,9 +1,15 @@
 package org.d2z.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.d2z.dto.CareerCalDTO;
+import org.d2z.dto.ChatMessageDTO;
+import org.d2z.dto.ChatRoomDTO;
 import org.d2z.dto.EngineerUserDTO;
 import org.d2z.dto.LoginUserDTO;
 import org.d2z.dto.PageRequestDTO;
+import org.d2z.service.ChatService;
 import org.d2z.service.CompanyUserService;
 import org.d2z.service.ContractService;
 import org.d2z.service.EngineerUserService;
@@ -31,6 +37,7 @@ public class EngineerUserController {
 	private final EngineerUserService eus;
 	private final CompanyUserService cus;
 	private final ContractService cs;
+	private final ChatService chatS;
 	private final PublicAnnouncementService pas;
 
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_EngineerUser')")
@@ -40,6 +47,26 @@ public class EngineerUserController {
 		model.addAttribute("engineerUserDTO", eus.engineerUserInfo(userDetails.getUsername()));
 		
 		model.addAttribute("contractList", cs.searchOneByEngineerUser(eus.engineerUserInfo(userDetails.getUsername()).getEngineerUserNo()));
+		
+		List<ChatRoomDTO> chatRooms = chatS.findChatRoomById(userDetails.getUsername());
+        
+		model.addAttribute("chatRooms", chatRooms);
+		
+		List<String> companyUserName = new ArrayList<>();
+		
+		for(ChatRoomDTO roomDTO : chatRooms) {
+			companyUserName.add(cus.companyUserInfo(roomDTO.getCompanyUserId()).getCompanyUserName());
+		}
+		
+		List<ChatMessageDTO> lastMessages = new ArrayList<>();
+        
+        for (ChatRoomDTO room : chatRooms) {
+            lastMessages.add(chatS.lastMessageByRoom(room.getRoomNo())); // 채팅방 별 마지막 메시지 저장
+        }
+        
+        model.addAttribute("lastMessages", lastMessages);
+        
+        model.addAttribute("roomUserName", companyUserName);
 		
 		return "/engineer/engineer";
 	}
@@ -160,6 +187,12 @@ public class EngineerUserController {
 		model.addAttribute("engineerUserDTO", eus.engineerUserInfo(userDetails.getUsername()));
 		
 		model.addAttribute("publicAnnouncementDTO", pas.publicAnnouncementReadOne(announcementNo));
+	}
+	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_EngineerUser')")
+	@GetMapping("/message")
+	public void messageGet() {
+		
 	}
 	
 	

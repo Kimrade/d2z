@@ -9,6 +9,8 @@ import org.d2z.dto.ChatMessageDTO;
 import org.d2z.dto.ChatRoomDTO;
 import org.d2z.repository.ChatMessageRepository;
 import org.d2z.repository.ChatRoomRepository;
+import org.d2z.repository.CompanyUserRepository;
+import org.d2z.repository.EngineerUserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,8 @@ public class ChatServiceImpl implements ChatService{
 	
 	private final ChatRoomRepository crr;
 	private final ChatMessageRepository cmr;
+	private final CompanyUserRepository cur;
+	private final EngineerUserRepository eur;
 	private final ModelMapper modelMapper;
 	
 	
@@ -80,6 +84,40 @@ public class ChatServiceImpl implements ChatService{
 	public List<ChatMessageDTO> listChatRecords(Long roomNo) {
 		
 		return cmr.findByChatRoomRoomNoOrderByCreatedTimeAsc(roomNo).stream().map(x -> modelMapper.map(x, ChatMessageDTO.class)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<ChatRoomDTO> findChatRoomById(String id) {
+		
+		List<ChatRoomDTO> dtolist = null;
+		
+		List<ChatRoom> chatRoomList = null;
+		
+		if(cur.findByLoginId(id).isPresent()) {
+			chatRoomList = crr.findByCompanyUserId(id);
+		}
+		
+		if(eur.findByLoginId(id).isPresent()) {
+			chatRoomList = crr.findByEngineerUserId(id);
+		}
+		
+		if(chatRoomList != null) {
+			dtolist = chatRoomList.stream().map(x -> modelMapper.map(x, ChatRoomDTO.class)).collect(Collectors.toList());
+		}
+		
+		return dtolist;
+	}
+
+	@Override
+	public ChatMessageDTO lastMessageByRoom(Long roomNo) {
+		
+		ChatMessage chatMessage = cmr.findTopByChatRoom_RoomNoOrderByCreatedTimeDesc(roomNo).orElse(null);
+		
+		return ChatMessageDTO.builder().messageNo(chatMessage.getMessageNo())
+						.messageContent(chatMessage.getMessageContent())
+						.roomNo(roomNo)
+						.sender(chatMessage.getSender())
+						.createdTime(chatMessage.getCreatedTime()).build();
 	}
 	
 	

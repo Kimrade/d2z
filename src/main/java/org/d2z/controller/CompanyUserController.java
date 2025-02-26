@@ -1,9 +1,8 @@
 package org.d2z.controller;
 
-import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.d2z.domain.ChatMessage;
 import org.d2z.dto.CareerCalDTO;
 import org.d2z.dto.ChatMessageDTO;
 import org.d2z.dto.ChatRoomDTO;
@@ -19,7 +18,6 @@ import org.d2z.service.ContractService;
 import org.d2z.service.EngineerUserService;
 import org.d2z.service.MatchingService;
 import org.d2z.service.PublicAnnouncementService;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -57,6 +55,26 @@ public class CompanyUserController {
 		
 		model.addAttribute("contractList", cs.searchOneByCompanyUser(cus.companyUserInfo(userDetails.getUsername()).getCompanyUserNo()));
 		
+		List<ChatRoomDTO> chatRooms = chatS.findChatRoomById(userDetails.getUsername());
+        
+		model.addAttribute("chatRooms", chatRooms);
+		
+		List<String> engineerUserName = new ArrayList<>();
+		
+		for(ChatRoomDTO roomDTO : chatRooms) {
+			engineerUserName.add(eus.engineerUserInfo(roomDTO.getEngineerUserId()).getEngineerUserName());
+		}
+		
+		List<ChatMessageDTO> lastMessages = new ArrayList<>();
+        
+        for (ChatRoomDTO room : chatRooms) {
+            lastMessages.add(chatS.lastMessageByRoom(room.getRoomNo())); // 채팅방 별 마지막 메시지 저장
+        }
+
+        model.addAttribute("lastMessages", lastMessages);
+        
+        model.addAttribute("roomUserName", engineerUserName);
+        
 		return "/company/company";
 	}
 	
@@ -101,6 +119,7 @@ public class CompanyUserController {
 					matchingRequestDTO.setKeyword2(publicAnnouncementDTO.getServiceDiv());
 					
 					model.addAttribute("matchingResponseDTO", ms.recommendationEngineerMatching(matchingRequestDTO));
+					model.addAttribute("totalEngineer", ms.recommendationEngineerCount(matchingRequestDTO));
 					
 					ra.addFlashAttribute("announceInsert", "공고를 성공적으로 등록하였습니다.");
 					return "/company/recommend";
@@ -265,8 +284,7 @@ public class CompanyUserController {
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
 	@GetMapping("/room")
-	public String chatRoomGet(@RequestParam Long roomNo, Model model, Principal principal, @AuthenticationPrincipal UserDetails userDetails) {
-        String username = principal.getName(); // 현재 로그인된 유저 정보 가져오기
+	public String chatRoomGet(@RequestParam Long roomNo, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         
         List<ChatMessageDTO> messages = chatS.listChatRecords(roomNo);
 
@@ -277,6 +295,11 @@ public class CompanyUserController {
         return "room"; // chatRoom.html로 이동
     }
 	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
+	@GetMapping("/message")
+	public void messageGet() {
+		
+	}
 	
 	
 
