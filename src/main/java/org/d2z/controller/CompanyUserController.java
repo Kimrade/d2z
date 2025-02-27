@@ -128,7 +128,7 @@ public class CompanyUserController {
 					model.addAttribute("totalEngineer", ms.recommendationEngineerCount(matchingRequestDTO));
 					
 					ra.addFlashAttribute("announceInsert", "공고를 성공적으로 등록하였습니다.");
-					return "/company/recommend";
+					return "company/recommend";
 				}else {	
 					ra.addFlashAttribute("announceInsert", "공고를 성공적으로 등록하였습니다.");
 				}

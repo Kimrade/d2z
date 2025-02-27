@@ -37,6 +37,9 @@
     .login-form {
       margin-top: 50px; 
     }
+    	textarea {   
+		resize: none;
+	}
   </style>
 </head>
 
@@ -93,7 +96,7 @@
           </div>
           <div class="mb-3">
             <label for="announcecost" class="form-label">모집 인원</label>
-            <input type="number" class="form-control" id="announcecost" name="servicePersonnel" th:value="${publicAnnouncementDTO.servicePersonnel}">
+            <input type="number" class="form-control" min="0" id="announcecost" name="servicePersonnel" th:value="${publicAnnouncementDTO.servicePersonnel}">
           </div>
           <div class="mb-3">
             <label for="address" class="form-label">근무지 주소</label>
@@ -113,15 +116,15 @@
           </div>
            <div class="mb-3">
             <label for="carrer" class="form-label">공고 비용</label>
-            <input type="number" class="form-control" name="serviceCost" th:value="${publicAnnouncementDTO.serviceCost}" id="career">
+            <input type="number" class="form-control" min="0" name="serviceCost" th:value="${publicAnnouncementDTO.serviceCost}" id="career">
           </div>
           <div class="mb-3">
             <label for="address" class="form-label">총 공고 비용</label>
-            <input type="number" class="form-control" id="address" th:value="${publicAnnouncementDTO.serviceTotalCost}" name="serviceTotalCost">
+            <input type="number" class="form-control" min="0" id="address" th:value="${publicAnnouncementDTO.serviceTotalCost}" name="serviceTotalCost">
           </div>
           <div class="mb-3">
             <label for="address" class="form-label">공고 마감 기한</label>
-            <input type="text" class="form-control" id="address" th:value="${publicAnnouncementDTO.deadlineDate}">
+            <input type="datetime-local" class="form-control" id="address" name="deadlineDate" th:value="${publicAnnouncementDTO.deadlineDate}">
           </div>
           <br>
           <br>

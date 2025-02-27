@@ -141,6 +141,9 @@
         		<td>
         			업체명
         		</td>
+        		<td>
+        			모집기한
+        		</td>
         	</tr>
     		<tr class="table-info" th:each="dtolist:${pageResponseDTO.dtolist}">
 		  		<td th:text="${dtolist.announcementNo}"></td>
@@ -151,6 +154,7 @@
 		  		<td th:text="${dtolist.serviceDiv}"></td>
 		  		<td th:text="${dtolist.servicePeriod}"></td>
 		  		<td th:text="${dtolist.companyName}"></td>
+		  		<td th:text="${#temporals.format(dtolist.deadlineDate, 'yyyy-MM-dd HH:mm')}"></td>
 		  	</tr>
         </table>
         

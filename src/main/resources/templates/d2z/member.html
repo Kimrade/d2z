@@ -37,6 +37,9 @@
     .login-form {
       margin-top: 50px; 
     }
+    	textarea {   
+		resize: none;
+	}
   </style>
 </head>
 
@@ -99,7 +102,7 @@
 	          </div>
 	          <div class="mb-3">
 	            <label for="carrer" class="form-label">경 력</label>
-	            <input type="number" class="form-control" id="career" name="engineerUserCareer" step="0.1" required>
+	            <input type="number" min="0" class="form-control" id="career" name="engineerUserCareer" step="0.1" required>
 	          </div>
 	          <div class="mb-3">
 	            <label for="majorCompany" class="form-label">주요 근무 업체</label>

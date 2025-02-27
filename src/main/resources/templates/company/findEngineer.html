@@ -106,7 +106,7 @@
 					<option value="nj">이름과 분야</option>
 				</select>
 				<br>	
-				경력 - <input type="number" th:value="${calDTO.fromNo}" name="fromNo"> 년 ~ <input type="number" th:value="${calDTO.toNo}" name="toNo"> 년
+				경력 - <input type="number" min="0" th:value="${calDTO.fromNo}" name="fromNo"> 년 ~ <input type="number" min="0" th:value="${calDTO.toNo}" name="toNo"> 년
 				<br>
 				<input type="text" class="text" name="keyword" placeholder="Keyword"/>
 				<button type="submit" class="btn btn-success">검색하기</button>

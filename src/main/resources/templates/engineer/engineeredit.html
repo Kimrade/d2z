@@ -32,6 +32,9 @@
 		footer#footer {
 		  padding: 40px 0; 
 		}
+			textarea {   
+		resize: none;
+	}
     </style>
 </head>
 
@@ -107,7 +110,7 @@
 			
 			  <div class="mb-3">
 			    <label for="carrer" class="form-label">경 력</label>
-			    <input type="text" class="form-control" id="career" th:value="${engineerUserDTO.engineerUserCareer}" name="engineerUserCareer" required>
+			    <input type="number" min="0" class="form-control" id="career" th:value="${engineerUserDTO.engineerUserCareer}" name="engineerUserCareer" required>
 			  </div>
 			  
 			  <div class="mb-3">

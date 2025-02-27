@@ -120,7 +120,7 @@
           </div>
           <div class="mb-3">
             <label for="address" class="form-label">공고 마감 기한</label>
-            <input type="text" class="form-control" id="address" th:value="${publicAnnouncementDTO.deadlineDate}" readonly>
+            <input type="datetime-local" class="form-control" id="address" th:value="${publicAnnouncementDTO.deadlineDate}" readonly>
           </div>
           <input type="text" id="announcementNo" th:value="${publicAnnouncementDTO.announcementNo}" hidden>
           <input type="text" id="engineerUserNo" th:value="${engineerUserDTO.engineerUserNo}" hidden>
