@@ -61,14 +61,20 @@ public class EngineerUserController {
 		List<ChatMessageDTO> lastMessages = new ArrayList<>();
         
         for (ChatRoomDTO room : chatRooms) {
-            lastMessages.add(chatS.lastMessageByRoom(room.getRoomNo())); // 채팅방 별 마지막 메시지 저장
+        	if(chatS.lastMessageByRoom(room.getRoomNo()) != null) {
+        		lastMessages.add(chatS.lastMessageByRoom(room.getRoomNo())); // 채팅방 별 마지막 메시지 저장
+        	}
         }
-        
-        model.addAttribute("lastMessages", lastMessages);
+
+        if(lastMessages.isEmpty()) {
+        	model.addAttribute("lastMessages", "-");
+        }else {
+        	model.addAttribute("lastMessages", lastMessages.get(lastMessages.size()-1).getCreatedTime());
+        }
         
         model.addAttribute("roomUserName", companyUserName);
 		
-		return "/engineer/engineer";
+		return "engineer/engineer";
 	}
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_EngineerUser')")

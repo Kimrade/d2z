@@ -68,14 +68,20 @@ public class CompanyUserController {
 		List<ChatMessageDTO> lastMessages = new ArrayList<>();
         
         for (ChatRoomDTO room : chatRooms) {
-            lastMessages.add(chatS.lastMessageByRoom(room.getRoomNo())); // 채팅방 별 마지막 메시지 저장
+        	if(chatS.lastMessageByRoom(room.getRoomNo()) != null) {
+        		lastMessages.add(chatS.lastMessageByRoom(room.getRoomNo())); // 채팅방 별 마지막 메시지 저장
+        	}
         }
 
-        model.addAttribute("lastMessages", lastMessages);
+        if(lastMessages.isEmpty()) {
+        	model.addAttribute("lastMessages", "-");
+        }else {
+        	model.addAttribute("lastMessages", lastMessages.get(lastMessages.size()-1).getCreatedTime());
+        }
         
         model.addAttribute("roomUserName", engineerUserName);
         
-		return "/company/company";
+		return "company/company";
 	}
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
@@ -254,6 +260,8 @@ public class CompanyUserController {
 		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
 		
 		model.addAttribute("publicAnnouncementDTO", pas.publicAnnouncementReadOne(announcementNo));
+		
+		model.addAttribute("", "");
 	}
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
@@ -299,6 +307,44 @@ public class CompanyUserController {
 	@GetMapping("/message")
 	public void messageGet() {
 		
+	}
+	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
+	@GetMapping("/annModify")
+	public void annModifyGet(@AuthenticationPrincipal UserDetails userDetails, @RequestParam int announcementNo, Model model) {
+		
+		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
+		
+		model.addAttribute("publicAnnouncementDTO", pas.publicAnnouncementReadOne(announcementNo));
+	}
+	
+	@PostMapping("/annModify")
+	public String annModifyPost(PublicAnnouncementDTO publicAnnouncementDTO, RedirectAttributes ra) {
+		
+		if(pas.publicAnnouncementModify(publicAnnouncementDTO)) {
+			ra.addFlashAttribute("annModifyAlert", "수정이 완료되었습니다.");
+		}else {
+			ra.addFlashAttribute("annModifyAlert", "수정을 실패하였습니다. 다시 확인하여 주시기 바랍니다.");
+		}
+		
+		log.info("확인용 : "+publicAnnouncementDTO.getAnnouncementNo());
+		
+		String link = String.valueOf(publicAnnouncementDTO.getAnnouncementNo());
+		
+		// annInfo?announcement="+publicAnnouncementDTO.getAnnouncementNo()
+		return "redirect:/company/searchAnn";
+	}
+	
+	@PostMapping("/annRemove")
+	public String annRemovePost(PublicAnnouncementDTO publicAnnouncementDTO, RedirectAttributes ra) {
+		
+		if(pas.publicAnnouncementDelete(publicAnnouncementDTO.getAnnouncementNo())) {
+			ra.addFlashAttribute("annRemoveAlert", "삭제가 완료되었습니다.");
+		}else {
+			ra.addFlashAttribute("annRemoveAlert", "삭제를 실패하였습니다. 다시 확인하여 주시기 바랍니다.");
+		}
+		
+		return "redirect:/company/searchAnn";
 	}
 	
 	

@@ -111,13 +111,23 @@ public class ChatServiceImpl implements ChatService{
 	@Override
 	public ChatMessageDTO lastMessageByRoom(Long roomNo) {
 		
-		ChatMessage chatMessage = cmr.findTopByChatRoom_RoomNoOrderByCreatedTimeDesc(roomNo).orElse(null);
-		
-		return ChatMessageDTO.builder().messageNo(chatMessage.getMessageNo())
+		if(cmr.findTopByChatRoom_RoomNoOrderByCreatedTimeDesc(roomNo) != null) {
+			
+			ChatMessage chatMessage = cmr.findTopByChatRoom_RoomNoOrderByCreatedTimeDesc(roomNo).orElse(null);
+			
+			if(chatMessage != null) {
+				
+				return ChatMessageDTO.builder().messageNo(chatMessage.getMessageNo())
 						.messageContent(chatMessage.getMessageContent())
 						.roomNo(roomNo)
 						.sender(chatMessage.getSender())
 						.createdTime(chatMessage.getCreatedTime()).build();
+			}
+			
+		}
+		
+		return null;
+		
 	}
 	
 	

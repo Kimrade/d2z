@@ -271,9 +271,13 @@
 </script>
 <script th:inline="javascript">
 	let sendProposalAlert = [[${sendProposalAlert}]];
+	let annModifyAlert = [[${annModifyAlert}]];
 	
 	if(sendProposalAlert){
 		alert(sendProposalAlert);
+	}
+	if(annModifyAlert){
+		alert(annModifyAlert);
 	}
 </script>
   

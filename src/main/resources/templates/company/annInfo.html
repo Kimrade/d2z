@@ -128,7 +128,10 @@
           
           <br>
           <br>
-			<a href="/company/main"><input type="button" class="btn btn-primary" value="돌아가기"></a>
+          	<th:block th:if="${companyUserDTO.companyUserNo == publicAnnouncementDTO.companyUserNo}">
+	          	<a th:href="@{/company/annModify(announcementNo=${publicAnnouncementDTO.announcementNo})}"><input type="button" class="btn btn-primary" value="수정메뉴"></a>
+				<a href="/company/main"><input type="button" class="btn btn-primary" value="돌아가기"></a>
+			</th:block>
         </div>
     </div>
     </div>

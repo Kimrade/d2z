@@ -252,7 +252,13 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
-
+	<script th:inline="javascript">
+		let annModifyAlert = [[${annModifyAlert}]];
+		
+		if(annModifyAlert){
+			alert(annModifyAlert);
+		}
+	</script>
   <!-- Vendor JS Files -->
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/vendor/php-email-form/validate.js"></script>

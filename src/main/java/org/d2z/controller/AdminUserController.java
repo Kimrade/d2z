@@ -41,7 +41,7 @@ public class AdminUserController {
 		
 		model.addAttribute("adminUserDTO", adminUserDTO);
 		
-		return "/admin/admin";
+		return "admin/admin";
 	}
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_AdminUser')")

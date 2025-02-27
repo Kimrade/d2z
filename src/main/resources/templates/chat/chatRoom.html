@@ -128,13 +128,13 @@
     const loginUserId = [[${loginUserDTO.id}]];
     
     if (!roomNo) {
-        console.error("❌ roomNo 값이 없습니다! URL을 확인하세요.");
+        console.error("roomNo 값이 없습니다! URL을 확인하세요.");
     } else {
         console.log("roomNo: " + roomNo);
     }
     
     function connect() {
-        let socket = new SockJS('http://localhost/ws');
+        let socket = new SockJS('http://localhost:8081/ws');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             console.log('WebSocket 연결 성공! ' + frame);
@@ -220,12 +220,21 @@
 	
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
-
-      <a class="logo d-flex align-items-center me-auto">
+	<th:block th:if="${loginUserDTO.userDiv.name() == 'CompanyUser'}">
+      <a href="/company/main" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
       </a>
+    </th:block>
+    
+    <th:block th:if="${loginUserDTO.userDiv.name() == 'EngineerUser'}">
+      <a href="/engineer/main" class="logo d-flex align-items-center me-auto">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1 class="sitename">D2Z</h1>
+      </a>
+    </th:block>
 
       <nav id="navmenu" class="navmenu">
         <ul>

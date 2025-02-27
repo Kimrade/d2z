@@ -45,7 +45,7 @@ public class D2zController {
 		
 		model.addAttribute("onGoingCount", cs.totalCountOnGoingContract());
 		
-		return "/d2z/main";
+		return "d2z/main";
 	}
 	
 	@PreAuthorize("permitAll")
@@ -187,7 +187,7 @@ public class D2zController {
 			return "redirect:/d2z/findpw";
 		}
 		
-		return "/d2z/findPwConfirm";
+		return "d2z/findPwConfirm";
 	}
 	
 	@PostMapping("/findPwConfirm")

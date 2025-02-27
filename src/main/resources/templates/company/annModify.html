@@ -4,13 +4,11 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>다장 - 사업체 메인 페이지</title>
+  <title>D2Z - 공고 조회</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="/img/favicon.png" rel="icon">
-  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -26,43 +24,23 @@
 
   <!-- Main CSS File -->
   <link href="/css/main.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: OnePage
+  * Template URL: https://bootstrapmade.com/onepage-multipurpose-bootstrap-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3                                                                                                                                                                                                                            
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
   <style>
-	table, tr, td {
-	  border-collapse: collapse;
-	  margin: 20px;
-	  padding: 10px;
-	}
-	
-	th, td {
-	  border: 1px solid white;
-	  text-align: center;
-	}
-	
-	tr:first-child td {
-	  background-color: #2487CE;
-	  color: white;
-	  font-weight: bold;
-	}  
-	
-     .portfolio-description h2 {
-	    text-align: center; 
-	  }
-		.portfolio-description table {
-	    margin: 20px auto; 
-	  }
-	  
-	  
-	  .conversation-table
-	  {
-	    margin: 20px auto; 
-	  }
-	 
-  
+    .login-form {
+      margin-top: 50px; 
+    }
   </style>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body class="portfolio-details-page">
+<body class="index-page">
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
@@ -72,7 +50,6 @@
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">D2Z</h1>
       </a>
-
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="/company/announce">공고 등록</a></li>
@@ -96,93 +73,72 @@
     </div>
   </header>
 
-  <main class="main">
-
-    <!-- Page Title -->
-    <div class="page-title accent-background">
-      <div class="container">
-        <h1>사업체 여러분 환영합니다</h1>
-        <nav class="breadcrumbs">
-          <ol>
-          	<li class="current">귀 사의 발전에 다장이 함께 하겠습니다.</li>
-          </ol>
-        </nav>
-      </div>
-    </div>
-    <!-- End Page Title -->
-
-    <!-- Portfolio Details Section -->
-    <section id="portfolio-details" class="portfolio-details section">
-        <div class="row justify-content-between gy-4 mt-4">
-
-          <div class="col-lg-7" data-aos="fade-up" >
-            <div class="portfolio-description">
-              <h2>현재 사업 진행 현황</h2>
-              <p>
-                <table>
-                  <tr>
-                  	<td>
-                  		순번
-                  	</td>
-                  	<td>
-                  		계약명
-                  	</td>
-                  	<td>
-                  		계약내용
-                  	</td>
-                  	<td>
-                  		처리과정
-                  	</td>
-                  	<td>
-                  		엔지니어
-                  	</td>
-                  </tr>
-                  <tr class="table-info" th:each="dto:${contractList}">
-                  	<td th:text="${dto.contractNo}">
-                  		1
-                  	</td>
-                  	<td>
-                  		<a th:href="@{/company/companyProgress(contractNo=${dto.contractNo})}">[[${dto.contractName}]]</a>
-                  	</td>
-                  	<td th:text="${dto.contractDescription}">
-                  		asdasdqweqwe
-                  	</td>
-                  	<td>
-                  		<th:block th:if="${dto.processingTask==1}"><span>계약성립</span></th:block>
-                  		<th:block th:if="${dto.processingTask==2}"><span>협의, 설계</span></th:block>
-                  		<th:block th:if="${dto.processingTask==3}"><span>작  업</span></th:block>
-                  		<th:block th:if="${dto.processingTask==4}"><span>보고, 테스트</span></th:block>
-                  		<th:block th:if="${dto.processingTask==5}"><span>계약완료</span></th:block>
-                  	</td>
-                  	<td th:text="${dto.engineerUserName}">
-                  		김감자
-                  	</td>
-                  </tr>
-                 </table>
-            </div>
+ 
+	<main class="main" style="min-height: 80vh;">
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100%;">
+      <div class="login-form p-5 shadow-lg rounded">
+        <h1 class="text-left mb-3">공고 조회</h1>
+        <form action="/company/annModify" method="post" id="f1">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <br>
+        <br>
+        <div id = "engineer">
+          <div class="mb-3"> 
+            <label for="announcename" class="form-label">공 고 명</label>
+            <input type="text" class="form-control" id="announcename" name="announcementName" th:value="${publicAnnouncementDTO.announcementName}" required>
           </div>
-
-	         <div class="col-lg-5" data-aos="fade-up">
-			    <h3 class="conversation-title" style="text-align: center; font-weight: bold;">대화 보관함</h3> <!-- 클래스 추가 -->
-			    <table class="conversation-table">
-			        <tr>
-			            <td>채팅방ID</td>
-			            <td>상대방</td>
-			            <td>최근 수신 시간</td>
-			        </tr>
-			        <tr class="table-info" th:each="list,status:${chatRooms}">
-			            <td th:text="${status.count}">1</td>
-			            <td><a th:href="@{/chat/room(roomNo=${list.roomNo})}">[[${roomUserName[status.index]}]]</a></td>
-			            <td th:text="${lastMessages == '-' ? '-' : #temporals.format(lastMessages, 'yyyy-MM-dd HH:mm')}">02.27 15:38</td>
-			        </tr>
-			    </table>
-			</div>
+          <div class="mb-3"> 
+            <label for="announcename" class="form-label">공고 내용</label>
+            <input type="text" class="form-control" id="announcename" name="announcementDescription" th:value="${publicAnnouncementDTO.announcementDescription}" required>
+          </div>
+          <div class="mb-3">
+            <label for="announcecost" class="form-label">모집 인원</label>
+            <input type="number" class="form-control" id="announcecost" name="servicePersonnel" th:value="${publicAnnouncementDTO.servicePersonnel}">
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">근무지 주소</label>
+            <input type="text" class="form-control" id="address" name="serviceAdd" th:value="${publicAnnouncementDTO.serviceAdd}" style="width: 500px;" required>
+          </div>
+          <div class="mb-3">
+            <label for="tel" class="form-label">서비스 구분</label>
+            <input type="text" class="form-control" id="tel" th:value="${publicAnnouncementDTO.serviceDiv}" name="serviceDiv" required>
+          </div>
+          <div class="mb-3">
+            <label for="guide" class="form-label">근무 분야</label>
+            <input type="text" class="form-control" name="serviceJob" id="career" th:value="${publicAnnouncementDTO.serviceJob}" required>
+          </div>
+           <div class="mb-3">
+            <label for="carrer" class="form-label">근무 기간</label>
+            <input type="text" class="form-control" id="career" th:value="${publicAnnouncementDTO.servicePeriod}" name="servicePeriod" required>
+          </div>
+           <div class="mb-3">
+            <label for="carrer" class="form-label">공고 비용</label>
+            <input type="number" class="form-control" name="serviceCost" th:value="${publicAnnouncementDTO.serviceCost}" id="career">
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">총 공고 비용</label>
+            <input type="number" class="form-control" id="address" th:value="${publicAnnouncementDTO.serviceTotalCost}" name="serviceTotalCost">
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">공고 마감 기한</label>
+            <input type="text" class="form-control" id="address" th:value="${publicAnnouncementDTO.deadlineDate}">
+          </div>
+          <br>
+          <br>
+          <br>
+          <br>
+          <input type="text" name="announcementNo" th:value="${publicAnnouncementDTO.announcementNo}" hidden>
+          	<th:block th:if="${companyUserDTO.companyUserNo == publicAnnouncementDTO.companyUserNo}">
+	          	<input type="submit" class="btn btn-info" value="편집">
+	          	<input type="button" class="btn btn-danger" id="btnRemove" value="삭제">
+			</th:block>
         </div>
-
-    </section><!-- /Portfolio Details Section -->
-
+        </form>
+    </div>
+    </div>
+  
   </main>
-
+   
   <footer id="footer" class="footer light-background">
 	<div class="container footer-top">
       <div class="row gy-4">
@@ -245,29 +201,32 @@
     </div>
 
   </footer>
-  
-  <script th:inline="javascript">
-  	let announceInsert = [[${announceInsert}]];
-  	let userModifyAlert = [[${userModifyAlert}]];
-  	let annRemoveAlert = [[${annRemoveAlert}]];
-  	
-  	if(announceInsert){
-  		alert(announceInsert);
-  	}
-  	if(userModifyAlert){
-  		alert(userModifyAlert);
-  	}
-  	if(annRemoveAlert){
-  		alert(annRemoveAlert);
-  	}
-  
-  </script>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  
+  <!-- ajax 처리 -->
+<script>
+  
+  document.querySelector("#btnRemove").addEventListener("click", function(e){
+	  e.preventDefault();
+	  e.stopPropagation();
+	  
+	  if(confirm("공고를 삭제하시겠습니까 ?")){
+		  document.querySelector("#f1").action = "/company/annRemove";
+		  document.querySelector("#f1").method = "post";
+		  document.querySelector("#f1").submit();
+	  }else{
+		  alert("삭제를 취소하였습니다.");
+	  }
+  });
+  
+</script>
 
   <!-- Vendor JS Files -->
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -283,4 +242,5 @@
   <script src="/js/main.js"></script>
 
 </body>
+
 </html>
