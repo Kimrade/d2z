@@ -8,6 +8,8 @@ import org.d2z.service.CompanyUserService;
 import org.d2z.service.ContractService;
 import org.d2z.service.EngineerUserService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,7 +38,7 @@ public class D2zController {
 	
 	@PreAuthorize("permitAll")
 	@GetMapping({"/","/main"})
-	public String mainGet(Model model) {
+	public String mainGet(Model model, Authentication authentication) {
 		log.info("main get 진입 - main 화면 조회");
 		
 		model.addAttribute("engineerCount", eus.totalEngineerCount());
@@ -46,6 +48,23 @@ public class D2zController {
 		model.addAttribute("completeCount", cs.totalCountCompletedContract());
 		
 		model.addAttribute("onGoingCount", cs.totalCountOnGoingContract());
+		
+		if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+			
+            if (authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_AdminUser"))) {
+            	
+                return "redirect:/admin/main";
+                
+            } else if (authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_EngineerUser"))) {
+            	
+                return "redirect:/engineer/main";
+                
+            } else if (authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_CompanyUser"))) {
+            	
+                return "redirect:/company/main";
+                
+            }
+        }
 		
 		return "d2z/main";
 	}

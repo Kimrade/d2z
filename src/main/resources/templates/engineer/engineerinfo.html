@@ -99,10 +99,10 @@
         <section>
 			<form action="/engineer/engineerinfo" method="get">
 				<select name="type">
-					<option value="">선택</option>
-					<option value="n">이름</option>
-					<option value="j">분야</option>
-					<option value="nj">이름과 분야</option>
+					<option value="" th:selected="${pageRequestDTO.type == ''}">선택</option>
+					<option value="n" th:selected="${pageRequestDTO.type == 'n'}">이름</option>
+					<option value="j" th:selected="${pageRequestDTO.type == 'j'}">분야</option>
+					<option value="nj" th:selected="${pageRequestDTO.type == 'nj'}">이름과 분야</option>
 				</select>
 				<br>	
 				경력 - <input type="number" min="0" th:value="${calDTO.fromNo}" name="fromNo"> 년 ~ <input type="number" min="0" th:value="${calDTO.toNo}" name="toNo"> 년
@@ -156,11 +156,11 @@
   		<div>
 		  <ul class="pagination">
 		    <li class="page-item disabled" th:if="${pageResponseDTO.prev}">
-		    	<a class="page-link" th:href="@{/engineer/engineerinfo(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword},fromNo=${calDTO.fromNo},toNo=${calDTO.toNo})}"><input type="button" value="Prev" class="button prev">Prev</a>
+		    	<a class="page-link" th:href="@{/engineer/engineerinfo(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},type=${pageRequestDTO.type},keyword=${pageRequestDTO.keyword},fromNo=${calDTO.fromNo},toNo=${calDTO.toNo})}"><input type="button" value="Prev" class="button prev">Prev</a>
 		    </li>
 		    
 		    <li class="page-item" th:each="num:${#numbers.sequence(pageResponseDTO.start,pageResponseDTO.end)}">
-		    	<a class="page-link" th:href="@{/engineer/engineerinfo(page=${num},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword},fromNo=${calDTO.fromNo},toNo=${calDTO.toNo})}">
+		    	<a class="page-link" th:href="@{/engineer/engineerinfo(page=${num},size=${pageResponseDTO.size},type=${pageRequestDTO.type},keyword=${pageRequestDTO.keyword},fromNo=${calDTO.fromNo},toNo=${calDTO.toNo})}">
 		    		<th:block th:if="${num==pageResponseDTO.page}">
 						<span th:text="${num}"></span>
 					</th:block>
@@ -171,7 +171,7 @@
 		    </li>
 		    
 		    <li class="page-item" th:if="${pageResponseDTO.next}">
-		      <a class="page-link" th:href="@{/engineer/engineerinfo(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword},fromNo=${calDTO.fromNo},toNo=${calDTO.toNo})}"><input type="button" value="Next" class="button next">Next</a>
+		      <a class="page-link" th:href="@{/engineer/engineerinfo(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},type=${pageRequestDTO.type},keyword=${pageRequestDTO.keyword},fromNo=${calDTO.fromNo},toNo=${calDTO.toNo})}"><input type="button" value="Next" class="button next">Next</a>
 		    </li>
 		  </ul>
 		 </div>
