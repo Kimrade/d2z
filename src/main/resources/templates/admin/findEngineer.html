@@ -157,11 +157,11 @@
   		<div>
 		  <ul class="pagination">
 		    <li class="page-item disabled" th:if="${pageResponseDTO.prev}">
-		    	<a class="page-link" th:href="@{/admin/findEngineer(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Prev" class="button prev">Prev</a>
+		    	<a class="page-link" th:href="@{/admin/findEngineer(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword},fromNo=${calDTO.fromNo},toNo=${calDTO.toNo})}"><input type="button" value="Prev" class="button prev">Prev</a>
 		    </li>
 		    
 		    <li class="page-item" th:each="num:${#numbers.sequence(pageResponseDTO.start,pageResponseDTO.end)}">
-		    	<a class="page-link" th:href="@{/admin/findEngineer(page=${num},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}">
+		    	<a class="page-link" th:href="@{/admin/findEngineer(page=${num},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword},fromNo=${calDTO.fromNo},toNo=${calDTO.toNo})}">
 		    		<th:block th:if="${num==pageResponseDTO.page}">
 						<span th:text="${num}"></span>
 					</th:block>
@@ -172,7 +172,7 @@
 		    </li>
 		    
 		    <li class="page-item" th:if="${pageResponseDTO.next}">
-		      <a class="page-link" th:href="@{/admin/findEngineer(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Next" class="button next">Next</a>
+		      <a class="page-link" th:href="@{/admin/findEngineer(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},keyword=${pageRequestDTO.keyword},fromNo=${calDTO.fromNo},toNo=${calDTO.toNo})}"><input type="button" value="Next" class="button next">Next</a>
 		    </li>
 		  </ul>
 		 </div>

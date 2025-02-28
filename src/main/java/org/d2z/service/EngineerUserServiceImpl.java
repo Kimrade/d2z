@@ -97,8 +97,6 @@ public class EngineerUserServiceImpl implements EngineerUserService {
 	                    .engineerUserEmail(engineerUserDTO.getEngineerUserEmail())
 	                    .engineerUserNote(engineerUserDTO.getEngineerUserNote())
 	                    .engineerUserInfo(engineerUserDTO.getEngineerUserInfo())
-	                    .isApproved(engineerUserDTO.getIsApproved())
-	                    .isDeleted(engineerUserDTO.getIsDeleted())
 	                    .login(login)
 	                    .build();
 

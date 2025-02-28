@@ -102,8 +102,6 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 						.companyUserTel(companyUserDTO.getCompanyUserTel())
 						.companyInfo(companyUserDTO.getCompanyInfo())
 						.companyNote(companyUserDTO.getCompanyNote())
-						.isDeleted(companyUserDTO.getIsDeleted())
-						.isApproved(companyUserDTO.getIsApproved())
 						.login(login)
 						.build();
 				

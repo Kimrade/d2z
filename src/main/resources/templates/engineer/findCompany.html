@@ -160,6 +160,9 @@
 					담당자 전화번호
 				</td>
 				<td>
+					주소지
+				</td>
+				<td>
 					이메일주소
 				</td>
 			</tr>
@@ -169,6 +172,7 @@
 		  		<td><a th:href="@{/engineer/anotherCompanyUserInfo(companyUserNo=${dtolist.companyUserNo})}">[[${dtolist.companyName}]]</a></td>
 		  		<td th:text="${dtolist.companyUserName}"></td>
 		  		<td th:text="${dtolist.companyUserTel}"></td>
+		  		<td th:text="${dtolist.companyAdd}"></td>
 		  		<td th:text="${dtolist.companyUserEmail}"></td>
 		  	</tr>
 		</table>
