@@ -1,5 +1,6 @@
 package org.d2z.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -111,23 +112,21 @@ public class ChatServiceImpl implements ChatService{
 	@Override
 	public ChatMessageDTO lastMessageByRoom(Long roomNo) {
 		
-		if(cmr.findTopByChatRoom_RoomNoOrderByCreatedTimeDesc(roomNo) != null) {
+		if(cmr.findTopByChatRoom_RoomNoOrderByCreatedTimeDesc(roomNo).isPresent()) {
 			
-			ChatMessage chatMessage = cmr.findTopByChatRoom_RoomNoOrderByCreatedTimeDesc(roomNo).orElse(null);
+			ChatMessage lastMessage = cmr.findTopByChatRoom_RoomNoOrderByCreatedTimeDesc(roomNo).get();
 			
-			if(chatMessage != null) {
-				
-				return ChatMessageDTO.builder().messageNo(chatMessage.getMessageNo())
-						.messageContent(chatMessage.getMessageContent())
-						.roomNo(roomNo)
-						.sender(chatMessage.getSender())
-						.createdTime(chatMessage.getCreatedTime()).build();
-			}
+			ChatMessageDTO result = ChatMessageDTO.builder().sender(lastMessage.getSender())
+													.roomNo(roomNo)
+													.messageNo(lastMessage.getMessageNo())
+													.messageContent(lastMessage.getMessageContent())
+													.createdTime(lastMessage.getCreatedTime()).build();
 			
+			return result;
+			
+		}else {
+			return null;
 		}
-		
-		return null;
-		
 	}
 	
 	

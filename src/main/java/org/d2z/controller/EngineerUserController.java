@@ -1,5 +1,6 @@
 package org.d2z.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,19 +59,18 @@ public class EngineerUserController {
 			companyUserName.add(cus.companyUserInfo(roomDTO.getCompanyUserId()).getCompanyUserName());
 		}
 		
-		List<ChatMessageDTO> lastMessages = new ArrayList<>();
+		List<LocalDateTime> lastMessages = new ArrayList<>();
         
-        for (ChatRoomDTO room : chatRooms) {
-        	if(chatS.lastMessageByRoom(room.getRoomNo()) != null) {
-        		lastMessages.add(chatS.lastMessageByRoom(room.getRoomNo())); // 채팅방 별 마지막 메시지 저장
-        	}
-        }
-
-        if(lastMessages.isEmpty()) {
-        	model.addAttribute("lastMessages", "-");
-        }else {
-        	model.addAttribute("lastMessages", lastMessages.get(lastMessages.size()-1).getCreatedTime());
-        }
+		 for (ChatRoomDTO room : chatRooms) {
+	        	ChatMessageDTO messageDTO = chatS.lastMessageByRoom(room.getRoomNo());
+	        	if(messageDTO != null) {
+	        		lastMessages.add(chatS.lastMessageByRoom(room.getRoomNo()).getCreatedTime()); // 채팅방 별 마지막 메시지 저장
+	        	}else {
+	        		lastMessages.add(null);
+	        	}
+		 }
+		 
+        model.addAttribute("lastMessages", lastMessages);
         
         model.addAttribute("roomUserName", companyUserName);
 		

@@ -8,6 +8,8 @@ import org.d2z.service.CompanyUserService;
 import org.d2z.service.ContractService;
 import org.d2z.service.EngineerUserService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

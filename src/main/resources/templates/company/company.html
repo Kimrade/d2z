@@ -173,7 +173,7 @@
 			        <tr class="table-info" th:each="list,status:${chatRooms}">
 			            <td th:text="${status.count}">1</td>
 			            <td><a th:href="@{/chat/room(roomNo=${list.roomNo})}">[[${roomUserName[status.index]}]]</a></td>
-			            <td th:text="${lastMessages == '-' ? '-' : #temporals.format(lastMessages, 'yyyy-MM-dd HH:mm')}">02.27 15:38</td>
+			            <td th:text="${lastMessages[status.index] == null ? '-' : #temporals.format(lastMessages[status.index], 'yyyy-MM-dd HH:mm')}">02.27 15:38</td>
 			        </tr>
 			    </table>
 			</div>

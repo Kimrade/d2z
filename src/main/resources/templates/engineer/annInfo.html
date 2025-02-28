@@ -255,10 +255,18 @@
 				normal = "<tr><th>제 안 자</th><th>제안 시간</th></tr>";
 				html="";
 				for(let i=0;i<data.length;i++){
+					
+					const date = new Date(data[i].sendProposalDate);
+					const formattedDate = date.getFullYear() + "." +
+					                      ("0" + (date.getMonth() + 1)).slice(-2) + "." +
+					                      ("0" + date.getDate()).slice(-2) + " " +
+					                      ("0" + date.getHours()).slice(-2) + ":" +
+					                      ("0" + date.getMinutes()).slice(-2);
+					
 					html += "<tr><th>"
 					html += data[i].engineerUserName;
 					html += "</th>";
-					html += "<th>("+data[i].sendProposalDate+")</th></tr>";
+					html += "<th>("+formattedDate+")</th></tr>";
 				}
 				document.querySelector("#proposalTable").innerHTML = normal+html;
 			},
