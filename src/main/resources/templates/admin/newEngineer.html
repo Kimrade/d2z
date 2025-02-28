@@ -109,7 +109,7 @@
       <div class="container">
       <form action="/admin/newEngineer" method="get">
         <h1>신규 가입 엔지니어</h1><br>
-		<input type = "text" name="keyword" placeholder="ex> 업체명"><button type="submit" class="btn btn-success">검색하기</button>
+		<input type = "text" name="keyword" th:value="${pageRequestDTO.keyword}" placeholder="ex> 업체명"><button type="submit" class="btn btn-success">검색하기</button>
       </form>
       </div>
     </div><!-- End Page Title -->

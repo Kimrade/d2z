@@ -329,9 +329,10 @@ public class CompanyUserController {
 		
 		log.info("확인용 : "+publicAnnouncementDTO.getAnnouncementNo());
 		
-		String link = String.valueOf(publicAnnouncementDTO.getAnnouncementNo());
+//		String link = String.valueOf(publicAnnouncementDTO.getAnnouncementNo());
 		
-		// annInfo?announcement="+publicAnnouncementDTO.getAnnouncementNo()
+//		annInfo?announcement="+publicAnnouncementDTO.getAnnouncementNo()
+		
 		return "redirect:/company/searchAnn";
 	}
 	

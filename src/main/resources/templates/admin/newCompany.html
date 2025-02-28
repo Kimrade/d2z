@@ -109,7 +109,7 @@
     <form action="/admin/newCompany" method="get">
       <div class="container">
         <h1>신규 가입 사업체</h1><br>
-		<input type = "text" name="keyword"> <button type="submit" class="btn btn-success">검색하기</button>
+		<input type = "text" name="keyword" th:value="${pageRequestDTO.keyword}"><button type="submit" class="btn btn-success">검색하기</button>
       </div>
       </form>
     </div><!-- End Page Title -->
