@@ -127,7 +127,7 @@
 					<option value="na" th:selected="${pageRequestDTO.type == 'na'}">업체명과 주소지</option>
 					<option value="ai" th:selected="${pageRequestDTO.type == 'ai'}">주소지와 비고</option>
 					<option value="ni" th:selected="${pageRequestDTO.type == 'ni'}">업체명과 비고</option>
-					<option value="nai" th:selected="${pageRequestDTO.type == nai'}">업체명과 주소지, 비고</option>
+					<option value="nai" th:selected="${pageRequestDTO.type == 'nai'}">업체명과 주소지, 비고</option>
 				</select>
 				<br>
 				<br>
@@ -179,11 +179,11 @@
 		<div>
 		  <ul class="pagination">
 		    <li class="page-item disabled" th:if="${pageResponseDTO.prev}">
-		    	<a class="page-link" th:href="@{/engineer/findCompany(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},type=${pageRequestDTO.type},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Prev" class="button prev">Prev</a>
+		    	<a class="page-link" th:href="@{/company/companyinfo(page=${pageResponseDTO.start-1},size=${pageResponseDTO.size},type=${pageRequestDTO.type},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Prev" class="button prev">Prev</a>
 		    </li>
 		    
 		    <li class="page-item" th:each="num:${#numbers.sequence(pageResponseDTO.start,pageResponseDTO.end)}">
-		    	<a class="page-link" th:href="@{/engineer/findCompany(page=${num},size=${pageResponseDTO.size},type=${pageRequestDTO.type},keyword=${pageRequestDTO.keyword})}">
+		    	<a class="page-link" th:href="@{/company/companyinfo(page=${num},size=${pageResponseDTO.size},type=${pageRequestDTO.type},keyword=${pageRequestDTO.keyword})}">
 		    		<th:block th:if="${num==pageResponseDTO.page}">
 						<span th:text="${num}"></span>
 					</th:block>
@@ -194,7 +194,7 @@
 		    </li>
 		    
 		    <li class="page-item" th:if="${pageResponseDTO.next}">
-		      <a class="page-link" th:href="@{/engineer/findCompany(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},type=${pageRequestDTO.type},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Next" class="button next">Next</a>
+		      <a class="page-link" th:href="@{/company/companyinfo(page=${pageResponseDTO.end+1},size=${pageResponseDTO.size},type=${pageRequestDTO.type},keyword=${pageRequestDTO.keyword})}"><input type="button" value="Next" class="button next">Next</a>
 		    </li>
 		  </ul>
 		 </div>

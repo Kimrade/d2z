@@ -236,9 +236,9 @@ public class CompanyUserController {
 	
 	@PreAuthorize("isAuthenticated() and hasRole('ROLE_CompanyUser')")
 	@GetMapping("/anotherCompanyUserInfo")
-	public void anotherCompanyUserInfoGet(@AuthenticationPrincipal UserDetails userDetails, RedirectAttributes ra, Model model, int companyUserNo) {
+	public void anotherCompanyUserInfoGet(@AuthenticationPrincipal UserDetails userDetails, RedirectAttributes ra, Model model, @RequestParam int companyUserNo) {
 	
-		model.addAttribute("companyUserDTO", cus.getCompanyUserInfoByNo(companyUserNo));
+		model.addAttribute("companyUserDTO", cus.companyUserInfo(userDetails.getUsername()));
 		
 		model.addAttribute("anotherCompanyUserDTO", cus.getCompanyUserInfoByNo(companyUserNo));
 		
